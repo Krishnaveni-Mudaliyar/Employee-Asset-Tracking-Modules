@@ -3,8 +3,8 @@
   "name": "Employee-Asset-Tracking-Modules",
   "publisher": "Default Publisher",
   "version": "1.0.0.0",
-  "brief": "is a set of modules for tracking employee assets",
-  "description": "is a set of modules for tracking employee assets",
+  "brief": "Employee Asset Tracking Module for Business Central",
+  "description": "Track and manage company assets assigned to employees",
   "privacyStatement": "",
   "EULA": "",
   "help": "",
@@ -107,8 +107,8 @@
   "application": "27.0.0.0",
   "idRanges": [
     {
-      "from": 50000,
-      "to": 60000
+      "from": 50100,
+      "to": 50199
     }
   ],
   "resourceExposurePolicy": {
