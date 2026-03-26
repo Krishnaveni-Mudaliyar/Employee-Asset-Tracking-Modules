@@ -45,7 +45,8 @@
     "includeSourceInSymbolFile": true
   },
   "runtime": "16.0",
+  "target": "Cloud",
   "features": [
-    "NoImplicitWith"
+    "NoImplicitWith","TranslationFile"
   ]
 }
