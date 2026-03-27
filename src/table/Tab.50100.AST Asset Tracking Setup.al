@@ -1,7 +1,6 @@
 table 50100 "AST Asset Tracking Setup"
 {
     Caption = 'Asset Tracking Setup';
-    DataClassification = ToBeClassified;
     DrillDownPageId = "AST Asset Tracking Setup";
     LookupPageId = "AST Asset Tracking Setup";
 
@@ -50,6 +49,11 @@ table 50100 "AST Asset Tracking Setup"
             Caption = 'Admin Email Address';
             DataClassification = CustomerContent;
         }
+        field(9; "Approval Threshold Amount"; Decimal)
+        {
+            Caption = 'Approval Threshold Amount';
+            DataClassification = CustomerContent;
+        }
     }
     keys
     {
@@ -58,14 +62,10 @@ table 50100 "AST Asset Tracking Setup"
             Clustered = true;
         }
     }
-    trigger OnInsert()
-    begin
-
-    end;
 
     trigger OnDelete()
     begin
-        Error('The Asset Tracking Setup Cannot be deleted.');
+        Error('The Asset Tracking Setup cannot be deleted.');
     end;
 
 }
