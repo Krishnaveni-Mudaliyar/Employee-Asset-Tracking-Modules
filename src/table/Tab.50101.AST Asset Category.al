@@ -1,13 +1,12 @@
 table 50101 "AST Asset Category"
 {
     Caption = 'Asset Category';
-    DataClassification = CustomerContent;
     DrillDownPageId = "AST Asset Category List";
     LookupPageId = "AST Asset Category List";
 
     fields
     {
-        field(1; "Code"; Code[20])
+        field(1; Code; Code[20])
         {
             Caption = 'Code';
             DataClassification = CustomerContent;
@@ -27,17 +26,17 @@ table 50101 "AST Asset Category"
             Caption = 'Require Approval';
             DataClassification = CustomerContent;
         }
-        field(5; "Default Condition"; enum "AST Asset Condition")
+        field(5; "Default Condition"; Enum "AST Asset Condition")
         {
             Caption = 'Default Condition';
             DataClassification = CustomerContent;
         }
-        field(6; "No. of Asset"; Integer)
+        field(6; "No. of Assets"; Integer)
         {
             Caption = 'No. of Asset';
             FieldClass = FlowField;
-            CalcFormula = count("AST Company Asset"
-            where("Category Code" = field(Code)));
+            CalcFormula = Count("AST Company Asset"
+                          where("Category Code" = field(Code)));
             Editable = false;
         }
     }
@@ -48,4 +47,12 @@ table 50101 "AST Asset Category"
             Clustered = true;
         }
     }
+    trigger OnDelete()
+    var
+        CompAsset: Record "AST Company Asset";
+    begin
+        CompAsset.SetRange("Category Code", Code);
+        if CompAsset.FindFirst() then
+            Error('You cannot delete category %1 because assets exist under it.', Code);
+    end;
 }
