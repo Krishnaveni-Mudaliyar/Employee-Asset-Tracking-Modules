@@ -5,14 +5,14 @@ table 50102 "AST Company Asset"
 
     fields
     {
-        field(1; "Company ID"; Code[20])
+        field(1; "Category Code"; Code[20])
         {
             Caption = '';
         }
     }
     keys
     {
-        key(PK; "Company ID")
+        key(PK; "Category Code")
         {
             Clustered = true;
         }

@@ -1,7 +1,7 @@
-page 50101 "AST Asset Category List "
+page 50101 "AST Asset Category List"
 {
     ApplicationArea = All;
-    Caption = 'AST Asset Category List ';
+    Caption = 'AST Asset Category List';
     PageType = List;
 
     layout
