@@ -14,9 +14,9 @@ enum 50100 "AST Asset Status"
     {
         Caption = 'Assigned';
     }
-    value(3; "Under Maintainence")
+    value(3; UnderMaintainance)
     {
-        Caption = 'Under Maintainence';
+        Caption = 'Under Maintainance';
     }
     value(4; Disposed)
     {

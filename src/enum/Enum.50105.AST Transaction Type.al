@@ -6,7 +6,7 @@ enum 50105 "AST Transaction Type"
     {
         Caption = '';
     }
-    value(1; "Assignment")
+    value(1; Assignment)
     {
         Caption = 'Assignment';
     }
@@ -20,7 +20,7 @@ enum 50105 "AST Transaction Type"
     }
     value(4; Maintenance)
     {
-        caption = 'Maintainance';
+        Caption = 'Maintenance';
     }
     value(5; Disposal)
     {

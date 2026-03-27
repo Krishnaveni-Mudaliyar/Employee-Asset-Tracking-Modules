@@ -10,7 +10,7 @@ enum 50104 "AST Approval Status"
     {
         Caption = 'Open';
     }
-    value(2; "Pending Approval")
+    value(2; PendingApproval)
     {
         Caption = 'Pending Approval';
     }

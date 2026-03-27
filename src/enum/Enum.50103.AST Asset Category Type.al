@@ -24,6 +24,6 @@ enum 50103 "AST Asset Category Type"
     }
     value(5; Other)
     {
-        caption = 'Other';
+        Caption = 'Other';
     }
 }
