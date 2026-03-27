@@ -1,0 +1,38 @@
+# AL Compiler Output
+*.app
+*.flf
+
+# AL Packages (Downloaded symbols - never commit these)
+
+.alpackages/
+.snapshots/
+
+# VS Code user-specifif Settings (machine specific)
+.vscode/settings.json.user
+.vscode/.alcache
+
+#Translation temp files
+TranslationTemp/
+
+# Test resukts
+TestResults/
+
+# Operating system files 
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+
+#Windows
+desktop.ini
+
+# Backup files
+*.bak
+*.tmp
+*~
+
+# Node modules (if any tooling added later)
+node_modules/

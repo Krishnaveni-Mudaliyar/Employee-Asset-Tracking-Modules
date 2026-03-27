@@ -5,12 +5,7 @@
   "version": "1.0.0.0",
   "brief": "Employee Asset Tracking Module for Business Central",
   "description": "Track and manage company assets assigned to employees",
-  "privacyStatement": "",
-  "EULA": "",
-  "help": "",
-  "url": "",
-  "logo": "",
-  "dependencies": [
+   "dependencies": [
 {
 "id": "437dbf0e-84ff-417a-965d-ed2bb9650972",
 "name": "Base Application",
