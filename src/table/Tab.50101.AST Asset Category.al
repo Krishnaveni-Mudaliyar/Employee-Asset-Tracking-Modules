@@ -5,14 +5,34 @@ table 50101 "AST Asset Category"
 
     fields
     {
-        field(1; "Category ID"; Code[20])
+        field(1; "Code"; Code[20])
         {
-            Caption = '';
+            Caption = 'Code';
+        }
+        field(2; Description; Text[100])
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(3; "Category Type"; Enum "AST Asset Category Type")
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(4; "Require Approval"; Boolean)
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(5; "Default Condition"; enum "AST Asset Condition")
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(6; "No. of Asset"; Integer)
+        {
+            FieldClass = FlowField;
         }
     }
     keys
     {
-        key(PK; "Category ID")
+        key(PK; "Code")
         {
             Clustered = true;
         }
