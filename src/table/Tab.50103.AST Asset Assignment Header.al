@@ -30,18 +30,17 @@ table 50103 "AST Asset Assignment Header"
                 lRecEmployee: Record Employee;
             begin
                 if "Employee No." = '' then begin
-                    "Employee Name" = '';
+                    "Employee Name" := '';
+                    Department := '';
                 end;
                 lRecEmployee.Get("Employee No.");
-                Department := lRecEmployee.Department;
+                Department := lRecEmployee."Global Dimension 1 Code";
+                "Employee Name" := CopyStr(lRecEmployee."First Name" + '' + lRecEmployee."Last Name", 1, 100);
             end;
         }
         field(3; "Employee Name"; Text[100])
         {
             Caption = 'Employee Name';
-            // FieldClass = FlowField;
-            // CalcFormula = Lookup(Employee."First Name"
-            // where("No." = field("Employee No.")));
             DataClassification = CustomerContent;
             Editable = false;
         }
@@ -103,7 +102,7 @@ table 50103 "AST Asset Assignment Header"
             Clustered = true;
         }
         key(EmployeeNo; "Employee No.") { }
-        Key(AssignmentDate; "Assignment Date") { }
+        key(AssignmentDate; "Assignment Date") { }
     }
 
     var
@@ -125,7 +124,6 @@ table 50103 "AST Asset Assignment Header"
         Status := Status::Open;
         "Assignment Date" := Today;
 
-        lRecSetup.Get();
         if lRecSetup."Default Return Days" > 0 then
             "Expected Return Date" :=
             CalcDate('<+' + Format(lRecSetup."Default Return Days") + 'D>',

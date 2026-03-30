@@ -17,7 +17,7 @@ table 50104 "AST Asset Assignment Line"
         }
         field(3; "Asset No."; Code[20])
         {
-            Caption = 'Asset No';
+            Caption = 'Asset No.';
             DataClassification = CustomerContent;
             TableRelation = "AST Company Asset";
 
@@ -53,7 +53,7 @@ where("No." = field("Asset No.")));
             Caption = 'Category Code';
             FieldClass = FlowField;
             CalcFormula = Lookup("AST Company Asset"."Category Code"
-            where("No." = field("Category Code")));
+            where("No." = field("Asset No.")));
             Editable = false;
         }
         field(7; "Condition at Handover"; Enum "AST Asset Condition")
