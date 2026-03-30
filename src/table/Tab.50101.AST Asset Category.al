@@ -33,7 +33,7 @@ table 50101 "AST Asset Category"
         }
         field(6; "No. of Assets"; Integer)
         {
-            Caption = 'No. of Asset';
+            Caption = 'No. of Assets';
             FieldClass = FlowField;
             CalcFormula = Count("AST Company Asset"
                           where("Category Code" = field(Code)));
@@ -49,10 +49,10 @@ table 50101 "AST Asset Category"
     }
     trigger OnDelete()
     var
-        CompAsset: Record "AST Company Asset";
+        lRecCompAsset: Record "AST Company Asset";
     begin
-        CompAsset.SetRange("Category Code", Code);
-        if CompAsset.FindFirst() then
+        lRecCompAsset.SetRange("Category Code", Code);
+        if lRecCompAsset.FindFirst() then
             Error('You cannot delete category %1 because assets exist under it.', Code);
     end;
 }
