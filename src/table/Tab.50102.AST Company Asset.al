@@ -1,6 +1,6 @@
 table 50102 "AST Company Asset"
 {
-    Caption = 'AST Company Asset';
+    Caption = 'Company Asset';
     DrillDownPageId = "AST Company Asset List";
     LookupPageId = "AST Company Asset List";
 
@@ -10,7 +10,6 @@ table 50102 "AST Company Asset"
         {
             Caption = 'No.';
             DataClassification = CustomerContent;
-            TableRelation = "No. Series";
         }
         field(2; Description; Text[100])
         {
@@ -21,15 +20,20 @@ table 50102 "AST Company Asset"
         {
             Caption = 'Category Code';
             DataClassification = CustomerContent;
-            TableRelation = "AST Asset Category".Code;
+            TableRelation = "AST Asset Category";
         }
-        field(4; "Category Description"; Text[350])
+        field(4; "Category Description"; Text[100])
         {
             Caption = 'Category Description';
             FieldClass = FlowField;
             CalcFormula = Lookup("AST Asset Category".Description
             where(Code = field("Category Code")));
             Editable = false;
+        }
+        field(5; "Serial No."; Text[50])
+        {
+            Caption = 'Serial No.';
+            DataClassification = CustomerContent;
         }
         field(6; Status; Enum "AST Asset Status")
         {
@@ -41,15 +45,15 @@ table 50102 "AST Company Asset"
         {
             Caption = 'Condition';
             DataClassification = CustomerContent;
-            Editable = false;
         }
         field(8; "Purchase Date"; Date)
         {
             Caption = 'Purchase Date';
             DataClassification = CustomerContent;
         }
-        field(9; "Purchase Price"; Integer)
+        field(9; "Purchase Price"; Decimal)
         {
+            Caption = 'Purchase Price';
             DataClassification = CustomerContent;
             MinValue = 0;
         }
@@ -62,15 +66,15 @@ table 50102 "AST Company Asset"
         {
             Caption = 'Vendor No.';
             DataClassification = CustomerContent;
-            TableRelation = Vendor."No.";
+            TableRelation = Vendor;
         }
-        field(12; "Assigned to Employee No."; Code[50])
+        field(12; "Assigned to Employee No."; Code[20])
         {
             Caption = 'Assigned to Employee No.';
             DataClassification = CustomerContent;
-            TableRelation = Employee."No.";
+            TableRelation = Employee;
         }
-        field(13; "Assigned to Employee Name"; Text[50])
+        field(13; "Assigned to Employee Name"; Text[100])
         {
             Caption = 'Assigned to Employee Name';
             FieldClass = FlowField;
@@ -95,7 +99,7 @@ table 50102 "AST Company Asset"
         }
         field(102; "Created Date"; Date)
         {
-            Caption = 'Created At';
+            Caption = 'Created Date';
             DataClassification = CustomerContent;
         }
         field(103; "Last Modified By"; Code[50])
@@ -112,8 +116,8 @@ table 50102 "AST Company Asset"
     keys
     {
         key(PK; "No.") { Clustered = true; }
-        key(K1; "Category Code", "Assigned to Employee No.")
-        { }
+        key(CategoryCode; "Category Code") { }
+        key(EmployeeNo; "Assigned to Employee No.") { }
     }
 
     trigger OnInsert()
@@ -143,7 +147,7 @@ table 50102 "AST Company Asset"
     trigger OnDelete()
     begin
         if Status = Status::Assigned then
-            Error('Asset %1 Cannot deleted because it is currently assigned to employee %2.', "No.", "Assigned to Employee No.");
+            Error('Asset %1 cannot be deleted because it is currently assigned to employee %2.', "No.", "Assigned to Employee No.");
     end;
 
 
