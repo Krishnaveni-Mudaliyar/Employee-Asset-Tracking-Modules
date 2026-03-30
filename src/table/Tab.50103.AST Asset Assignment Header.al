@@ -10,19 +10,40 @@ table 50103 "AST Asset Assignment Header"
         {
             Caption = 'No.';
             DataClassification = CustomerContent;
+
+            trigger OnValidate()
+            begin
+                if "No." <> xRec."No." then begin
+                    ASTSetup.Get();
+                    NoSeries.TestManual(ASTSetup."Assignment Nos.");
+                end;
+            end;
         }
         field(2; "Employee No."; Code[20])
         {
             Caption = 'Employee No.';
             DataClassification = CustomerContent;
             TableRelation = Employee;
+
+            trigger OnValidate()
+            var
+                lRecEmployee: Record Employee;
+            begin
+                if "Employee No." = '' then begin
+                    "Employee Name" = '';
+                end;
+                lRecEmployee.Get("Employee No.");
+                Department := lRecEmployee.Department;
+            end;
         }
         field(3; "Employee Name"; Text[100])
         {
             Caption = 'Employee Name';
-            FieldClass = FlowField;
-            CalcFormula = Lookup(Employee."First Name"
-            where("No." = field("Employee No.")));
+            // FieldClass = FlowField;
+            // CalcFormula = Lookup(Employee."First Name"
+            // where("No." = field("Employee No.")));
+            DataClassification = CustomerContent;
+            Editable = false;
         }
         field(4; "Assignment Date"; Date)
         {
@@ -81,7 +102,13 @@ table 50103 "AST Asset Assignment Header"
         {
             Clustered = true;
         }
+        key(EmployeeNo; "Employee No.") { }
+        Key(AssignmentDate; "Assignment Date") { }
     }
+
+    var
+        ASTSetup: Record "AST Asset Tracking Setup";
+        NoSeries: Codeunit "No. Series";
 
     trigger OnInsert()
     var

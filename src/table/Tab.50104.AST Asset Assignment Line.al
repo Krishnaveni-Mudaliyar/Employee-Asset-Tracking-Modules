@@ -24,10 +24,8 @@ table 50104 "AST Asset Assignment Line"
             trigger OnValidate()
             var
                 lRecAsset: Record "AST Company Asset";
-
             begin
                 if "Asset No." = '' then exit;
-
                 lRecAsset.Get("Asset No.");
 
                 if lRecAsset.Status <> lRecAsset.Status::Available then
@@ -40,6 +38,7 @@ table 50104 "AST Asset Assignment Line"
             FieldClass = FlowField;
             CalcFormula = Lookup("AST Company Asset".Description
 where("No." = field("Asset No.")));
+            Editable = false;
         }
         field(5; "Serial No."; Text[50])
         {
@@ -47,6 +46,7 @@ where("No." = field("Asset No.")));
             FieldClass = FlowField;
             CalcFormula = Lookup("AST Company Asset"."Serial No."
             where("No." = field("Asset No.")));
+            Editable = false;
         }
         field(6; "Category Code"; Code[20])
         {
@@ -54,6 +54,7 @@ where("No." = field("Asset No.")));
             FieldClass = FlowField;
             CalcFormula = Lookup("AST Company Asset"."Category Code"
             where("No." = field("Category Code")));
+            Editable = false;
         }
         field(7; "Condition at Handover"; Enum "AST Asset Condition")
         {
@@ -72,6 +73,7 @@ where("No." = field("Asset No.")));
         {
             Clustered = true;
         }
+        key(AssetNo; "Asset No.") { }
     }
 
     trigger OnInsert()
