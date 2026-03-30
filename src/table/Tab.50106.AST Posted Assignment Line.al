@@ -1,20 +1,60 @@
 table 50106 "AST Posted Assignment Line"
 {
-    Caption = 'AST Posted ';
-    DataClassification = ToBeClassified;
+    Caption = 'Posted Assignment Line';
 
     fields
     {
-        field(1; "Ass Line"; Code[20])
+        field(1; "Document No."; Code[20])
         {
-            Caption = '';
+            Caption = 'Document No.';
+            DataClassification = CustomerContent;
+            TableRelation = "AST Posted Assignment Header";
+        }
+        field(2; "Line No."; Integer)
+        {
+            Caption = 'Line No.';
+            DataClassification = CustomerContent;
+        }
+        field(3; "Asset No."; Code[20])
+        {
+            Caption = 'Asset No.';
+            DataClassification = CustomerContent;
+        }
+        field(4; "Asset Description"; Text[100])
+        {
+            Caption = 'Asset Description';
+            DataClassification = CustomerContent;
+        }
+        field(5; "Serial No."; Text[50])
+        {
+            Caption = 'Serial No.';
+            DataClassification = CustomerContent;
+        }
+        field(6; "Category Code"; Code[20])
+        {
+            Caption = 'Category Code';
+            DataClassification = CustomerContent;
+        }
+        field(7; "Condition at Handover"; Enum "AST Asset Condition")
+        {
+            Caption = 'Condition at Handover';
+            DataClassification = CustomerContent;
+        }
+        field(8; Notes; Text[250])
+        {
+            DataClassification = CustomerContent;
         }
     }
     keys
     {
-        key(PK; "Ass Line")
+        key(PK; "Document No.")
         {
             Clustered = true;
         }
     }
+
+    trigger OnDelete()
+    begin
+        Error('Posted assignments cannot be deleted.');
+    end;
 }

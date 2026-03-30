@@ -10,14 +10,6 @@ table 50103 "AST Asset Assignment Header"
         {
             Caption = 'No.';
             DataClassification = CustomerContent;
-
-            trigger OnValidate()
-            begin
-                if "No." <> xRec."No." then begin
-                    ASTSetup.Get();
-                    NoSeries.TestManual(ASTSetup."Assignment Nos.");
-                end;
-            end;
         }
         field(2; "Employee No."; Code[20])
         {
@@ -32,10 +24,11 @@ table 50103 "AST Asset Assignment Header"
                 if "Employee No." = '' then begin
                     "Employee Name" := '';
                     Department := '';
+                    exit;
                 end;
                 lRecEmployee.Get("Employee No.");
                 Department := lRecEmployee."Global Dimension 1 Code";
-                "Employee Name" := CopyStr(lRecEmployee."First Name" + '' + lRecEmployee."Last Name", 1, 100);
+                "Employee Name" := CopyStr(lRecEmployee."First Name" + ' ' + lRecEmployee."Last Name", 1, 100);
             end;
         }
         field(3; "Employee Name"; Text[100])
@@ -66,12 +59,12 @@ table 50103 "AST Asset Assignment Header"
             DataClassification = CustomerContent;
             Editable = false;
         }
-        field(8; "Department"; Text[50])
+        field(8; Department; Text[50])
         {
             Caption = 'Department';
             DataClassification = CustomerContent;
         }
-        field(9; "Purpose"; Text[250])
+        field(9; Purpose; Text[250])
         {
             Caption = 'Purpose';
             DataClassification = CustomerContent;
@@ -105,18 +98,14 @@ table 50103 "AST Asset Assignment Header"
         key(AssignmentDate; "Assignment Date") { }
     }
 
-    var
-        ASTSetup: Record "AST Asset Tracking Setup";
-        NoSeries: Codeunit "No. Series";
-
     trigger OnInsert()
     var
         lRecSetup: Record "AST Asset Tracking Setup";
         lCodNoSeries: Codeunit "No. Series";
 
     begin
+        lRecSetup.Get();
         if "No." = '' then begin
-            lRecSetup.Get();
             lRecSetup.TestField("Assignment Nos.");
             "No." := lCodNoSeries.GetNextNo(
                 lRecSetup."Assignment Nos.", Today, true);
@@ -125,9 +114,7 @@ table 50103 "AST Asset Assignment Header"
         "Assignment Date" := Today;
 
         if lRecSetup."Default Return Days" > 0 then
-            "Expected Return Date" :=
-            CalcDate('<+' + Format(lRecSetup."Default Return Days") + 'D>',
-            Today);
+            "Expected Return Date" := Today + lRecSetup."Default Return Days";
 
         "Created By" := CopyStr(UserId(), 1, 50);
         "Created Date" := Today;
