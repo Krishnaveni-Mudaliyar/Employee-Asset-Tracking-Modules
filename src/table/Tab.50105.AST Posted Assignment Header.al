@@ -1,6 +1,8 @@
 table 50105 "AST Posted Assignment Header"
 {
     Caption = 'Posted Assignment Header';
+    DrillDownPageId = "AST Posted Assignment List";
+    LookupPageId = "AST Posted Assignment List";
 
     fields
     {
@@ -14,7 +16,7 @@ table 50105 "AST Posted Assignment Header"
             Caption = 'Employee No.';
             DataClassification = CustomerContent;
         }
-        field(3; "Employee Name"; Text[50])
+        field(3; "Employee Name"; Text[100])
         {
             Caption = 'Employee Name';
             DataClassification = CustomerContent;
@@ -80,5 +82,11 @@ table 50105 "AST Posted Assignment Header"
         {
             Clustered = true;
         }
+        key(EmployeeNo; "Employee No.") { }
+        key(PostingDate; "Posting Date") { }
     }
+    trigger OnDelete()
+    begin
+        Error('Posted assignments cannot be deleted.');
+    end;
 }

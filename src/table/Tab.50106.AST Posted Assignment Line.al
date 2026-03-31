@@ -42,12 +42,13 @@ table 50106 "AST Posted Assignment Line"
         }
         field(8; Notes; Text[250])
         {
+            Caption = 'Notes';
             DataClassification = CustomerContent;
         }
     }
     keys
     {
-        key(PK; "Document No.")
+        key(PK; "Document No.", "Line No.")
         {
             Clustered = true;
         }
