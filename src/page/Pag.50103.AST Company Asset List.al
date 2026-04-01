@@ -16,7 +16,7 @@ page 50103 "AST Company Asset List"
                 field("No."; Rec."No.")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the document no.';
+                    ToolTip = 'Specifies the unique asset number.';
                 }
                 field(Description; Rec.Description)
                 {
@@ -28,7 +28,18 @@ page 50103 "AST Company Asset List"
                     ApplicationArea = All;
                     ToolTip = 'Specifies the category code.';
                 }
-                                field(Status; Rec.Status)
+                field("Category Description"; Rec."Category Description")
+{
+    ApplicationArea = All;
+    Editable = false;
+    ToolTip = 'Specifies the category description.';
+}
+field("Serial No."; Rec."Serial No.")
+{
+    ApplicationArea = All;
+    ToolTip = 'Specifies the serial number of the asset.';
+}
+field(Status; Rec.Status)
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the status.';

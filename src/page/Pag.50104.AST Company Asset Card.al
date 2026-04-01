@@ -17,7 +17,7 @@ page 50104 "AST Company Asset Card"
                 field("No."; Rec."No.")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the document number.';
+                    ToolTip = 'Specifies the unique asset number.';
                 }
                 field(Description; Rec.Description)
                 {
@@ -38,12 +38,12 @@ page 50104 "AST Company Asset Card"
                 field("Serial No."; Rec."Serial No.")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the serial number.';
+                    ToolTip = 'Specifies the serial number of the asset.';
                 }
                 field(Status; Rec.Status)
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the status.';
+                    ToolTip = 'Specifies the status of the asset.';
                     Editable=false;
                 }
                 field(Condition; Rec.Condition)
@@ -51,17 +51,7 @@ page 50104 "AST Company Asset Card"
                     ApplicationArea = All;
                     ToolTip = 'Specifies the condition.';
                 }
-                field("Warranty Expiry Date"; Rec."Warranty Expiry Date")
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Specifies the warranty expiry date.';
-                }
-                field("Vendor No."; Rec."Vendor No.")
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Specifies the vendor number.';
-                }
-
+                
 
             }
             group(Assignment)
@@ -102,6 +92,17 @@ page 50104 "AST Company Asset Card"
                     ApplicationArea = All;
                     ToolTip = 'Specifies the purchase price.';
                 }
+                field("Warranty Expiry Date"; Rec."Warranty Expiry Date")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the warranty expiry date.';
+                }
+                field("Vendor No."; Rec."Vendor No.")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the vendor number.';
+                }
+
             }
             group(Note)
             {
