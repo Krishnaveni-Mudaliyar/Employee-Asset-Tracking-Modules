@@ -17,12 +17,12 @@ page 50104 "AST Company Asset Card"
                 field("No."; Rec."No.")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the document no.';
+                    ToolTip = 'Specifies the document number.';
                 }
                 field(Description; Rec.Description)
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the category description.';
+                    ToolTip = 'Specifies the description of the asset.';
                 }
                 field("Category Code"; Rec."Category Code")
                 {
@@ -33,16 +33,18 @@ page 50104 "AST Company Asset Card"
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the category description.';
+                 Editable=false;
                 }
                 field("Serial No."; Rec."Serial No.")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the serial no..';
+                    ToolTip = 'Specifies the serial number.';
                 }
                 field(Status; Rec.Status)
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the status.';
+                    Editable=false;
                 }
                 field(Condition; Rec.Condition)
                 {
@@ -57,7 +59,7 @@ page 50104 "AST Company Asset Card"
                 field("Vendor No."; Rec."Vendor No.")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the vendor no.';
+                    ToolTip = 'Specifies the vendor number.';
                 }
 
 
@@ -65,16 +67,18 @@ page 50104 "AST Company Asset Card"
             group(Assignment)
             {
                 Caption = 'Assignment Information';
+                Visible=IsAssigned;
 
                 field("Assigned to Employee No."; Rec."Assigned to Employee No.")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the assigned to employee no..';
+                    ToolTip = 'Specifies the assigned to employee number.';
                 }
                 field("Assigned to Employee Name"; Rec."Assigned to Employee Name")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the assigned to employee name.';
+                Editable=false;
                 }
                 field("Last Assignment Date"; Rec."Last Assignment Date")
                 {
@@ -106,7 +110,8 @@ page 50104 "AST Company Asset Card"
                 field(Notes; Rec.Notes)
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the notes.';
+                    ToolTip = 'Specifies any additional notes about the asset.';
+                    MultiLine=true;
                 }
 
             }
@@ -118,21 +123,25 @@ page 50104 "AST Company Asset Card"
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the created by.';
+                     Editable=false;
                 }
                 field("Created Date"; Rec."Created Date")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the created date.';
+                     Editable=false;
                 }
                 field("Last Modified By"; Rec."Last Modified By")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the modified by.';
+                     Editable=false;
                 }
                 field("Last Modified Date"; Rec."Last Modified Date")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the modified date.';
+                     Editable=false;
                 }
             }
         }
@@ -150,7 +159,7 @@ page 50104 "AST Company Asset Card"
                 Enabled = IsAvailable;
                 trigger OnAction()
                 begin
-
+ Message('Assignment creation will be implemented in the posting codeunit session.');
                 end;
             }
         }

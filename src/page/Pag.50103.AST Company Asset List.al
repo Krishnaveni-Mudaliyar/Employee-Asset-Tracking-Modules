@@ -28,17 +28,7 @@ page 50103 "AST Company Asset List"
                     ApplicationArea = All;
                     ToolTip = 'Specifies the category code.';
                 }
-                field("Category Description"; Rec."Category Description")
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Specifies the category description.';
-                }
-                field("Serial No."; Rec."Serial No.")
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Specifies the serial no..';
-                }
-                field(Status; Rec.Status)
+                                field(Status; Rec.Status)
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the status.';
@@ -58,57 +48,12 @@ page 50103 "AST Company Asset List"
                     ApplicationArea = All;
                     ToolTip = 'Specifies the purchase price.';
                 }
-                field("Warranty Expiry Date"; Rec."Warranty Expiry Date")
+                                field("Assigned to Employee No."; Rec."Assigned to Employee No.")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the warranty expiry date.';
+                    ToolTip = 'Specifies the assigned to employee number.';
                 }
-                field("Vendor No."; Rec."Vendor No.")
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Specifies the vendor no.';
-                }
-                field("Assigned to Employee No."; Rec."Assigned to Employee No.")
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Specifies the assigned to employee no..';
-                }
-                field("Assigned to Employee Name"; Rec."Assigned to Employee Name")
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Specifies the assigned to employee name.';
-                }
-                field("Last Assignment Date"; Rec."Last Assignment Date")
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Specifies the last assignment date.';
-                }
-                field(Notes; Rec.Notes)
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Specifies the notes.';
-                }
-                field("Created By"; Rec."Created By")
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Specifies the created by.';
-                }
-                field("Created Date"; Rec."Created Date")
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Specifies the created date.';
-                }
-                field("Last Modified By"; Rec."Last Modified By")
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Specifies the modified by.';
-                }
-                field("Last Modified Date"; Rec."Last Modified Date")
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Specifies the modified date.';
-                }
-            }
+                           }
         }
     }
     actions
@@ -124,7 +69,7 @@ page 50103 "AST Company Asset List"
 
                 trigger OnAction()
                 begin
-
+Message('Assignment creation will be implemented in the posting codeunit session.');
                 end;
             }
         }
