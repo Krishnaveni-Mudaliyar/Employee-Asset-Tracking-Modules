@@ -21,7 +21,7 @@ page 50103 "AST Company Asset List"
                 field(Description; Rec.Description)
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the category description.';
+                    ToolTip = 'Specifies the description of the assets.';
                 }
                 field("Category Code"; Rec."Category Code")
                 {
@@ -29,17 +29,17 @@ page 50103 "AST Company Asset List"
                     ToolTip = 'Specifies the category code.';
                 }
                 field("Category Description"; Rec."Category Description")
-{
-    ApplicationArea = All;
-    Editable = false;
-    ToolTip = 'Specifies the category description.';
-}
-field("Serial No."; Rec."Serial No.")
-{
-    ApplicationArea = All;
-    ToolTip = 'Specifies the serial number of the asset.';
-}
-field(Status; Rec.Status)
+                {
+                    ApplicationArea = All;
+                    Editable = false;
+                    ToolTip = 'Specifies the category description.';
+                }
+                field("Serial No."; Rec."Serial No.")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the serial number of the asset.';
+                }
+                field(Status; Rec.Status)
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the status.';
@@ -59,12 +59,12 @@ field(Status; Rec.Status)
                     ApplicationArea = All;
                     ToolTip = 'Specifies the purchase price.';
                 }
-                                field("Assigned to Employee No."; Rec."Assigned to Employee No.")
+                field("Assigned to Employee No."; Rec."Assigned to Employee No.")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the assigned to employee number.';
                 }
-                           }
+            }
         }
     }
     actions
@@ -80,7 +80,7 @@ field(Status; Rec.Status)
 
                 trigger OnAction()
                 begin
-Message('Assignment creation will be implemented in the posting codeunit session.');
+                    Message('Assignment creation will be implemented in the posting codeunit session.');
                 end;
             }
         }

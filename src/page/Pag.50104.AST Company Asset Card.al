@@ -12,8 +12,6 @@ page 50104 "AST Company Asset Card"
         {
             group(General)
             {
-                Caption = 'General';
-
                 field("No."; Rec."No.")
                 {
                     ApplicationArea = All;
@@ -33,7 +31,7 @@ page 50104 "AST Company Asset Card"
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the category description.';
-                 Editable=false;
+                    Editable = false;
                 }
                 field("Serial No."; Rec."Serial No.")
                 {
@@ -44,20 +42,20 @@ page 50104 "AST Company Asset Card"
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the status of the asset.';
-                    Editable=false;
+                    Editable = false;
                 }
                 field(Condition; Rec.Condition)
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the condition.';
                 }
-                
+
 
             }
             group(Assignment)
             {
                 Caption = 'Assignment Information';
-                Visible=IsAssigned;
+                Visible = IsAssigned;
 
                 field("Assigned to Employee No."; Rec."Assigned to Employee No.")
                 {
@@ -68,7 +66,7 @@ page 50104 "AST Company Asset Card"
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the assigned to employee name.';
-                Editable=false;
+                    Editable = false;
                 }
                 field("Last Assignment Date"; Rec."Last Assignment Date")
                 {
@@ -112,7 +110,7 @@ page 50104 "AST Company Asset Card"
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies any additional notes about the asset.';
-                    MultiLine=true;
+                    MultiLine = true;
                 }
 
             }
@@ -123,26 +121,26 @@ page 50104 "AST Company Asset Card"
                 field("Created By"; Rec."Created By")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the created by.';
-                     Editable=false;
+                    ToolTip = 'Specifies the user who created this record.';
+                    Editable = false;
                 }
                 field("Created Date"; Rec."Created Date")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the created date.';
-                     Editable=false;
+                    ToolTip = 'Specifies the date and time when this record was created.';
+                    Editable = false;
                 }
                 field("Last Modified By"; Rec."Last Modified By")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the modified by.';
-                     Editable=false;
+                    ToolTip = 'Specifies the user who last modified this record.';
+                    Editable = false;
                 }
                 field("Last Modified Date"; Rec."Last Modified Date")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the modified date.';
-                     Editable=false;
+                    ToolTip = 'Specifies the date and time when this record was last modified.';
+                    Editable = false;
                 }
             }
         }
@@ -160,7 +158,7 @@ page 50104 "AST Company Asset Card"
                 Enabled = IsAvailable;
                 trigger OnAction()
                 begin
- Message('Assignment creation will be implemented in the posting codeunit session.');
+                    Message('Assignment creation will be implemented in the posting codeunit session.');
                 end;
             }
         }
