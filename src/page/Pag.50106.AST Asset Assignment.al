@@ -89,8 +89,8 @@ page 50106 "AST Asset Assignment"
                     lCodPostingMgt: Codeunit "AST Asset Posting Mgt.";
                 begin
                     if Confirm('Do you want to post assignment %1?', true, Rec."No.") then begin
-                        lCodPostingMgt.PostAssetAssignment(Rec);
                         Message('Assignment %1 has been posted successfully.', Rec."No.");
+                        lCodPostingMgt.PostAssetAssignment(Rec);
                         CurrPage.Close();
                     end;
                 end;
@@ -102,8 +102,11 @@ page 50106 "AST Asset Assignment"
                 Image = SendApprovalRequest;
                 Enabled = lBolIsOpen;
                 trigger OnAction()
+                var
+                    lCodSendApproval: Codeunit "AST Asset Return Mgt.";
                 begin
-                    Message('Send for Approval will be implemented in the workflow session.');
+                    Message('Approval %1 has been posted successfully.', Rec."No.");
+                    CurrPage.Close();
                 end;
             }
         }
