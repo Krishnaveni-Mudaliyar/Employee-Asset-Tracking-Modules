@@ -31,6 +31,8 @@ codeunit 50106 "AST Install"
     var
         lRecNoSeries: Record "No. Series";
         lRecNoSeriesLine: Record "No. Series Line";
+        lRecSetup: Record "AST Asset Tracking Setup";
+
     begin
         // Asset Number Series
         if not lRecNoSeries.Get('AST-ASSET') then begin
@@ -94,6 +96,7 @@ codeunit 50106 "AST Install"
     begin
         if lRecCategory.Get(pCodCode) then
             exit;
+        lRecCategory.Init();
         lRecCategory.Code := pCodCode;
         lRecCategory.Description := pTxtDescription;
         lRecCategory."Category Type" := pEnumType;

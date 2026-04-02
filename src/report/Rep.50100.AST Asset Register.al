@@ -9,6 +9,8 @@ report 50100 "AST Asset Register"
     {
         dataitem("Company Asset"; "AST Company Asset")
         {
+            RequestFilterFields = Status, "Category Code";
+
             column(No_; "No.") { }
             column(Description; Description) { }
             column(Category_Code; "Category Code") { }
@@ -36,12 +38,6 @@ report 50100 "AST Asset Register"
                         ToolTip = 'Specifies the status to filter assets by.';
                     }
                 }
-            }
-        }
-        actions
-        {
-            area(Processing)
-            {
             }
         }
     }

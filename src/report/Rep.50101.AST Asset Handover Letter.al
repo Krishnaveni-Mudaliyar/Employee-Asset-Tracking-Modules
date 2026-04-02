@@ -9,6 +9,8 @@ report 50101 "AST Asset Handover Letter"
     {
         dataitem(Header; "AST Posted Assignment Header")
         {
+            RequestFilterFields = "No.", "Employee No.";
+
             column(No_; "No.") { }
             column(Employee_No_; "Employee No.") { }
             column(Employee_Name; "Employee Name") { }
@@ -25,8 +27,6 @@ report 50101 "AST Asset Handover Letter"
                 column(Condition_at_Handover; "Condition at Handover") { }
             }
         }
-
-
     }
     requestpage
     {
@@ -37,19 +37,7 @@ report 50101 "AST Asset Handover Letter"
                 group(Filters)
                 {
                     Caption = 'Filters';
-                    field(StatusFilter; StatusFilter)
-                    {
-                        ApplicationArea = All;
-                        Caption = 'Status Filter';
-                        ToolTip = 'Specifies the status to filter assets by.';
-                    }
                 }
-            }
-        }
-        actions
-        {
-            area(Processing)
-            {
             }
         }
     }
