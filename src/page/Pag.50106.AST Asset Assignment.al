@@ -83,14 +83,17 @@ page 50106 "AST Asset Assignment"
                 Caption = 'Post';
                 Image = Post;
                 Enabled = lBolIsOpen;
+                ToolTip = 'Posts the asset assignment document.';
 
                 trigger OnAction()
                 var
                     lCodPostingMgt: Codeunit "AST Asset Posting Mgt.";
                 begin
-                    if Confirm('Do you want to post assignment %1?', true, Rec."No.") then begin
-                        Message('Assignment %1 has been posted successfully.', Rec."No.");
+                    if Confirm('Do you want to post assignment %1?',
+                               true, Rec."No.") then begin
                         lCodPostingMgt.PostAssetAssignment(Rec);
+                        Message('Assignment %1 posted successfully.',
+                                Rec."No.");
                         CurrPage.Close();
                     end;
                 end;
@@ -101,12 +104,11 @@ page 50106 "AST Asset Assignment"
                 ApplicationArea = All;
                 Image = SendApprovalRequest;
                 Enabled = lBolIsOpen;
+                ToolTip = 'Sends the assignment for manager approval.';
+
                 trigger OnAction()
-                var
-                    lCodSendApproval: Codeunit "AST Asset Return Mgt.";
                 begin
-                    Message('Approval %1 has been posted successfully.', Rec."No.");
-                    CurrPage.Close();
+                    Message('Approval workflow will be implemented in Session 17.');
                 end;
             }
         }

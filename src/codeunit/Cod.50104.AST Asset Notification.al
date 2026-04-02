@@ -4,8 +4,7 @@ codeunit 50104 "AST Asset Notification"
     var
         lRecAsset: Record "AST Company Asset";
         lRecSetup: Record "AST Asset Tracking Setup";
-        lRecEmployee: Record Employee;
-        lNotification: Notification;
+          lNotification: Notification;
 
     begin
         lRecSetup.Get();
