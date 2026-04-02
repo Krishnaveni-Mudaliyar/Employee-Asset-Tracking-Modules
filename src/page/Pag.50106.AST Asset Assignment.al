@@ -85,8 +85,14 @@ page 50106 "AST Asset Assignment"
                 Enabled = lBolIsOpen;
 
                 trigger OnAction()
+                var
+                    lCodPostingMgt: Codeunit "AST Asset Posting Mgt.";
                 begin
-                    Message('Post will be implemented in the posting codeunit session.');
+                    if Confirm('Do you want to post assignment %1?', true, Rec."No.") then begin
+                        lCodPostingMgt.PostAssetAssignment(Rec);
+                        Message('Assignment %1 has been posted successfully.', Rec."No.");
+                        CurrPage.Close();
+                    end;
                 end;
             }
             action(SendApproval)

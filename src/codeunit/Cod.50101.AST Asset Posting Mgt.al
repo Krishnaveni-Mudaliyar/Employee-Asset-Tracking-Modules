@@ -75,6 +75,7 @@ codeunit 50101 "AST Asset Posting Mgt."
 
                 //Snapshot - copy values at posting time
                 lRecAsset.Get(lRecLine."Asset No.");
+                lEnumStatusBefore := lRecAsset.Status;
                 lRecPostedLine."Asset Description" := lRecAsset.Description;
                 lRecPostedLine."Serial No." := lRecAsset."Serial No.";
                 lRecPostedLine."Category Code" := lRecAsset."Category Code";
@@ -93,7 +94,7 @@ codeunit 50101 "AST Asset Posting Mgt."
                 //Create log entry
                 lCodLogMgt.CreateLogEntry(
                     lRecAsset,
-lEnumStatusBefore,
+                    lEnumStatusBefore,
                     lRecAsset.Status::Assigned,
                     pRecHeader."No.",
                 pRecHeader."Employee No.",

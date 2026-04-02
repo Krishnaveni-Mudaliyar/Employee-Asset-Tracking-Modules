@@ -39,7 +39,7 @@ codeunit 50100 "AST Asset Validation"
 
         //Check 3 : Asset must be Available
         if lRecAsset.Status <> lRecAsset.Status::Available then
-            Error('Asset %1 is not available.Status: %2.',
+            Error('Asset %1 is not available. Current status: %2.',
             pRecLine."Asset No.", lRecAsset.Status);
 
         //Check 4 : Asset not already on another line in same document
