@@ -13,8 +13,6 @@ page 50105 "AST Asset Assignment List"
         {
             repeater(General)
             {
-                Caption = 'General';
-
                 field("No."; Rec."No.")
                 {
                     ApplicationArea = All;

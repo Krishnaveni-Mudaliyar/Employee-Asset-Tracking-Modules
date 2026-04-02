@@ -11,7 +11,6 @@ page 50107 "AST Assignment Lines Subpage"
         {
             repeater(Lines)
             {
-
                 field("Asset No."; Rec."Asset No.")
                 {
                     ApplicationArea = All;
