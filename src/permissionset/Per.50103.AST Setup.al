@@ -1,25 +1,17 @@
 permissionset 50103 "AST-Setup"
 {
     Assignable = true;
-    Caption = 'Asset Tracking - Setup';
+    Caption = 'AST-SETUP';
 
     Permissions =
-        table "AST Asset Tracking Setup" = X,
-        tabledata "AST Asset Tracking Setup" = RIMD,
-        table "AST Asset Category" = X,
-        tabledata "AST Asset Category" = RIMD,
-        table "AST Company Asset" = X,
-        tabledata "AST Company Asset" = R,
-        table "AST Asset Assignment Header" = X,
-        tabledata "AST Asset Assignment Header" = R,
-        table "AST Asset Assignment Line" = X,
-        tabledata "AST Asset Assignment Line" = R,
-        table "AST Posted Assignment Header" = X,
-        tabledata "AST Posted Assignment Header" = R,
-        table "AST Posted Assignment Line" = X,
-        tabledata "AST Posted Assignment Line" = R,
-        table "AST Asset Log Entry" = X,
-        tabledata "AST Asset Log Entry" = R,
+              tabledata "AST Asset Tracking Setup" = RIMD,
+              tabledata "AST Asset Category" = RIMD,
+                tabledata "AST Company Asset" = R,
+            tabledata "AST Asset Assignment Header" = R,
+               tabledata "AST Asset Assignment Line" = R,
+             tabledata "AST Posted Assignment Header" = R,
+              tabledata "AST Posted Assignment Line" = R,
+               tabledata "AST Asset Log Entry" = R,
 
         page "AST Asset Tracking Setup" = X,
         page "AST Asset Category List" = X,

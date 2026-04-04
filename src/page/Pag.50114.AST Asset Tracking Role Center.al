@@ -6,15 +6,7 @@ page 50114 "AST Asset Tracking Role Center"
 
     layout
     {
-        area(RoleCenter)
-        {
-            // Cue groups show counts/KPIs
-            group(AssetOverview)
-            {
-                Caption = 'Asset Overview';
 
-            }
-        }
     }
     actions
     {
@@ -36,6 +28,16 @@ page 50114 "AST Asset Tracking Role Center"
                     RunObject = page "AST Asset Category List";
                 }
             }
+            group(Setup)
+            {
+                Caption = 'Setup';
+                action(AssetSetup)
+                {
+                    Caption = 'Asset Tracking Setup';
+                    ApplicationArea = All;
+                    RunObject = page "AST Asset Tracking Setup";
+                }
+            }
             group(Assignments)
             {
                 Caption = 'Assignments';
@@ -45,15 +47,11 @@ page 50114 "AST Asset Tracking Role Center"
                     ApplicationArea = All;
                     RunObject = page "AST Asset Assignment List";
                 }
-            }
-            group(Setup)
-            {
-                Caption = 'Setup';
-                action(AssetSetup)
+                action(PostedAssignments)
                 {
-                    Caption = 'Asset Tracking Setup';
+                    Caption = 'Posted Assignments';
                     ApplicationArea = All;
-                    RunObject = page "AST Asset Tracking Setup";
+                    RunObject = page "AST Posted Assignment List";
                 }
             }
         }
@@ -70,16 +68,6 @@ page 50114 "AST Asset Tracking Role Center"
                 Caption = 'Asset Handover Letter';
                 ApplicationArea = All;
                 RunObject = report "AST Asset Handover Letter";
-            }
-            action(PostedAssignments)
-            {
-                Caption = 'Posted Assignments';
-                ApplicationArea = All;
-            }
-            action(PostedAssignmentList)
-            {
-                Caption = 'Posted Assignment List';
-                ApplicationArea = All;
             }
         }
     }

@@ -1,7 +1,7 @@
 permissionset 50100 "AST-Admin"
 {
     Assignable = true;
-    Caption = 'Asset Tracking - Admin';
+    Caption = 'AST-ADMIN';
 
     Permissions =
 // Tables
