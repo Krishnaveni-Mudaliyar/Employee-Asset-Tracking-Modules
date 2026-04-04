@@ -1,17 +1,17 @@
-query 50101 "AST Asset Statistics Query"
-{
-    Caption = 'AST Asset Statistics Query';
-    QueryType = Normal;
+// query 50101 "AST Asset Statistics Query"
+// {
+//     Caption = 'AST Asset Statistics Query';
+//     QueryType = Normal;
 
-    elements
-    {
-        dataitem(""; "")
-        {
-        }
-    }
+//     elements
+//     {
+//         dataitem(""; "")
+//         {
+//         }
+//     }
 
-    trigger OnBeforeOpen()
-    begin
+//     trigger OnBeforeOpen()
+//     begin
 
-    end;
-}
+//     end;
+// }
