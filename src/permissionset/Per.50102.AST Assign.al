@@ -1,4 +1,4 @@
-permissionset 50102 "AST-Assign"
+permissionset 50102 "AST-ASSIGN"
 {
     Assignable = true;
     Caption = 'AST-ASSIGN';

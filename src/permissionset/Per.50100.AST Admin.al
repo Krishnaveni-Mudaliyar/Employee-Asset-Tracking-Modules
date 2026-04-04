@@ -1,4 +1,4 @@
-permissionset 50100 "AST-Admin"
+permissionset 50100 "AST-ADMIN"
 {
     Assignable = true;
     Caption = 'AST-ADMIN';

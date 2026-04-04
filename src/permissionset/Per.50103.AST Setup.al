@@ -1,4 +1,4 @@
-permissionset 50103 "AST-Setup"
+permissionset 50103 "AST-SETUP"
 {
     Assignable = true;
     Caption = 'AST-SETUP';

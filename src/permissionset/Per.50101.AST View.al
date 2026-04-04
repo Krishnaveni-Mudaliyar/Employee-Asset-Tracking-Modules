@@ -1,4 +1,4 @@
-permissionset 50101 "AST-View"
+permissionset 50101 "AST-VIEW"
 {
     Assignable = true;
     Caption = 'AST-VIEW';
@@ -14,8 +14,7 @@ permissionset 50101 "AST-View"
         tabledata "AST Asset Assignment Header" = R,
         page "AST Asset Category List" = X,
              page "AST Asset Category Card" = X,
-        // page "AST Asset Tracking Setup" = X,
-        page "AST Company Asset List" = X,
+               page "AST Company Asset List" = X,
         page "AST Company Asset Card" = X,
               page "AST Asset Assignment" = X,
              page "AST Posted Assignment List" = X,
