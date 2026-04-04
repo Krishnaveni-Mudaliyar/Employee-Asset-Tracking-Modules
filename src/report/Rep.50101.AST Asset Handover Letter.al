@@ -49,6 +49,4 @@ report 50101 "AST Asset Handover Letter"
             LayoutFile = 'src/reportlayout/ASTAssetHandoverLetter.rdlc';
         }
     }
-    var
-        StatusFilter: Enum "AST Asset Status";
 }

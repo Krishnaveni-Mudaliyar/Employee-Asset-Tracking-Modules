@@ -1,7 +1,9 @@
 permissionset 50103 "50103.AST Setup"
 {
     Assignable = true;
-    Caption = '50103.AST Setup', MaxLength = 30;
+    Caption = '50103.AST Setup',
+    MaxLength = 30;
+
     Permissions =
         table "AST Posted Assignment Header" = X,
         tabledata "AST Posted Assignment Header" = RMID,
@@ -28,12 +30,12 @@ permissionset 50103 "50103.AST Setup"
         page "AST Posted Assign Line Subpage" = X,
         page "AST Posted Assignment" = X,
         page "AST Posted Assignment List" = X,
-        page "AST Assignment Line Subpage" = X,
+        page "AST Assignment Lines Subpage" = X,
         page "AST Asset Assignment" = X,
-        page "AST Asset Assignment List " = X,
+        page "AST Asset Assignment List" = X,
         page "AST Company Asset Card" = X,
         page "AST Company Asset List" = X,
-        page "AST Asset Category List " = X,
+        page "AST Asset Category List" = X,
         page "AST Asset Tracking Setup" = X,
         report "AST Asset History" = X,
         report "AST Overdue Asset Return" = X,
@@ -47,8 +49,8 @@ permissionset 50103 "50103.AST Setup"
         codeunit "AST Install" = X,
         codeunit "AST Asset Events" = X,
         codeunit "AST Asset Notification" = X,
-        codeunit "AST Asset Log Mgt" = X,
-        codeunit "AST Asset Return Mgt" = X,
-        codeunit "AST Asset Posting Mgt" = X,
+        codeunit "AST Asset Log Mgt." = X,
+        codeunit "AST Asset Return Mgt." = X,
+        codeunit "AST Asset Posting Mgt." = X,
         codeunit "AST Asset Validation" = X;
 }

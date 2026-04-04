@@ -1,7 +1,9 @@
 permissionset 50101 "AST View"
 {
     Assignable = true;
-    Caption = 'AST View', MaxLength = 30;
+    Caption = 'AST View',
+    MaxLength = 30;
+
     Permissions =
         table "AST Posted Assignment Header" = X,
         tabledata "AST Posted Assignment Header" = RMID,
@@ -20,14 +22,11 @@ permissionset 50101 "AST View"
         table "AST Asset Assignment Header" = X,
         tabledata "AST Asset Assignment Header" = RMID,
         page "AST Asset Tracking Setup" = X,
-        page "AST Asset Category List " = X,
-        page "AST Asset Category Card" = X,
+             page "AST Asset Category Card" = X,
         page "AST Company Asset List" = X,
         page "AST Company Asset Card" = X,
-        page "AST Asset Assignment List " = X,
-        page "AST Asset Assignment" = X,
-        page "AST Assignment Line Subpage" = X,
-        page "AST Posted Assignment List" = X,
+              page "AST Asset Assignment" = X,
+             page "AST Posted Assignment List" = X,
         page "AST Posted Assignment" = X,
         page "AST Posted Assign Line Subpage" = X,
         page "AST Asset History Factbox" = X,
@@ -44,9 +43,9 @@ permissionset 50101 "AST View"
         query "AST Asset Assignment Query" = X,
         query "AST Asset Statistics Query" = X,
         codeunit "AST Asset Validation" = X,
-        codeunit "AST Asset Posting Mgt" = X,
-        codeunit "AST Asset Return Mgt" = X,
-        codeunit "AST Asset Log Mgt" = X,
+        codeunit "AST Asset Posting Mgt." = X,
+        codeunit "AST Asset Return Mgt." = X,
+        codeunit "AST Asset Log Mgt." = X,
         codeunit "AST Asset Notification" = X,
         codeunit "AST Asset Events" = X,
         codeunit "AST Install" = X,

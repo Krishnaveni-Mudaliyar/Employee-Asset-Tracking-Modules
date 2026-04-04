@@ -5,7 +5,7 @@ query 50100 "AST Asset Assignment Query"
 
     elements
     {
-        dataitem(""; "")
+        dataitem(AST_Asset_Assignment_Header; "AST Asset Assignment Header")
         {
         }
     }
