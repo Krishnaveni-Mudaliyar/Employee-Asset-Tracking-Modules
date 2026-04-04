@@ -71,6 +71,16 @@ page 50114 "AST Asset Tracking Role Center"
                 ApplicationArea = All;
                 RunObject = report "AST Asset Handover Letter";
             }
+            action(PostedAssignments)
+            {
+                Caption = 'Posted Assignments';
+                ApplicationArea = All;
+            }
+            action(PostedAssignmentList)
+            {
+                Caption = 'Posted Assignment List';
+                ApplicationArea = All;
+            }
         }
     }
 }

@@ -1,29 +1,28 @@
-permissionset 50102 "50102.AST Assign"
+permissionset 50102 "AST-Assign"
 {
     Assignable = true;
-    Caption = '50102.AST Assign',
-    MaxLength = 30;
+    Caption = 'Asset Tracking - Assign';
+
 
     Permissions =
-        table "AST Posted Assignment Header" = X,
-        tabledata "AST Posted Assignment Header" = RMID,
-        table "AST Asset Assignment Line" = X,
-        tabledata "AST Asset Assignment Line" = RMID,
-        table "AST Company Asset" = X,
-        tabledata "AST Company Asset" = RMID,
-        table "AST Asset Category" = X,
-        tabledata "AST Asset Category" = RMID,
         table "AST Asset Tracking Setup" = X,
-        tabledata "AST Asset Tracking Setup" = RMID,
-        table "AST Posted Assignment Line" = X,
-        tabledata "AST Posted Assignment Line" = RMID,
-        table "AST Asset Log Entry" = X,
-        tabledata "AST Asset Log Entry" = RMID,
+        tabledata "AST Asset Tracking Setup" = R,
+        table "AST Asset Category" = X,
+        tabledata "AST Asset Category" = R,
+        table "AST Company Asset" = X,
+        tabledata "AST Company Asset" = RIMD,
         table "AST Asset Assignment Header" = X,
-        tabledata "AST Asset Assignment Header" = RMID,
-        page "AST Asset Tracking Setup" = X,
+        tabledata "AST Asset Assignment Header" = RIMD,
+        table "AST Asset Assignment Line" = X,
+        tabledata "AST Asset Assignment Line" = RIMD,
+        table "AST Posted Assignment Header" = X,
+        tabledata "AST Posted Assignment Header" = R,
+        table "AST Posted Assignment Line" = X,
+        tabledata "AST Posted Assignment Line" = R,
+        table "AST Asset Log Entry" = X,
+        tabledata "AST Asset Log Entry" = RI,
+
         page "AST Asset Category List" = X,
-        page "AST Asset Category Card" = X,
         page "AST Company Asset List" = X,
         page "AST Company Asset Card" = X,
         page "AST Asset Assignment List" = X,
@@ -31,26 +30,12 @@ permissionset 50102 "50102.AST Assign"
         page "AST Assignment Lines Subpage" = X,
         page "AST Posted Assignment List" = X,
         page "AST Posted Assignment" = X,
-        page "AST Posted Assign Line Subpage" = X,
         page "AST Asset History Factbox" = X,
-        page "AST Employee Asset Factbox" = X,
-        page "AST Asset Statistics" = X,
         page "AST Asset Tracking Role Center" = X,
-        page "AST Asset Cue" = X,
-        report "AST Asset Handover Letter" = X,
-        report "AST Asset Register" = X,
-        report "AST Employee Asset Summary" = X,
-        report "AST Overdue Asset Return" = X,
-        report "AST Asset History" = X,
-        xmlport "AST Asset Migration" = X,
-        query "AST Asset Assignment Query" = X,
-        query "AST Asset Statistics Query" = X,
         codeunit "AST Asset Validation" = X,
         codeunit "AST Asset Posting Mgt." = X,
         codeunit "AST Asset Return Mgt." = X,
         codeunit "AST Asset Log Mgt." = X,
-        codeunit "AST Asset Notification" = X,
-        codeunit "AST Asset Events" = X,
-        codeunit "AST Install" = X,
-        codeunit "AST Upgrade" = X;
+        report "AST Asset Register" = X,
+        report "AST Asset Handover Letter" = X;
 }

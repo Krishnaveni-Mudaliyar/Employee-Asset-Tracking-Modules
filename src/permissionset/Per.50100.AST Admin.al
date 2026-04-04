@@ -1,8 +1,7 @@
-permissionset 50100 "AST Admin"
+permissionset 50100 "AST-Admin"
 {
     Assignable = true;
-    Caption = 'Asset Tracking - Admin',
-    MaxLength = 30;
+    Caption = 'Asset Tracking - Admin';
 
     Permissions =
 // Tables
@@ -28,6 +27,9 @@ tabledata "AST Asset Tracking Setup" = RIMD,
         page "AST Assignment Lines Subpage" = X,
         page "AST Posted Assignment List" = X,
         page "AST Posted Assignment" = X,
+        page "AST Posted Assign Line Subpage" = X,
+        page "AST Asset History Factbox" = X,
+        page "AST Asset Tracking Role Center" = X,
         codeunit "AST Asset Validation" = X,
         codeunit "AST Asset Posting Mgt." = X,
         codeunit "AST Asset Return Mgt." = X,
