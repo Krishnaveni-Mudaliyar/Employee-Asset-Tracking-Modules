@@ -19,21 +19,16 @@ page 50116 "AST Company Asset API"
                 field(number; Rec."No.") { }
                 field(description; Rec.Description) { }
                 field(categoryCode; Rec."Category Code") { }
+                field(CategoryDescription; Rec."Category Description") { }
                 field(serialNo; Rec."Serial No.") { }
                 field(status; Rec.Status) { }
                 field(condition; Rec.Condition) { }
                 field(purchaseDate; Rec."Purchase Date") { }
                 field(purchasePrice; Rec."Purchase Price") { }
-                field(warrantyExpiryDate;
-                Rec."Warranty Expiry Date")
-                { }
+                field(warrantyExpiryDate; Rec."Warranty Expiry Date") { }
                 field(vendorNo; Rec."Vendor No.") { }
-                field(assignedToEmployeeNo;
-                Rec."Assigned to Employee No.")
-                { }
-                field(lastAssignmentDate;
-                Rec."Last Assignment Date")
-                { }
+                field(assignedToEmployeeNo; Rec."Assigned to Employee No.") { }
+                field(lastAssignmentDate; Rec."Last Assignment Date") { }
             }
         }
     }

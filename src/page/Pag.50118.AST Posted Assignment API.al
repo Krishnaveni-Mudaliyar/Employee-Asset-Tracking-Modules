@@ -20,14 +20,10 @@ page 50118 "AST Posted Assignment API"
                 field(documentNo; Rec."Document No.") { }
                 field(lineNo; Rec."Line No.") { }
                 field(assetNo; Rec."Asset No.") { }
-                field(assetDescription;
-                Rec."Asset Description")
-                { }
+                field(assetDescription; Rec."Asset Description") { }
                 field(serialNo; Rec."Serial No.") { }
                 field(categoryCode; Rec."Category Code") { }
-                field(conditionAtHandover;
-                Rec."Condition at Handover")
-                { }
+                field(conditionAtHandover; Rec."Condition at Handover") { }
             }
         }
     }
