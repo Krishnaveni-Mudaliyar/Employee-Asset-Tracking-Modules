@@ -6,7 +6,13 @@ page 50114 "AST Asset Tracking Role Center"
 
     layout
     {
-
+        area(RoleCenter)
+        {
+            part(AssetCue; "AST Asset Cue")
+            {
+                ApplicationArea = All;
+            }
+        }
     }
     actions
     {

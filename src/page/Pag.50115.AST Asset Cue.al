@@ -1,9 +1,9 @@
 page 50115 "AST Asset Cue"
 {
     ApplicationArea = All;
-    Caption = 'AST Asset Cue';
-    PageType = Card;
-    
+    Caption = 'Asset Cue';
+    PageType = CardPart;
+
     layout
     {
         area(Content)
@@ -11,7 +11,7 @@ page 50115 "AST Asset Cue"
             group(General)
             {
                 Caption = 'General';
-                
+
             }
         }
     }

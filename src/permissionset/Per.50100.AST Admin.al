@@ -13,7 +13,7 @@ tabledata "AST Asset Tracking Setup" = RIMD,
         tabledata "AST Asset Assignment Line" = RIMD,
         tabledata "AST Posted Assignment Header" = RIMD,
         tabledata "AST Posted Assignment Line" = RIMD,
-        tabledata "AST Asset Log Entry" = RIMD,
+        tabledata "AST Asset Log Entry" = RI,
 
  // Objects (Pages,Codeunit,reports)
 
