@@ -43,6 +43,7 @@ page 50103 "AST Company Asset List"
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the status.';
+                    StyleExpr = StatusStyle;
                 }
                 field(Condition; Rec.Condition)
                 {
@@ -66,23 +67,113 @@ page 50103 "AST Company Asset List"
                 }
             }
         }
+        area(FactBoxes)
+        {
+            part(AssetHistory; "AST Asset History Factbox")
+            {
+                ApplicationArea = All;
+                SubPageLink = "Asset No." = field("No.");
+            }
+            part(SystemInfo; "System Information FactBox")
+            {
+                ApplicationArea = All;
+            }
+        }
     }
     actions
     {
         area(Processing)
         {
-            action(NewAssignment)
+            action(ImportAssets)
             {
-                Caption = 'Create Assignment';
-                Image = Allocations;
+                Caption = 'Import Assets';
+                Image = Import;
                 ApplicationArea = All;
-                ToolTip = 'Creates a new assignment document for the selected asset.';
+                ToolTip = 'Import company assets from a CSV file usinf the asset migration XMLPort.';
 
                 trigger OnAction()
+                var
+                    lxmlport: XmlPort "AST Asset Migration";
                 begin
-                    Message('Assignment creation will be implemented in the posting codeunit session.');
+                    lxmlport.Run();
                 end;
             }
         }
+        area(Navigation)
+        {
+            action(AssetAssignment)
+            {
+                Caption = 'Assignments';
+                Image = Allocations;
+                ApplicationArea = All;
+                ToolTip = 'View all assignment documents for the selected asset.';
+
+                trigger OnAction()
+                var
+                    lRecPostedHeader: Record "AST Posted Assignment Header";
+                    lRecPostedLine: Record "AST Posted Assignment Line";
+                begin
+                    // Filter posted lines to this asset then open posted headers
+                    lRecPostedLine.SetRange("Asset No.", Rec."No.");
+                    if lRecPostedLine.FindFirst() then begin
+                        lRecPostedHeader.SetRange("No.", lRecPostedLine."Document No.");
+                        Page.Run(Page::"AST Posted Assignment List", lRecPostedHeader);
+                    end else
+                        Message('No posted assignments found for asset %1.', Rec."No.");
+                end;
+            }
+            action(AssetLog)
+            {
+                Caption = 'Asset Log';
+                Image = Log;
+                ApplicationArea = All;
+                ToolTip = 'View the full audit log for the selected asset.';
+
+                trigger OnAction()
+                var
+                    lRecLog: Record "AST Asset Log Entry";
+                begin
+                    lRecLog.SetRange("Asset No.", Rec."No.");
+                    Page.Run(0, lRecLog);
+                end;
+            }
+        }
+
+        area(Reporting)
+        {
+            action(AssetRegister)
+            {
+                Caption = 'Asset Register';
+                Image = Report;
+                ApplicationArea = All;
+                ToolTip = 'Print or preview the full asset register report.';
+                RunObject = report "AST Asset Register";
+            }
+        }
+        area(Promoted)
+        {
+            actionref(ImportAssets_Promoted; ImportAssets) { }
+        }
     }
+    var
+        StatusStyle: Text;
+
+    trigger OnAfterGetRecord()
+    begin
+        // StyleExpr — drives row colouring in the list
+        case Rec.Status of
+            Rec.Status::Available:
+                StatusStyle := 'Favorable';     // Green text
+            Rec.Status::Assigned:
+                StatusStyle := 'Strong';        // Bold text
+            Rec.Status::UnderMaintenance:
+                StatusStyle := 'Ambiguous';     // Orange/amber text
+            Rec.Status::Lost:
+                StatusStyle := 'Unfavorable';   // Red text
+            Rec.Status::Disposed:
+                StatusStyle := 'Subordinate';   // Grey text
+            else
+                StatusStyle := 'None';
+        end;
+    end;
 }

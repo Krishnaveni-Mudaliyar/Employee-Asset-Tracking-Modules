@@ -12,6 +12,7 @@ page 50104 "AST Company Asset Card"
         {
             group(General)
             {
+                Caption = 'General';
                 field("No."; Rec."No.")
                 {
                     ApplicationArea = All;
@@ -58,18 +59,20 @@ page 50104 "AST Company Asset Card"
                 field("Assigned to Employee No."; Rec."Assigned to Employee No.")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the assigned to employee number.';
+                    ToolTip = 'Specifies the employee this asset is asssigned to.';
+                    Editable = false;
                 }
                 field("Assigned to Employee Name"; Rec."Assigned to Employee Name")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the assigned to employee name.';
+                    ToolTip = 'Specifies the name of the assigned employee';
                     Editable = false;
                 }
                 field("Last Assignment Date"; Rec."Last Assignment Date")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the last assignment date.';
+                    ToolTip = 'Specifies the date this asset was last assigned.';
+                    Editable = false;
                 }
             }
             group(Purchase)
@@ -105,7 +108,7 @@ page 50104 "AST Company Asset Card"
                 field(Notes; Rec.Notes)
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies any additional notes about the asset.';
+                    ToolTip = 'Specifies any additional notes or remark about the asset.';
                     MultiLine = true;
                 }
 
@@ -142,7 +145,17 @@ page 50104 "AST Company Asset Card"
         }
         area(FactBoxes)
         {
-            part(AssetHistory; "AST Asset History Factbox") { }
+            part(AssetHistory; "AST Asset History Factbox")
+            {
+                ApplicationArea = All;
+                Caption = 'Asset History';
+                SubPageLink = "Asset No." = field("No.");
+            }
+            part(SystemInfo; "System Information FactBox")
+            {
+                ApplicationArea = All;
+
+            }
         }
     }
     actions
@@ -156,11 +169,48 @@ page 50104 "AST Company Asset Card"
                 ApplicationArea = All;
                 ToolTip = 'Creates a new assignment for this asset.';
                 Enabled = IsAvailable;
+
                 trigger OnAction()
+                var
+                    lRecHeader: Record "AST Asset Assignment Header";
+                    lRecLine: Record "AST Asset Assignment Line";
+                    lPageAssignment: Page "AST Asset Assignment";
                 begin
-                    Message('Assignment creation will be implemented in the posting codeunit session.');
+                    lRecHeader.Init();
+                    lRecHeader.Insert(true);
+
+                    lRecLine.Init();
+                    lRecLine."Document No." := lRecHeader."No.";
+                    lRecLine."Asset No." := Rec."No.";
+                    lRecLine."Condition at Handover" := Rec.Condition;
+                    lRecLine.Insert(true);
+
+                    lPageAssignment.SetRecord(lRecHeader);
+                    lPageAssignment.Run();
                 end;
             }
+        }
+        area(Navigation)
+        {
+            action(ViewHistory)
+            {
+                Caption = 'Asset Log';
+                Image = Log;
+                ApplicationArea = All;
+                ToolTip = 'View the complete history of this asset - all assignments, returns and status changes.';
+
+                trigger OnAction()
+                var
+                    lRecLog: Record "AST Asset Log Entry";
+                begin
+                    lRecLog.SetRange("Asset No.", Rec."No.");
+                    Page.Run(0, lRecLog);
+                end;
+            }
+        }
+        area(Promoted)
+        {
+            actionref(CreateAssignment_Promoted; CreateAssignment) { }
         }
     }
     var

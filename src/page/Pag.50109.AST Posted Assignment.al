@@ -58,10 +58,11 @@ page 50109 "AST Posted Assignment"
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the purpose of the asset assignment.';
+                    MultiLine = true;
                 }
             }
 
-            group(Posting)
+            group(PostingDetails)
             {
                 Caption = 'Posting Details';
 
@@ -85,9 +86,75 @@ page 50109 "AST Posted Assignment"
             }
             part(Lines; "AST Posted Assign Line Subpage")
             {
+                ApplicationArea = All;
                 SubPageLink = "Document No." = field("No.");
+            }
+        }
+        area(FactBoxes)
+        {
+            part(SystemInfo; "System Information FactBox")
+            {
                 ApplicationArea = All;
             }
         }
     }
+    actions
+    {
+        area(Processing)
+        {
+            action(ProcessReturn)
+            {
+                Caption = 'Process Return';
+                Image = Return;
+                ApplicationArea = All;
+                ToolTip = 'Process the return of all assets in this assignment. Assets will be set back to available status and a return log wntry will be created.';
+                Enabled = IsAssignmentType;
+
+                trigger OnAction()
+                var
+                    lCodReturnMgt: Codeunit "AST Asset Return Mgt.";
+                begin
+                    if not confirm(
+                        'Process return for assignment %1\n\nAll %2 assets will be set back to available status.',
+                        true,
+                        Rec."No.",
+                        Rec."No. of Lines")
+                         then
+                        exit;
+                    lCodReturnMgt.ProcessReturn(Rec);
+                    Message('Return processed successfully. Assets are now available.');
+                    CurrPage.Update(false);
+                end;
+            }
+        }
+        area(Navigation)
+        {
+            action(ViewAssetLog)
+            {
+                Caption = 'Asset Log';
+                Image = Log;
+                ApplicationArea = All;
+                ToolTip = 'View all log entries related to this assignment.';
+
+                trigger OnAction()
+                var
+                    lRecLog: Record "AST Asset Log Entry";
+                begin
+                    lRecLog.SetRange("Document No.", Rec."No.");
+                    Page.Run(0, lRecLog);
+                end;
+            }
+        }
+        area(Promoted)
+        {
+            actionref(ProcessReturn_promoted; ProcessReturn) { }
+        }
+    }
+    var
+        IsAssignmentType: Boolean;
+
+    trigger OnAfterGetRecord()
+    begin
+        IsAssignmentType := Rec."Transaction Type" = Rec."Transaction Type"::Assignment;
+    end;
 }
