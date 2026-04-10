@@ -14,7 +14,7 @@ codeunit 50103 "AST Asset Log Mgt."
     begin
         lRecLogEntry.Init();
         lRecLogEntry."Asset No." := pRecAsset."No.";
-        lRecLogEntry."Transaction Type" := lRecLogEntry."Transaction Type"::Assignment;
+        lRecLogEntry."Transaction Type" := pEnumTransactionType;
         lRecLogEntry."Document No." := pCodDocumentNo;
         lRecLogEntry."Employee No." := pCodEmployeeNo;
         lRecLogEntry."Employee Name" := CopyStr(pTxtEmployeeName, 1, 100);

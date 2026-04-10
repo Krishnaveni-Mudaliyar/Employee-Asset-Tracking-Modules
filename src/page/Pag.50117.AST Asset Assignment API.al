@@ -6,7 +6,7 @@ page 50117 "AST Asset Assignment API"
     APIVersion = 'v1.0';
     EntityName = 'PostedAssignment';
     EntitySetName = 'PostedAssignments';
-    SourceTable = "AST Asset Assignment Header";
+    SourceTable = "AST Posted Assignment Header";
     ODataKeyFields = "No.";
     Editable = false;
 
