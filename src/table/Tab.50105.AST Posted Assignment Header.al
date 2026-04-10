@@ -74,14 +74,11 @@ table 50105 "AST Posted Assignment Header"
             Caption = 'Created Date';
             DataClassification = CustomerContent;
         }
-
     }
+
     keys
     {
-        key(PK; "No.")
-        {
-            Clustered = true;
-        }
+        key(PK; "No.") { Clustered = true; }
         key(EmployeeNo; "Employee No.") { }
         key(PostingDate; "Posting Date") { }
     }

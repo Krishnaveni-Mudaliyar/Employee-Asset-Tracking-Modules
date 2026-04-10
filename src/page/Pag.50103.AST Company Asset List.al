@@ -42,7 +42,11 @@ page 50103 "AST Company Asset List"
                 field(Status; Rec.Status)
                 {
                     ApplicationArea = All;
+<<<<<<< HEAD
                     ToolTip = 'Specifies the current status of the asset.';
+=======
+                    ToolTip = 'Specifies the status.';
+>>>>>>> 19481db02111f54469b6ac07e83bd12d14a5ac17
                     StyleExpr = StatusStyle;
                 }
                 field(Condition; Rec.Condition)
@@ -67,7 +71,10 @@ page 50103 "AST Company Asset List"
                 }
             }
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 19481db02111f54469b6ac07e83bd12d14a5ac17
         area(FactBoxes)
         {
             part(AssetHistory; "AST Asset History Factbox")
@@ -75,7 +82,10 @@ page 50103 "AST Company Asset List"
                 ApplicationArea = All;
                 SubPageLink = "Asset No." = field("No.");
             }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 19481db02111f54469b6ac07e83bd12d14a5ac17
             part(SystemInfo; "System Information FactBox")
             {
                 ApplicationArea = All;
@@ -92,6 +102,7 @@ page 50103 "AST Company Asset List"
                 Caption = 'Import Assets';
                 Image = Import;
                 ApplicationArea = All;
+<<<<<<< HEAD
                 ToolTip = 'Import company assets from a CSV file using the Asset Migration XMLport.';
 
                 trigger OnAction()
@@ -106,6 +117,21 @@ page 50103 "AST Company Asset List"
         area(Navigation)
         {
             action(AssetAssignments)
+=======
+                ToolTip = 'Import company assets from a CSV file usinf the asset migration XMLPort.';
+
+                trigger OnAction()
+                var
+                    lxmlport: XmlPort "AST Asset Migration";
+                begin
+                    lxmlport.Run();
+                end;
+            }
+        }
+        area(Navigation)
+        {
+            action(AssetAssignment)
+>>>>>>> 19481db02111f54469b6ac07e83bd12d14a5ac17
             {
                 Caption = 'Assignments';
                 Image = Allocations;
@@ -126,7 +152,10 @@ page 50103 "AST Company Asset List"
                         Message('No posted assignments found for asset %1.', Rec."No.");
                 end;
             }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 19481db02111f54469b6ac07e83bd12d14a5ac17
             action(AssetLog)
             {
                 Caption = 'Asset Log';
@@ -155,11 +184,19 @@ page 50103 "AST Company Asset List"
                 RunObject = report "AST Asset Register";
             }
         }
+<<<<<<< HEAD
 
         // BC 21+ — promote key actions to top bar
         actionref(ImportAssets_Promoted; ImportAssets) { }
     }
 
+=======
+        area(Promoted)
+        {
+            actionref(ImportAssets_Promoted; ImportAssets) { }
+        }
+    }
+>>>>>>> 19481db02111f54469b6ac07e83bd12d14a5ac17
     var
         StatusStyle: Text;
 

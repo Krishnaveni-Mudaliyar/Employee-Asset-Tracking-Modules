@@ -52,7 +52,11 @@ page 50109 "AST Posted Assignment"
                 field(Purpose; Rec.Purpose)
                 {
                     ApplicationArea = All;
+<<<<<<< HEAD
                     ToolTip = 'Specifies the stated purpose of this assignment.';
+=======
+                    ToolTip = 'Specifies the purpose of the asset assignment.';
+>>>>>>> 19481db02111f54469b6ac07e83bd12d14a5ac17
                     MultiLine = true;
                 }
             }
@@ -82,11 +86,16 @@ page 50109 "AST Posted Assignment"
             {
                 ApplicationArea = All;
                 SubPageLink = "Document No." = field("No.");
+<<<<<<< HEAD
                 // Only shows lines belonging to this posted document
             }
         }
 
         // FactBox — Asset History linked to the employee on this document
+=======
+            }
+        }
+>>>>>>> 19481db02111f54469b6ac07e83bd12d14a5ac17
         area(FactBoxes)
         {
             part(SystemInfo; "System Information FactBox")
@@ -95,6 +104,7 @@ page 50109 "AST Posted Assignment"
             }
         }
     }
+<<<<<<< HEAD
 
     actions
     {
@@ -112,6 +122,10 @@ page 50109 "AST Posted Assignment"
         // Assignment transactions — not on Return transactions that are
         // already recorded (prevents double-return).
         // ─────────────────────────────────────────────────────────────────────
+=======
+    actions
+    {
+>>>>>>> 19481db02111f54469b6ac07e83bd12d14a5ac17
         area(Processing)
         {
             action(ProcessReturn)
@@ -119,15 +133,21 @@ page 50109 "AST Posted Assignment"
                 Caption = 'Process Return';
                 Image = Return;
                 ApplicationArea = All;
+<<<<<<< HEAD
                 ToolTip = 'Process the return of all assets in this assignment. Assets will be set back to Available status and a return log entry will be created.';
                 Enabled = IsAssignmentType;
                 // Only enabled on Assignment transactions.
                 // If this is already a Return record, the button is greyed out.
+=======
+                ToolTip = 'Process the return of all assets in this assignment. Assets will be set back to available status and a return log wntry will be created.';
+                Enabled = IsAssignmentType;
+>>>>>>> 19481db02111f54469b6ac07e83bd12d14a5ac17
 
                 trigger OnAction()
                 var
                     lCodReturnMgt: Codeunit "AST Asset Return Mgt.";
                 begin
+<<<<<<< HEAD
                     // Confirmation dialog before executing — production standard.
                     // Never run destructive/important operations without confirmation.
                     if not Confirm(
@@ -145,11 +165,25 @@ page 50109 "AST Posted Assignment"
                     Message('Return processed successfully. Assets are now available.');
 
                     // Refresh the page so Transaction Type updates visually
+=======
+                    if not confirm(
+                        'Process return for assignment %1\n\nAll %2 assets will be set back to available status.',
+                        true,
+                        Rec."No.",
+                        Rec."No. of Lines")
+                         then
+                        exit;
+                    lCodReturnMgt.ProcessReturn(Rec);
+                    Message('Return processed successfully. Assets are now available.');
+>>>>>>> 19481db02111f54469b6ac07e83bd12d14a5ac17
                     CurrPage.Update(false);
                 end;
             }
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 19481db02111f54469b6ac07e83bd12d14a5ac17
         area(Navigation)
         {
             action(ViewAssetLog)
@@ -168,15 +202,24 @@ page 50109 "AST Posted Assignment"
                 end;
             }
         }
+<<<<<<< HEAD
 
         // Promote ProcessReturn to top action bar (BC 21+)
         actionref(ProcessReturn_Promoted; ProcessReturn) { }
     }
 
+=======
+        area(Promoted)
+        {
+            actionref(ProcessReturn_promoted; ProcessReturn) { }
+        }
+    }
+>>>>>>> 19481db02111f54469b6ac07e83bd12d14a5ac17
     var
         IsAssignmentType: Boolean;
 
     trigger OnAfterGetRecord()
+<<<<<<< HEAD
     // Fires on every record load.
     // IsAssignmentType controls whether ProcessReturn action is enabled.
     // A Return document should not have another Return triggered on it.
@@ -185,3 +228,9 @@ page 50109 "AST Posted Assignment"
             Rec."Transaction Type" = Rec."Transaction Type"::Assignment;
     end;
 }
+=======
+    begin
+        IsAssignmentType := Rec."Transaction Type" = Rec."Transaction Type"::Assignment;
+    end;
+}
+>>>>>>> 19481db02111f54469b6ac07e83bd12d14a5ac17
