@@ -149,6 +149,4 @@ table 50102 "AST Company Asset"
         if Status = Status::Assigned then
             Error('Asset %1 cannot be deleted because it is currently assigned to employee %2.', "No.", "Assigned to Employee No.");
     end;
-
-
 }

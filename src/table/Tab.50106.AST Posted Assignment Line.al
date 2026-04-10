@@ -58,4 +58,9 @@ table 50106 "AST Posted Assignment Line"
     begin
         Error('Posted assignments cannot be deleted.');
     end;
+
+    trigger OnModify()
+    begin
+        Error('Posted assignment lines cannot be modified. They are permanent records.');
+    end;
 }

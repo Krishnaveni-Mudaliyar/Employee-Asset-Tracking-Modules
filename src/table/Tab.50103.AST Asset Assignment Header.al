@@ -27,8 +27,8 @@ table 50103 "AST Asset Assignment Header"
                     exit;
                 end;
                 lRecEmployee.Get("Employee No.");
-                Department := lRecEmployee."Global Dimension 1 Code";
                 "Employee Name" := CopyStr(lRecEmployee."First Name" + ' ' + lRecEmployee."Last Name", 1, 100);
+                Department := lRecEmployee."Global Dimension 1 Code";
             end;
         }
         field(3; "Employee Name"; Text[100])
@@ -87,6 +87,18 @@ table 50103 "AST Asset Assignment Header"
             Caption = 'Created Date';
             DataClassification = CustomerContent;
         }
+        field(103; "Last Modified By"; Code[50])
+        {
+            Caption = 'Last Modified By';
+            DataClassification = CustomerContent;
+            Editable = false;
+        }
+        field(104; "Last Modified Date"; Date)
+        {
+            Caption = 'Last Modified Date';
+            DataClassification = CustomerContent;
+            Editable = false;
+        }
     }
     keys
     {
@@ -118,6 +130,14 @@ table 50103 "AST Asset Assignment Header"
 
         "Created By" := CopyStr(UserId(), 1, 50);
         "Created Date" := Today;
+        "Last Modified By" := CopyStr(UserId(), 1, 50);
+        "Last Modified Date" := Today;
+    end;
+
+    trigger OnModify()
+    begin
+        "Last Modified By" := CopyStr(UserId(), 1, 50);
+        "Last Modified Date" := Today;
     end;
 
     trigger OnDelete()

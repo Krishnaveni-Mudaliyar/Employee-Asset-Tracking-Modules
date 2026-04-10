@@ -49,8 +49,6 @@ page 50104 "AST Company Asset Card"
                     ApplicationArea = All;
                     ToolTip = 'Specifies the condition.';
                 }
-
-
             }
             group(Assignment)
             {
@@ -73,8 +71,6 @@ page 50104 "AST Company Asset Card"
                     ApplicationArea = All;
                     ToolTip = 'Specifies the last assignment date.';
                 }
-
-
             }
             group(Purchase)
             {

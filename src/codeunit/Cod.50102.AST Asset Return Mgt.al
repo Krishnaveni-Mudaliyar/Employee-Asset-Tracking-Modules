@@ -24,6 +24,7 @@ codeunit 50102 "AST Asset Return Mgt."
                 // Return asset to available
                 lRecAsset.Status := lRecAsset.Status::Available;
                 lRecAsset."Assigned to Employee No." := '';
+                lRecAsset."Last Assignment Date" := 0D;
                 lRecAsset.Modify(true);
 
                 // create return log entry
@@ -31,6 +32,7 @@ codeunit 50102 "AST Asset Return Mgt."
                     lRecAsset,
                     lEnumStatusBefore,
                     lRecAsset.Status::Available,
+                    "AST Transaction Type"::Return,
                     pRecPostedHeader."No.",
                     pRecPostedHeader."Employee No.",
                     pRecPostedHeader."Employee Name");

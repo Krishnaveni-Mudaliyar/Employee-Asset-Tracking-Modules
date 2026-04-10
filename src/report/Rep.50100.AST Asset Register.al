@@ -20,6 +20,12 @@ report 50100 "AST Asset Register"
             column(Purchase_Price; "Purchase Price") { }
             column(AssignedEmployee; "Assigned to Employee No.") { }
             column(Serial_No_; "Serial No.") { }
+
+            trigger OnPreDataItem()
+            begin
+                if StatusFilter <> StatusFilter::" " then
+                    SetRange(Status, StatusFilter);
+            end;
         }
     }
     requestpage

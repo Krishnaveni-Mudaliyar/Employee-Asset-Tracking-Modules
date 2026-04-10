@@ -6,23 +6,27 @@ enum 50101 "AST Asset Condition"
     {
         Caption = '';
     }
-    value(1; New)
+    value(1; Excellent)
+    {
+        Caption = 'Excellent';
+    }
+    value(2; New)
     {
         Caption = 'New';
     }
-    value(2; Good)
+    value(3; Good)
     {
         Caption = 'Good';
     }
-    value(3; Fair)
+    value(4; Fair)
     {
         Caption = 'Fair';
     }
-    value(4; Poor)
+    value(5; Poor)
     {
         Caption = 'Poor';
     }
-    value(5; Damaged)
+    value(6; Damaged)
     {
         Caption = 'Damaged';
     }

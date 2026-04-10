@@ -4,7 +4,6 @@ codeunit 50101 "AST Asset Posting Mgt."
 
     // TableNo = the table this codeunit operates on
     // Allows: Codeunit.Run(Codeunit::"AST Asset Posting Mgt.", Rec)
-    // from a page action
 
     trigger OnRun()
     begin
@@ -24,8 +23,7 @@ codeunit 50101 "AST Asset Posting Mgt."
         lRecLine.SetRange("Document No.", pRecHeader."No.");
         if lRecLine.FindSet() then
             repeat
-                lCodValidation.ValidateAssignmentLine(
-                    lRecLine, pRecHeader);
+                lCodValidation.ValidateAssignmentLine(lRecLine, pRecHeader);
             until lRecLine.Next() = 0;
 
         //STEP 3: Create posted header
@@ -47,8 +45,7 @@ codeunit 50101 "AST Asset Posting Mgt."
         lRecPostedHeader.TransferFields(pRecHeader);
         lRecPostedHeader."Posting Date" := Today;
         lRecPostedHeader."Posted By" := CopyStr(UserId(), 1, 50);
-        lRecPostedHeader."Transaction Type" :=
-        lRecPostedHeader."Transaction Type"::Assignment;
+        lRecPostedHeader."Transaction Type" := lRecPostedHeader."Transaction Type"::Assignment;
         lRecPostedHeader."Created By" := CopyStr(UserId(), 1, 50);
         lRecPostedHeader."Created Date" := Today;
         lRecPostedHeader.Insert(true);
@@ -67,15 +64,15 @@ codeunit 50101 "AST Asset Posting Mgt."
         lRecLine.SetRange("Document No.", pRecHeader."No.");
         if lRecLine.FindSet() then
             repeat
+                //snapshot asset data at posting time
+                lRecAsset.Get(lRecLine."Asset No.");
+                lEnumStatusBefore := lRecAsset.Status;
+
                 //Create Posted Line
                 lRecPostedLine.Init();
                 lRecPostedLine."Document No." := pRecHeader."No.";
                 lRecPostedLine."Line No." := lRecLine."Line No.";
                 lRecPostedLine."Asset No." := lRecLine."Asset No.";
-
-                //Snapshot - copy values at posting time
-                lRecAsset.Get(lRecLine."Asset No.");
-                lEnumStatusBefore := lRecAsset.Status;
                 lRecPostedLine."Asset Description" := lRecAsset.Description;
                 lRecPostedLine."Serial No." := lRecAsset."Serial No.";
                 lRecPostedLine."Category Code" := lRecAsset."Category Code";
@@ -85,10 +82,8 @@ codeunit 50101 "AST Asset Posting Mgt."
 
                 //Update asset status
                 lRecAsset.Status := lRecAsset.Status::Assigned;
-                lRecAsset."Assigned to Employee No." :=
-                pRecHeader."Employee No.";
-                lRecAsset."Last Assignment Date" :=
-                pRecHeader."Assignment Date";
+                lRecAsset."Assigned to Employee No." := pRecHeader."Employee No.";
+                lRecAsset."Last Assignment Date" := pRecHeader."Assignment Date";
                 lRecAsset.Modify(true);
 
                 //Create log entry
@@ -96,6 +91,7 @@ codeunit 50101 "AST Asset Posting Mgt."
                     lRecAsset,
                     lEnumStatusBefore,
                     lRecAsset.Status::Assigned,
+                    "AST Transaction Type"::Assignment,
                     pRecHeader."No.",
                 pRecHeader."Employee No.",
                 pRecHeader."Employee Name");
@@ -107,7 +103,6 @@ codeunit 50101 "AST Asset Posting Mgt."
         var pRecHeader: Record "AST Asset Assignment Header")
     var
         lRecLine: Record "AST Asset Assignment Line";
-
     begin
         lRecLine.SetRange("Document No.", pRecHeader."No.");
         lRecLine.DeleteAll(true);
