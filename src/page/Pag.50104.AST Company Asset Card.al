@@ -13,10 +13,6 @@ page 50104 "AST Company Asset Card"
             group(General)
             {
                 Caption = 'General';
-<<<<<<< HEAD
-
-=======
->>>>>>> 19481db02111f54469b6ac07e83bd12d14a5ac17
                 field("No."; Rec."No.")
                 {
                     ApplicationArea = All;
@@ -48,7 +44,6 @@ page 50104 "AST Company Asset Card"
                     ApplicationArea = All;
                     ToolTip = 'Specifies the current status of the asset.';
                     Editable = false;
-                    // Status is always system-controlled — never allow manual edit
                 }
                 field(Condition; Rec.Condition)
                 {
@@ -61,27 +56,17 @@ page 50104 "AST Company Asset Card"
             {
                 Caption = 'Assignment Information';
                 Visible = IsAssigned;
-                // This entire FastTab is hidden when asset is not Assigned
-                // OnAfterGetRecord sets IsAssigned based on Status
 
                 field("Assigned to Employee No."; Rec."Assigned to Employee No.")
                 {
                     ApplicationArea = All;
-<<<<<<< HEAD
-                    ToolTip = 'Specifies the employee this asset is assigned to.';
-=======
                     ToolTip = 'Specifies the employee this asset is asssigned to.';
->>>>>>> 19481db02111f54469b6ac07e83bd12d14a5ac17
                     Editable = false;
                 }
                 field("Assigned to Employee Name"; Rec."Assigned to Employee Name")
                 {
                     ApplicationArea = All;
-<<<<<<< HEAD
-                    ToolTip = 'Specifies the name of the assigned employee.';
-=======
                     ToolTip = 'Specifies the name of the assigned employee';
->>>>>>> 19481db02111f54469b6ac07e83bd12d14a5ac17
                     Editable = false;
                 }
                 field("Last Assignment Date"; Rec."Last Assignment Date")
@@ -118,18 +103,14 @@ page 50104 "AST Company Asset Card"
                 }
             }
 
-            group(Notes)
+            group(Note)
             {
                 Caption = 'Notes';
 
                 field(Notes; Rec.Notes)
                 {
                     ApplicationArea = All;
-<<<<<<< HEAD
-                    ToolTip = 'Specifies any additional notes or remarks about this asset.';
-=======
                     ToolTip = 'Specifies any additional notes or remark about the asset.';
->>>>>>> 19481db02111f54469b6ac07e83bd12d14a5ac17
                     MultiLine = true;
                 }
             }
@@ -175,7 +156,6 @@ page 50104 "AST Company Asset Card"
             part(SystemInfo; "Workflow Status FactBox")
             {
                 ApplicationArea = All;
-
             }
         }
     }
@@ -229,20 +209,15 @@ page 50104 "AST Company Asset Card"
                 end;
             }
         }
-        area(Promoted)
-        {
-            actionref(CreateAssignment_Promoted; CreateAssignment) { }
-        }
-    }
+                    actionref(CreateAssignment_Promoted; CreateAssignment) { }
+            }
 
     var
         IsAssigned: Boolean;
         IsAvailable: Boolean;
 
     trigger OnAfterGetRecord()
-    // Fires every time a record loads — keeps Boolean vars in sync with Status.
-    // These vars drive Visible= and Enabled= throughout the page.
-    begin
+       begin
         IsAssigned := Rec.Status = Rec.Status::Assigned;
         IsAvailable := Rec.Status = Rec.Status::Available;
     end;

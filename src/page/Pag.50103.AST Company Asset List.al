@@ -42,7 +42,7 @@ page 50103 "AST Company Asset List"
                 field(Status; Rec.Status)
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the status.';
+                    ToolTip = 'Specifies the current status of the asset.';
                     StyleExpr = StatusStyle;
                 }
                 field(Condition; Rec.Condition)
@@ -74,10 +74,7 @@ page 50103 "AST Company Asset List"
                 ApplicationArea = All;
                 SubPageLink = "Asset No." = field("No.");
             }
-
             part(SystemInfo; "Workflow Status FactBox")
-=======
-            part(SystemInfo; "System Information FactBox")
             {
                 ApplicationArea = All;
             }
@@ -119,8 +116,7 @@ page 50103 "AST Company Asset List"
                 begin
                     // Filter posted lines to this asset then open posted headers
                     lRecPostedLine.SetRange("Asset No.", Rec."No.");
-                    if lRecPostedLine.FindFirst() then 
-                    begin
+                    if lRecPostedLine.FindFirst() then begin
                         lRecPostedHeader.SetRange("No.", lRecPostedLine."Document No.");
                         Page.Run(Page::"AST Posted Assignment List", lRecPostedHeader);
                     end else
@@ -150,9 +146,9 @@ page 50103 "AST Company Asset List"
             {
                 Caption = 'Asset Register';
                 Image = Report;
-                            ApplicationArea = All;
-                            ToolTip = 'Print or preview the full asset register report.';
-                            RunObject = report "AST Asset Register";
+                ApplicationArea = All;
+                ToolTip = 'Print or preview the full asset register report.';
+                RunObject = report "AST Asset Register";
             }
         }
         area(Promoted)

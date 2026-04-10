@@ -6,7 +6,6 @@ page 50102 "AST Asset Category Card"
     UsageCategory = None;
     ApplicationArea = All;
 
-
     layout
     {
         area(Content)
@@ -50,8 +49,39 @@ page 50102 "AST Asset Category Card"
                     ApplicationArea = All;
                     DrillDown = true;
                     ToolTip = 'Specifies the number of assets in this category.';
+
+                    trigger OnDrillDown()
+                    var
+                        lRecAsset: Record "AST Company Asset";
+                    begin
+                        lRecAsset.SetRange("Category Code", rec.Code);
+                        Page.Run(Page::"AST Company Asset List", lRecAsset);
+                    end;
                 }
             }
         }
+    }
+
+    actions
+    {
+        area(Navigation)
+        {
+            action(ViewAssets)
+            {
+                Caption = 'Assets in Category';
+                Image = Item;
+                ApplicationArea = All;
+                ToolTip = 'View all assets assigned to this category.';
+
+                trigger OnAction()
+                var
+                    lRecAsset: Record "AST Company Asset";
+                begin
+                    lRecAsset.SetRange("Category Code", Rec.Code);
+                    page.Run(Page::"AST Company Asset List", lRecAsset);
+                end;
+            }
+        }
+        actionref(ViewAssets_promoted;ViewAssets){}
     }
 }
