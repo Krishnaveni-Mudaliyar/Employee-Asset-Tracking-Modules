@@ -92,7 +92,7 @@ page 50109 "AST Posted Assignment"
         }
         area(FactBoxes)
         {
-            part(SystemInfo; "System Information FactBox")
+            part(SystemInfo; "Workflow Status FactBox")
             {
                 ApplicationArea = All;
             }

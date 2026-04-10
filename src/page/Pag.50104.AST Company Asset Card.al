@@ -151,7 +151,7 @@ page 50104 "AST Company Asset Card"
                 Caption = 'Asset History';
                 SubPageLink = "Asset No." = field("No.");
             }
-            part(SystemInfo; "System Information FactBox")
+            part(SystemInfo; "Workflow Status FactBox")
             {
                 ApplicationArea = All;
 

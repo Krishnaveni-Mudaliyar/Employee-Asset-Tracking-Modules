@@ -74,7 +74,7 @@ page 50103 "AST Company Asset List"
                 ApplicationArea = All;
                 SubPageLink = "Asset No." = field("No.");
             }
-            part(SystemInfo; "System Information FactBox")
+            part(SystemInfo; "Workflow Status FactBox")
             {
                 ApplicationArea = All;
             }
