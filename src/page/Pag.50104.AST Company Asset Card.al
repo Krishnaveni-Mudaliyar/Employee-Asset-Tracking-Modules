@@ -140,6 +140,10 @@ page 50104 "AST Company Asset Card"
                 }
             }
         }
+        area(FactBoxes)
+        {
+            part(AssetHistory; "AST Asset History Factbox") { }
+        }
     }
     actions
     {
