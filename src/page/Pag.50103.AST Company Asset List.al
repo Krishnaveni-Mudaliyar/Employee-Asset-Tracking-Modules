@@ -21,7 +21,7 @@ page 50103 "AST Company Asset List"
                 field(Description; Rec.Description)
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the description of the assets.';
+                    ToolTip = 'Specifies the description of the asset.';
                 }
                 field("Category Code"; Rec."Category Code")
                 {
@@ -42,13 +42,17 @@ page 50103 "AST Company Asset List"
                 field(Status; Rec.Status)
                 {
                     ApplicationArea = All;
+<<<<<<< HEAD
+                    ToolTip = 'Specifies the current status of the asset.';
+=======
                     ToolTip = 'Specifies the status.';
+>>>>>>> 19481db02111f54469b6ac07e83bd12d14a5ac17
                     StyleExpr = StatusStyle;
                 }
                 field(Condition; Rec.Condition)
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the condition.';
+                    ToolTip = 'Specifies the physical condition of the asset.';
                 }
                 field("Purchase Date"; Rec."Purchase Date")
                 {
@@ -63,10 +67,14 @@ page 50103 "AST Company Asset List"
                 field("Assigned to Employee No."; Rec."Assigned to Employee No.")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the assigned to employee number.';
+                    ToolTip = 'Specifies the employee this asset is currently assigned to.';
                 }
             }
         }
+<<<<<<< HEAD
+
+=======
+>>>>>>> 19481db02111f54469b6ac07e83bd12d14a5ac17
         area(FactBoxes)
         {
             part(AssetHistory; "AST Asset History Factbox")
@@ -74,12 +82,21 @@ page 50103 "AST Company Asset List"
                 ApplicationArea = All;
                 SubPageLink = "Asset No." = field("No.");
             }
+<<<<<<< HEAD
             part(SystemInfo; "Workflow Status FactBox")
+=======
+<<<<<<< HEAD
+
+=======
+>>>>>>> 19481db02111f54469b6ac07e83bd12d14a5ac17
+            part(SystemInfo; "System Information FactBox")
+>>>>>>> afa2e756daee14a41b8e75ad7f4b337b3c415e47
             {
                 ApplicationArea = All;
             }
         }
     }
+
     actions
     {
         area(Processing)
@@ -89,6 +106,22 @@ page 50103 "AST Company Asset List"
                 Caption = 'Import Assets';
                 Image = Import;
                 ApplicationArea = All;
+<<<<<<< HEAD
+                ToolTip = 'Import company assets from a CSV file using the Asset Migration XMLport.';
+
+                trigger OnAction()
+                var
+                    lXmlPort: XmlPort "AST Asset Migration";
+                begin
+                    lXmlPort.Run();
+                end;
+            }
+        }
+
+        area(Navigation)
+        {
+            action(AssetAssignments)
+=======
                 ToolTip = 'Import company assets from a CSV file usinf the asset migration XMLPort.';
 
                 trigger OnAction()
@@ -102,6 +135,7 @@ page 50103 "AST Company Asset List"
         area(Navigation)
         {
             action(AssetAssignment)
+>>>>>>> 19481db02111f54469b6ac07e83bd12d14a5ac17
             {
                 Caption = 'Assignments';
                 Image = Allocations;
@@ -122,6 +156,10 @@ page 50103 "AST Company Asset List"
                         Message('No posted assignments found for asset %1.', Rec."No.");
                 end;
             }
+<<<<<<< HEAD
+
+=======
+>>>>>>> 19481db02111f54469b6ac07e83bd12d14a5ac17
             action(AssetLog)
             {
                 Caption = 'Asset Log';
@@ -150,11 +188,19 @@ page 50103 "AST Company Asset List"
                 RunObject = report "AST Asset Register";
             }
         }
+<<<<<<< HEAD
+
+        // BC 21+ — promote key actions to top bar
+        actionref(ImportAssets_Promoted; ImportAssets) { }
+    }
+
+=======
         area(Promoted)
         {
             actionref(ImportAssets_Promoted; ImportAssets) { }
         }
     }
+>>>>>>> 19481db02111f54469b6ac07e83bd12d14a5ac17
     var
         StatusStyle: Text;
 
