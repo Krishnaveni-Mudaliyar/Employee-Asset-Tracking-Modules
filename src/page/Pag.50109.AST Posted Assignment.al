@@ -5,6 +5,7 @@ page 50109 "AST Posted Assignment"
     Caption = 'Posted Asset Assignment';
     UsageCategory = None;
 
+    // Posted documents are READ ONLY — user can never edit posted data
     Editable = false;
     InsertAllowed = false;
     ModifyAllowed = false;
@@ -21,73 +22,166 @@ page 50109 "AST Posted Assignment"
                 field("No."; Rec."No.")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the unique identifier of the posted asset assignment.';
+                    ToolTip = 'Specifies the posted assignment number.';
                 }
-
                 field("Employee No."; Rec."Employee No.")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the employee number associated with this assignment.';
                 }
-
                 field("Employee Name"; Rec."Employee Name")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the name of the employee.';
                 }
-
                 field("Assignment Date"; Rec."Assignment Date")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the date when the asset was assigned.';
+                    ToolTip = 'Specifies the date when assets were assigned.';
                 }
-
                 field("Expected Return Date"; Rec."Expected Return Date")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the expected return date of the asset.';
+                    ToolTip = 'Specifies the expected date for asset return.';
                 }
-
                 field(Department; Rec.Department)
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the department to which the asset is assigned.';
+                    ToolTip = 'Specifies the department the asset was assigned to.';
                 }
-
                 field(Purpose; Rec.Purpose)
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the purpose of the asset assignment.';
+                    ToolTip = 'Specifies the stated purpose of this assignment.';
+                    MultiLine = true;
                 }
             }
 
-            group(Posting)
+            group(PostingDetails)
             {
                 Caption = 'Posting Details';
 
                 field("Posting Date"; Rec."Posting Date")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the date when the assignment was posted.';
+                    ToolTip = 'Specifies the date this assignment was posted.';
                 }
-
                 field("Posted By"; Rec."Posted By")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the user who posted the assignment.';
+                    ToolTip = 'Specifies the user who posted this assignment.';
                 }
-
                 field("Transaction Type"; Rec."Transaction Type")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the type of transaction recorded.';
+                    ToolTip = 'Specifies whether this is an Assignment or Return transaction.';
                 }
             }
+
             part(Lines; "AST Posted Assign Line Subpage")
             {
+                ApplicationArea = All;
                 SubPageLink = "Document No." = field("No.");
+                // Only shows lines belonging to this posted document
+            }
+        }
+
+        // FactBox — Asset History linked to the employee on this document
+        area(FactBoxes)
+        {
+            part(SystemInfo; "System Information FactBox")
+            {
                 ApplicationArea = All;
             }
         }
     }
+
+    actions
+    {
+        // ── TASK 2 FIX ────────────────────────────────────────────────────────
+        // Added area(Processing) with ProcessReturn action.
+        // Was completely missing — user had no way to trigger a return
+        // from the Posted Assignment page.
+        //
+        // Design decision: Return action lives on the POSTED document page
+        // because that is the source of truth for what was assigned.
+        // The return codeunit reads the posted lines to know which assets
+        // to set back to Available.
+        //
+        // Enabled = IsAssignmentType ensures Return is only available on
+        // Assignment transactions — not on Return transactions that are
+        // already recorded (prevents double-return).
+        // ─────────────────────────────────────────────────────────────────────
+        area(Processing)
+        {
+            action(ProcessReturn)
+            {
+                Caption = 'Process Return';
+                Image = Return;
+                ApplicationArea = All;
+                ToolTip = 'Process the return of all assets in this assignment. Assets will be set back to Available status and a return log entry will be created.';
+                Enabled = IsAssignmentType;
+                // Only enabled on Assignment transactions.
+                // If this is already a Return record, the button is greyed out.
+
+                trigger OnAction()
+                var
+                    lCodReturnMgt: Codeunit "AST Asset Return Mgt.";
+                begin
+                    // Confirmation dialog before executing — production standard.
+                    // Never run destructive/important operations without confirmation.
+                    if not Confirm(
+                        'Process return for assignment %1?\n\nAll %2 assets will be set back to Available status.',
+                        true,
+                        Rec."No.",
+                        Rec."No. of Lines")
+                    then
+                        exit;
+
+                    // Call the Return codeunit — passes the full posted header.
+                    // The codeunit loops through posted lines internally.
+                    lCodReturnMgt.ProcessReturn(Rec);
+
+                    Message('Return processed successfully. Assets are now available.');
+
+                    // Refresh the page so Transaction Type updates visually
+                    CurrPage.Update(false);
+                end;
+            }
+        }
+
+        area(Navigation)
+        {
+            action(ViewAssetLog)
+            {
+                Caption = 'Asset Log';
+                Image = Log;
+                ApplicationArea = All;
+                ToolTip = 'View all log entries related to this assignment.';
+
+                trigger OnAction()
+                var
+                    lRecLog: Record "AST Asset Log Entry";
+                begin
+                    lRecLog.SetRange("Document No.", Rec."No.");
+                    Page.Run(0, lRecLog);
+                end;
+            }
+        }
+
+        // Promote ProcessReturn to top action bar (BC 21+)
+        actionref(ProcessReturn_Promoted; ProcessReturn) { }
+    }
+
+    var
+        IsAssignmentType: Boolean;
+
+    trigger OnAfterGetRecord()
+    // Fires on every record load.
+    // IsAssignmentType controls whether ProcessReturn action is enabled.
+    // A Return document should not have another Return triggered on it.
+    begin
+        IsAssignmentType :=
+            Rec."Transaction Type" = Rec."Transaction Type"::Assignment;
+    end;
 }

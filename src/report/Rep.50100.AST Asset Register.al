@@ -23,7 +23,7 @@ report 50100 "AST Asset Register"
 
             trigger OnPreDataItem()
             begin
-                if StatusFilter <> StatusFilter::" " then
+                if StatusFilter.AsInteger() > 0 then
                     SetRange(Status, StatusFilter);
             end;
         }

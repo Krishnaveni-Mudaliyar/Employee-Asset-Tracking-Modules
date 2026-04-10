@@ -12,6 +12,8 @@ page 50104 "AST Company Asset Card"
         {
             group(General)
             {
+                Caption = 'General';
+
                 field("No."; Rec."No.")
                 {
                     ApplicationArea = All;
@@ -41,37 +43,44 @@ page 50104 "AST Company Asset Card"
                 field(Status; Rec.Status)
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the status of the asset.';
+                    ToolTip = 'Specifies the current status of the asset.';
                     Editable = false;
+                    // Status is always system-controlled — never allow manual edit
                 }
                 field(Condition; Rec.Condition)
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the condition.';
+                    ToolTip = 'Specifies the physical condition of the asset.';
                 }
             }
+
             group(Assignment)
             {
                 Caption = 'Assignment Information';
                 Visible = IsAssigned;
+                // This entire FastTab is hidden when asset is not Assigned
+                // OnAfterGetRecord sets IsAssigned based on Status
 
                 field("Assigned to Employee No."; Rec."Assigned to Employee No.")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the assigned to employee number.';
+                    ToolTip = 'Specifies the employee this asset is assigned to.';
+                    Editable = false;
                 }
                 field("Assigned to Employee Name"; Rec."Assigned to Employee Name")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the assigned to employee name.';
+                    ToolTip = 'Specifies the name of the assigned employee.';
                     Editable = false;
                 }
                 field("Last Assignment Date"; Rec."Last Assignment Date")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the last assignment date.';
+                    ToolTip = 'Specifies the date this asset was last assigned.';
+                    Editable = false;
                 }
             }
+
             group(Purchase)
             {
                 Caption = 'Purchase Details';
@@ -79,37 +88,37 @@ page 50104 "AST Company Asset Card"
                 field("Purchase Date"; Rec."Purchase Date")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the purchase date.';
+                    ToolTip = 'Specifies the date the asset was purchased.';
                 }
                 field("Purchase Price"; Rec."Purchase Price")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the purchase price.';
+                    ToolTip = 'Specifies the original purchase price of the asset.';
                 }
                 field("Warranty Expiry Date"; Rec."Warranty Expiry Date")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the warranty expiry date.';
+                    ToolTip = 'Specifies the date the warranty expires.';
                 }
                 field("Vendor No."; Rec."Vendor No.")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the vendor number.';
+                    ToolTip = 'Specifies the vendor this asset was purchased from.';
                 }
-
             }
-            group(Note)
+
+            group(Notes)
             {
                 Caption = 'Notes';
 
                 field(Notes; Rec.Notes)
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies any additional notes about the asset.';
+                    ToolTip = 'Specifies any additional notes or remarks about this asset.';
                     MultiLine = true;
                 }
-
             }
+
             group(Audit)
             {
                 Caption = 'Audit Information';
@@ -123,7 +132,7 @@ page 50104 "AST Company Asset Card"
                 field("Created Date"; Rec."Created Date")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the date and time when this record was created.';
+                    ToolTip = 'Specifies the date this record was created.';
                     Editable = false;
                 }
                 field("Last Modified By"; Rec."Last Modified By")
@@ -135,12 +144,38 @@ page 50104 "AST Company Asset Card"
                 field("Last Modified Date"; Rec."Last Modified Date")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the date and time when this record was last modified.';
+                    ToolTip = 'Specifies the date this record was last modified.';
                     Editable = false;
                 }
             }
         }
+
+        // ── TASK 1 FIX ────────────────────────────────────────────────────────
+        // Added area(FactBoxes) — was completely missing from this page.
+        // FactBoxes appear as panels on the right side of the Card page.
+        // They show related information without requiring navigation away.
+        // SubPageLink ties the FactBox to the current asset record.
+        // ─────────────────────────────────────────────────────────────────────
+        area(FactBoxes)
+        {
+            part(AssetHistory; "AST Asset History Factbox")
+            {
+                ApplicationArea = All;
+                Caption = 'Asset History';
+                SubPageLink = "Asset No." = field("No.");
+                // Every log entry where Asset No. = current record No.
+                // Shows all assignments, returns, status changes for this asset
+            }
+
+            part(SystemInfo; "System Information FactBox")
+            {
+                ApplicationArea = All;
+                // Standard BC FactBox — shows record ID, modified by, etc.
+                // Always good practice to include on Card pages.
+            }
+        }
     }
+
     actions
     {
         area(Processing)
@@ -150,23 +185,68 @@ page 50104 "AST Company Asset Card"
                 Caption = 'Create Assignment';
                 Image = Allocations;
                 ApplicationArea = All;
-                ToolTip = 'Creates a new assignment for this asset.';
+                ToolTip = 'Creates a new asset assignment document for this asset.';
                 Enabled = IsAvailable;
+                // Only enabled when asset Status = Available
+                // Greyed out if Assigned, Under Maintenance, Disposed, or Lost
+
                 trigger OnAction()
+                var
+                    lRecHeader: Record "AST Asset Assignment Header";
+                    lRecLine: Record "AST Asset Assignment Line";
+                    lPageAssignment: Page "AST Asset Assignment";
                 begin
-                    Message('Assignment creation will be implemented in the posting codeunit session.');
+                    // Create a new assignment header
+                    lRecHeader.Init();
+                    lRecHeader.Insert(true);
+                    // OnInsert handles: No. Series, Status = Open, Assignment Date, defaults
+
+                    // Pre-populate first line with this asset
+                    lRecLine.Init();
+                    lRecLine."Document No." := lRecHeader."No.";
+                    lRecLine."Asset No." := Rec."No.";
+                    lRecLine."Condition at Handover" := Rec.Condition;
+                    lRecLine.Insert(true);
+
+                    // Open the assignment document for user to complete
+                    lPageAssignment.SetRecord(lRecHeader);
+                    lPageAssignment.Run();
                 end;
             }
         }
+
+        area(Navigation)
+        {
+            action(ViewHistory)
+            {
+                Caption = 'Asset Log';
+                Image = Log;
+                ApplicationArea = All;
+                ToolTip = 'View the complete history of this asset — all assignments, returns, and status changes.';
+
+                trigger OnAction()
+                var
+                    lRecLog: Record "AST Asset Log Entry";
+                begin
+                    lRecLog.SetRange("Asset No.", Rec."No.");
+                    Page.Run(0, lRecLog);
+                end;
+            }
+        }
+
+        // BC 21+ ActionRef — promotes actions to top action bar
+        actionref(CreateAssignment_Promoted; CreateAssignment) { }
     }
+
     var
         IsAssigned: Boolean;
         IsAvailable: Boolean;
 
     trigger OnAfterGetRecord()
+    // Fires every time a record loads — keeps Boolean vars in sync with Status.
+    // These vars drive Visible= and Enabled= throughout the page.
     begin
         IsAssigned := Rec.Status = Rec.Status::Assigned;
         IsAvailable := Rec.Status = Rec.Status::Available;
     end;
-
 }
