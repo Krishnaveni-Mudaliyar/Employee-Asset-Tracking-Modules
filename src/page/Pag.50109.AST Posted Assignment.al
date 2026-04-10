@@ -104,7 +104,6 @@ page 50109 "AST Posted Assignment"
             }
         }
     }
-<<<<<<< HEAD
 
     actions
     {
@@ -122,10 +121,8 @@ page 50109 "AST Posted Assignment"
         // Assignment transactions — not on Return transactions that are
         // already recorded (prevents double-return).
         // ─────────────────────────────────────────────────────────────────────
-=======
     actions
     {
->>>>>>> 19481db02111f54469b6ac07e83bd12d14a5ac17
         area(Processing)
         {
             action(ProcessReturn)
@@ -133,39 +130,13 @@ page 50109 "AST Posted Assignment"
                 Caption = 'Process Return';
                 Image = Return;
                 ApplicationArea = All;
-<<<<<<< HEAD
-                ToolTip = 'Process the return of all assets in this assignment. Assets will be set back to Available status and a return log entry will be created.';
-                Enabled = IsAssignmentType;
-                // Only enabled on Assignment transactions.
-                // If this is already a Return record, the button is greyed out.
-=======
                 ToolTip = 'Process the return of all assets in this assignment. Assets will be set back to available status and a return log wntry will be created.';
                 Enabled = IsAssignmentType;
->>>>>>> 19481db02111f54469b6ac07e83bd12d14a5ac17
 
                 trigger OnAction()
                 var
                     lCodReturnMgt: Codeunit "AST Asset Return Mgt.";
                 begin
-<<<<<<< HEAD
-                    // Confirmation dialog before executing — production standard.
-                    // Never run destructive/important operations without confirmation.
-                    if not Confirm(
-                        'Process return for assignment %1?\n\nAll %2 assets will be set back to Available status.',
-                        true,
-                        Rec."No.",
-                        Rec."No. of Lines")
-                    then
-                        exit;
-
-                    // Call the Return codeunit — passes the full posted header.
-                    // The codeunit loops through posted lines internally.
-                    lCodReturnMgt.ProcessReturn(Rec);
-
-                    Message('Return processed successfully. Assets are now available.');
-
-                    // Refresh the page so Transaction Type updates visually
-=======
                     if not confirm(
                         'Process return for assignment %1\n\nAll %2 assets will be set back to available status.',
                         true,
@@ -175,15 +146,10 @@ page 50109 "AST Posted Assignment"
                         exit;
                     lCodReturnMgt.ProcessReturn(Rec);
                     Message('Return processed successfully. Assets are now available.');
->>>>>>> 19481db02111f54469b6ac07e83bd12d14a5ac17
                     CurrPage.Update(false);
                 end;
             }
         }
-<<<<<<< HEAD
-
-=======
->>>>>>> 19481db02111f54469b6ac07e83bd12d14a5ac17
         area(Navigation)
         {
             action(ViewAssetLog)

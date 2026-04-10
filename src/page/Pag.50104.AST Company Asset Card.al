@@ -164,16 +164,6 @@ page 50104 "AST Company Asset Card"
                 }
             }
         }
-<<<<<<< HEAD
-
-        // ── TASK 1 FIX ────────────────────────────────────────────────────────
-        // Added area(FactBoxes) — was completely missing from this page.
-        // FactBoxes appear as panels on the right side of the Card page.
-        // They show related information without requiring navigation away.
-        // SubPageLink ties the FactBox to the current asset record.
-        // ─────────────────────────────────────────────────────────────────────
-=======
->>>>>>> 19481db02111f54469b6ac07e83bd12d14a5ac17
         area(FactBoxes)
         {
             part(AssetHistory; "AST Asset History Factbox")
@@ -181,23 +171,11 @@ page 50104 "AST Company Asset Card"
                 ApplicationArea = All;
                 Caption = 'Asset History';
                 SubPageLink = "Asset No." = field("No.");
-<<<<<<< HEAD
-                // Every log entry where Asset No. = current record No.
-                // Shows all assignments, returns, status changes for this asset
-            }
-
-            part(SystemInfo; "System Information FactBox")
-            {
-                ApplicationArea = All;
-                // Standard BC FactBox — shows record ID, modified by, etc.
-                // Always good practice to include on Card pages.
-=======
             }
             part(SystemInfo; "Workflow Status FactBox")
             {
                 ApplicationArea = All;
 
->>>>>>> 19481db02111f54469b6ac07e83bd12d14a5ac17
             }
         }
     }
@@ -213,11 +191,6 @@ page 50104 "AST Company Asset Card"
                 ApplicationArea = All;
                 ToolTip = 'Creates a new asset assignment document for this asset.';
                 Enabled = IsAvailable;
-<<<<<<< HEAD
-                // Only enabled when asset Status = Available
-                // Greyed out if Assigned, Under Maintenance, Disposed, or Lost
-=======
->>>>>>> 19481db02111f54469b6ac07e83bd12d14a5ac17
 
                 trigger OnAction()
                 var
@@ -225,37 +198,19 @@ page 50104 "AST Company Asset Card"
                     lRecLine: Record "AST Asset Assignment Line";
                     lPageAssignment: Page "AST Asset Assignment";
                 begin
-<<<<<<< HEAD
                     // Create a new assignment header
                     lRecHeader.Init();
                     lRecHeader.Insert(true);
                     // OnInsert handles: No. Series, Status = Open, Assignment Date, defaults
-
-                    // Pre-populate first line with this asset
-=======
-                    lRecHeader.Init();
-                    lRecHeader.Insert(true);
-
->>>>>>> 19481db02111f54469b6ac07e83bd12d14a5ac17
-                    lRecLine.Init();
                     lRecLine."Document No." := lRecHeader."No.";
                     lRecLine."Asset No." := Rec."No.";
                     lRecLine."Condition at Handover" := Rec.Condition;
-                    lRecLine.Insert(true);
 
-<<<<<<< HEAD
-                    // Open the assignment document for user to complete
-=======
->>>>>>> 19481db02111f54469b6ac07e83bd12d14a5ac17
                     lPageAssignment.SetRecord(lRecHeader);
                     lPageAssignment.Run();
                 end;
             }
         }
-<<<<<<< HEAD
-
-=======
->>>>>>> 19481db02111f54469b6ac07e83bd12d14a5ac17
         area(Navigation)
         {
             action(ViewHistory)
@@ -263,11 +218,7 @@ page 50104 "AST Company Asset Card"
                 Caption = 'Asset Log';
                 Image = Log;
                 ApplicationArea = All;
-<<<<<<< HEAD
-                ToolTip = 'View the complete history of this asset — all assignments, returns, and status changes.';
-=======
                 ToolTip = 'View the complete history of this asset - all assignments, returns and status changes.';
->>>>>>> 19481db02111f54469b6ac07e83bd12d14a5ac17
 
                 trigger OnAction()
                 var
@@ -278,16 +229,10 @@ page 50104 "AST Company Asset Card"
                 end;
             }
         }
-<<<<<<< HEAD
-
-        // BC 21+ ActionRef — promotes actions to top action bar
-        actionref(CreateAssignment_Promoted; CreateAssignment) { }
-=======
         area(Promoted)
         {
             actionref(CreateAssignment_Promoted; CreateAssignment) { }
         }
->>>>>>> 19481db02111f54469b6ac07e83bd12d14a5ac17
     }
 
     var
