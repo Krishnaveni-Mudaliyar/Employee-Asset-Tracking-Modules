@@ -12,7 +12,7 @@ query 50101 "AST Asset Statistics Query"
             column(CategoryCode; "Category Code") { }
             column(AssetStatus; Status) { }
             column(AssetCondition; Condition) { }
-            column(Cout; "No.")
+            column(Count; "No.")
             {
                 Method = Count;
             }
