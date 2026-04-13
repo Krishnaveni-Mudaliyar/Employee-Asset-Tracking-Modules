@@ -182,6 +182,7 @@ page 50104 "AST Company Asset Card"
                     lRecHeader.Init();
                     lRecHeader.Insert(true);
                     // OnInsert handles: No. Series, Status = Open, Assignment Date, defaults
+                    lRecLine.Init();
                     lRecLine."Document No." := lRecHeader."No.";
                     lRecLine."Asset No." := Rec."No.";
                     lRecLine."Condition at Handover" := Rec.Condition;
@@ -209,15 +210,18 @@ page 50104 "AST Company Asset Card"
                 end;
             }
         }
-                    actionref(CreateAssignment_Promoted; CreateAssignment) { }
-            }
+        area(Promoted)
+        {
+            actionref(CreateAssignment_Promoted; CreateAssignment) { }
+        }
+    }
 
     var
         IsAssigned: Boolean;
         IsAvailable: Boolean;
 
     trigger OnAfterGetRecord()
-       begin
+    begin
         IsAssigned := Rec.Status = Rec.Status::Assigned;
         IsAvailable := Rec.Status = Rec.Status::Available;
     end;

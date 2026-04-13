@@ -52,11 +52,7 @@ page 50109 "AST Posted Assignment"
                 field(Purpose; Rec.Purpose)
                 {
                     ApplicationArea = All;
-<<<<<<< HEAD
-                    ToolTip = 'Specifies the stated purpose of this assignment.';
-=======
                     ToolTip = 'Specifies the purpose of the asset assignment.';
->>>>>>> 19481db02111f54469b6ac07e83bd12d14a5ac17
                     MultiLine = true;
                 }
             }
@@ -86,16 +82,8 @@ page 50109 "AST Posted Assignment"
             {
                 ApplicationArea = All;
                 SubPageLink = "Document No." = field("No.");
-<<<<<<< HEAD
-                // Only shows lines belonging to this posted document
             }
         }
-
-        // FactBox — Asset History linked to the employee on this document
-=======
-            }
-        }
->>>>>>> 19481db02111f54469b6ac07e83bd12d14a5ac17
         area(FactBoxes)
         {
             part(SystemInfo; "Workflow Status FactBox")
@@ -105,22 +93,7 @@ page 50109 "AST Posted Assignment"
         }
     }
 
-    actions
-    {
-        // ── TASK 2 FIX ────────────────────────────────────────────────────────
-        // Added area(Processing) with ProcessReturn action.
-        // Was completely missing — user had no way to trigger a return
-        // from the Posted Assignment page.
-        //
-        // Design decision: Return action lives on the POSTED document page
-        // because that is the source of truth for what was assigned.
-        // The return codeunit reads the posted lines to know which assets
-        // to set back to Available.
-        //
-        // Enabled = IsAssignmentType ensures Return is only available on
-        // Assignment transactions — not on Return transactions that are
-        // already recorded (prevents double-return).
-        // ─────────────────────────────────────────────────────────────────────
+
     actions
     {
         area(Processing)
@@ -168,35 +141,17 @@ page 50109 "AST Posted Assignment"
                 end;
             }
         }
-<<<<<<< HEAD
-
-        // Promote ProcessReturn to top action bar (BC 21+)
-        actionref(ProcessReturn_Promoted; ProcessReturn) { }
-    }
-
-=======
         area(Promoted)
         {
             actionref(ProcessReturn_promoted; ProcessReturn) { }
         }
     }
->>>>>>> 19481db02111f54469b6ac07e83bd12d14a5ac17
     var
         IsAssignmentType: Boolean;
 
     trigger OnAfterGetRecord()
-<<<<<<< HEAD
-    // Fires on every record load.
-    // IsAssignmentType controls whether ProcessReturn action is enabled.
-    // A Return document should not have another Return triggered on it.
     begin
         IsAssignmentType :=
             Rec."Transaction Type" = Rec."Transaction Type"::Assignment;
     end;
 }
-=======
-    begin
-        IsAssignmentType := Rec."Transaction Type" = Rec."Transaction Type"::Assignment;
-    end;
-}
->>>>>>> 19481db02111f54469b6ac07e83bd12d14a5ac17
