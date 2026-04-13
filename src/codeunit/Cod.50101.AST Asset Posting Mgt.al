@@ -51,8 +51,7 @@ codeunit 50101 "AST Asset Posting Mgt."
         //Step 5 : Delete Original document
         DeleteOriginalDocument(pRecHeader);
 
-        lCodEvents.OnAfterPostAssetAssignment(
-            GetPostedHeader(pRecHeader."No."));
+        lCodEvents.OnAfterPostAssetAssignment(GetPostedHeader(pRecHeader."No."));
     end;
 
     procedure SendForApproval(var pRecHeader: Record "AST Asset Assignment Header")
