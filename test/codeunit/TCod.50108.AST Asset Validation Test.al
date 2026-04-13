@@ -6,6 +6,7 @@ codeunit 50108 "AST Asset Validation Test"
     var
         lCodValidation: Codeunit "AST Asset Validation";
 
+    [Test]
     procedure TestValidateHeader_NoEmployee_ShouldError()
     var
         lRecHeader: Record "AST Asset Assignment Header";
@@ -17,6 +18,7 @@ codeunit 50108 "AST Asset Validation Test"
         asserterror lCodValidation.ValidateAssignmentHeader(lRecHeader);
     end;
 
+    [Test]
     procedure TestValidateHeader_NoDate_ShouldError()
     var
         lRecHeader: Record "AST Asset Assignment Header";
@@ -28,6 +30,7 @@ codeunit 50108 "AST Asset Validation Test"
         asserterror lCodValidation.ValidateAssignmentHeader(lRecHeader);
     end;
 
+    [Test]
     procedure TestValidateLine_AssetNotAvailable_ShouldError()
     var
         lRecHeader: Record "AST Asset Assignment Header";
