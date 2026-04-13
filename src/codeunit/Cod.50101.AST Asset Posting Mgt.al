@@ -15,7 +15,22 @@ codeunit 50101 "AST Asset Posting Mgt."
     var
         lCodValidation: Codeunit "AST Asset Validation";
         lRecLine: Record "AST Asset Assignment Line";
+        lRecSetup: Record "AST Asset Tracking Setup";
+        lCodEvents: Codeunit "AST Asset Events";
+        lBolHandled: Boolean;
+
     begin
+
+        lRecSetup.Get();
+        if lRecSetup."Require Approval" then
+            if pRecHeader."Approval Status" <> pRecHeader."Approval Status"::Approved then
+                Error('Assignment %1 must be approved before posting.Current approval status: %2.', pRecHeader."No.", pRecHeader."Approval Status");
+
+        lCodEvents.OnBeforePostAssetAssignment(pRecHeader, lBolHandled);
+
+        if lBolHandled then
+            exit;
+
         // STEP 1: Validate Header
         lCodValidation.ValidateAssignmentHeader(pRecHeader);
 
@@ -34,6 +49,45 @@ codeunit 50101 "AST Asset Posting Mgt."
 
         //Step 5 : Delete Original document
         DeleteOriginalDocument(pRecHeader);
+
+        lCodEvents.OnAfterPostAssetAssignment(
+            GetPostedHeader(pRecHeader."No."));
+    end;
+
+    procedure SendForApproval(var pRecHeader: Record "AST Asset Assignment Header")
+    begin
+        pRecHeader.TestField("Employee No.");
+        pRecHeader.TestField("Assignment Date");
+
+        if pRecHeader.Status <> pRecHeader.Status::Open then
+            Error('Only open assignments can be sent for approval.');
+
+        if pRecHeader."Approval Status" = pRecHeader."Approval Status"::PendingApproval then
+            Error('Assignment %1 is already pending approval.', pRecHeader."No.");
+
+        pRecHeader."Approval Status" := pRecHeader."Approval Status"::PendingApproval;
+        pRecHeader.Modify(true);
+
+        Message('Assignment %1 has been sent for approval.', pRecHeader."No.");
+    end;
+
+    procedure ApproveAssignment(var pRecHeader: Record "AST Asset Assignment Header")
+    begin
+        if pRecHeader."Approval Status" <> pRecHeader."Approval Status"::PendingApproval then
+            Error('Assignment %1 is not pending approval.', pRecHeader."No.");
+
+        pRecHeader."Approval Status" := pRecHeader."Approval Status"::Approved;
+        pRecHeader.Modify(true);
+        Message('Assignment %1 has been approved.', pRecHeader."No.");
+    end;
+
+    procedure RejectAssignment(var pRecHeader: Record "AST Asset Assignment Header")
+    begin
+        if pRecHeader."Approval Status" <> pRecHeader."Approval Status"::PendingApproval then
+            Error('Assignment %1 is not pending approval.', pRecHeader."No.");
+        pRecHeader."Approval Status" := pRecHeader."Approval Status"::Rejected;
+        pRecHeader.Modify(true);
+        Message('Assignment %1 has been rejected.', pRecHeader."No.");
     end;
 
     local procedure InsertPostedHeader(
@@ -51,8 +105,7 @@ codeunit 50101 "AST Asset Posting Mgt."
         lRecPostedHeader.Insert(true);
     end;
 
-    local procedure PostLines(
-        var pRecHeader: Record "AST Asset Assignment Header")
+    local procedure PostLines(var pRecHeader: Record "AST Asset Assignment Header")
     var
         lRecLine: Record "AST Asset Assignment Line";
         lRecPostedLine: Record "AST Posted Assignment Line";
@@ -99,13 +152,20 @@ codeunit 50101 "AST Asset Posting Mgt."
             until lRecLine.Next() = 0;
     end;
 
-    local procedure DeleteOriginalDocument(
-        var pRecHeader: Record "AST Asset Assignment Header")
+    local procedure DeleteOriginalDocument(var pRecHeader: Record "AST Asset Assignment Header")
     var
         lRecLine: Record "AST Asset Assignment Line";
     begin
         lRecLine.SetRange("Document No.", pRecHeader."No.");
         lRecLine.DeleteAll(true);
         pRecHeader.Delete(true);
+    end;
+
+    local procedure GetPostedHeader(pCodNo: Code[20]): Record "AST Posted Assignment Header"
+    var
+        lRecPostedHeader: Record "AST Posted Assignment Header";
+    begin
+        lRecPostedHeader.Get(pCodNo);
+        exit(lRecPostedHeader);
     end;
 }

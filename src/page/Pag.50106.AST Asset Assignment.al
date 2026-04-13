@@ -72,6 +72,13 @@ page 50106 "AST Asset Assignment"
                 SubPageLink = "Document No." = field("No.");
             }
         }
+        area(FactBoxes)
+        {
+            part(AssetHistory; "AST Asset History Factbox")
+            {
+                ApplicationArea = All;
+            }
+        }
     }
     actions
     {
@@ -79,45 +86,117 @@ page 50106 "AST Asset Assignment"
         {
             action(Post)
             {
-                ApplicationArea = All;
                 Caption = 'Post';
                 Image = Post;
-                Enabled = lBolIsOpen;
+                ApplicationArea = All;
                 ToolTip = 'Posts the asset assignment document.';
+                Enabled = IsOpen;
 
                 trigger OnAction()
                 var
                     lCodPostingMgt: Codeunit "AST Asset Posting Mgt.";
                 begin
-                    if Confirm('Do you want to post assignment %1?',
-                               true, Rec."No.") then begin
-                        lCodPostingMgt.PostAssetAssignment(Rec);
-                        Message('Assignment %1 posted successfully.',
-                                Rec."No.");
-                        CurrPage.Close();
-                    end;
+                    if not Confirm('Post assignment %1?', true, Rec."No.")
+                    then
+                        exit;
+                    lCodPostingMgt.PostAssetAssignment(Rec);
+                    Message('Assignment %1 posted successfully.', Rec."No.");
+                    CurrPage.Close();
                 end;
             }
-            action(SendApproval)
+            action(SendForApproval)
             {
                 Caption = 'Send for Approval';
-                ApplicationArea = All;
                 Image = SendApprovalRequest;
-                Enabled = lBolIsOpen;
+                ApplicationArea = All;
                 ToolTip = 'Sends the assignment for manager approval.';
+                Enabled = IsOpen;
 
                 trigger OnAction()
+                var
+                    lCodPostingMgt: Codeunit "AST Asset Posting Mgt.";
                 begin
-                    Message('Approval workflow will be implemented in Session 17.');
+                    lCodPostingMgt.SendForApproval(Rec);
+                    CurrPage.Update(false);
+                end;
+            }
+            action(Approve)
+            {
+                Caption = 'Approve';
+                Image = Approve;
+                ApplicationArea = All;
+                ToolTip = 'Approve the assignment for posting.';
+                Enabled = IsPendingApproval;
+
+                trigger OnAction()
+                var
+                    lCodPostingMgt: Codeunit "AST Asset Posting Mgt.";
+                begin
+                    lCodPostingMgt.ApproveAssignment(Rec);
+                    CurrPage.Update(false);
+                end;
+            }
+            action(Reject)
+            {
+                Caption = 'Reject';
+                Image = Reject;
+                ApplicationArea = All;
+                ToolTip = 'Reject this assignment request.';
+                Enabled = IsPendingApproval;
+
+                trigger OnAction()
+                var
+                    lCodPostingMgt: Codeunit "AST Asset Posting Mgt.";
+
+                begin
+                    lCodPostingMgt.RejectAssignment(Rec);
+                    CurrPage.Update(false);
                 end;
             }
         }
+        area(Navigation)
+        {
+            action(ViewLog)
+            {
+                Caption = 'Asset Log';
+                Image = Log;
+                ApplicationArea = All;
+                ToolTip = 'View audit log enteries related to this assignment.';
+
+                trigger OnAction()
+                var
+                    lRecLog: Record "AST Asset Log Entry";
+                begin
+                    lRecLog.SetRange("Document No.", Rec."No.");
+                    Page.Run(0, lRecLog);
+                end;
+            }
+        }
+        area(Promoted)
+        {
+            actionref(Post_Promoted; Post) { }
+            actionref(SendForApproval_promoted; SendForApproval) { }
+        }
     }
     var
-        lBolIsOpen: Boolean;
+        IsOpen: Boolean;
+        IsPendingApproval: Boolean;
+        ApprovalStyle: Text;
 
     trigger OnAfterGetRecord()
     begin
-        lBolIsOpen := Rec.Status = Rec.Status::Open;
+        IsOpen := Rec.Status = Rec.Status::Open;
+        IsPendingApproval := Rec."Approval Status" = Rec."Approval Status"::PendingApproval;
+
+        case Rec."Approval Status" of
+            Rec."Approval Status"::Approved:
+                ApprovalStyle := 'Favorable';
+            Rec."Approval Status"::Rejected:
+                ApprovalStyle := 'UnFavorable';
+            Rec."Approval Status"::PendingApproval:
+                ApprovalStyle := 'Ambiguous';
+            else
+                ApprovalStyle := 'None';
+        end;
     end;
 }

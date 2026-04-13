@@ -77,10 +77,10 @@ table 50102 "AST Company Asset"
         field(13; "Assigned to Employee Name"; Text[100])
         {
             Caption = 'Assigned to Employee Name';
-            FieldClass = FlowField;
-            CalcFormula = Lookup(Employee."First Name"
-         where("No." = field("Assigned to Employee No.")));
+            // FieldClass = FlowField;
+            // CalcFormula = Lookup(Employee."First Name" where("No." = field("Assigned to Employee No.")));
             Editable = false;
+            DataClassification = EndUserIdentifiableInformation;
         }
         field(14; "Last Assignment Date"; Date)
         {

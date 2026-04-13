@@ -45,6 +45,9 @@ permissionset 50100 "AST-ADMIN"
         codeunit "AST Asset Notification" = X,
         codeunit "AST Asset Events" = X,
         codeunit "AST Install" = X,
+        codeunit "AST Excel Export" = X,
+        codeunit "AST Performance Helpers" = X,
+        codeunit "AST Telemetry" = X,
 
          // Reports
          report "AST Asset Register" = X,
@@ -52,6 +55,10 @@ permissionset 50100 "AST-ADMIN"
         report "AST Employee Asset Summary" = X,
         report "AST Overdue Asset Return" = X,
         report "AST Asset History" = X,
+
+        //Query
+        query "AST Asset Assignment Query" = X,
+        query "AST Asset Statistics Query" = X,
 
         //  XMLport 
         xmlport "AST Asset Migration" = X;

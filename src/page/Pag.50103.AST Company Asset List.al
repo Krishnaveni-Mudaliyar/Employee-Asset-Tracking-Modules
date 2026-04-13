@@ -99,6 +99,20 @@ page 50103 "AST Company Asset List"
                     lxmlport.Run();
                 end;
             }
+            action(ExportToExcel)
+            {
+                Caption = 'Export to Excel';
+                Image = ExportToExcel;
+                ApplicationArea = All;
+                ToolTip = 'Export the current asset list to an Excel File.';
+
+                trigger OnAction()
+                var
+                    lCodExcelExport: Codeunit "AST Excel Export";
+                begin
+                    lCodExcelExport.ExportAssetsToExcel();
+                end;
+            }
         }
         area(Navigation)
         {
@@ -151,10 +165,12 @@ page 50103 "AST Company Asset List"
                 RunObject = report "AST Asset Register";
             }
         }
+
         area(Promoted)
         {
             actionref(ImportAssets_Promoted; ImportAssets) { }
         }
+
     }
     var
         StatusStyle: Text;
