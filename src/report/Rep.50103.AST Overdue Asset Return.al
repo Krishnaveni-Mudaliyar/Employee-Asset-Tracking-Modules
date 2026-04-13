@@ -34,8 +34,7 @@ report 50103 "AST Overdue Asset Return"
             trigger OnPreDataItem()
             begin
                 // Only show records where Expected Return Date is in the past
-                SetFilter("Expected Return Date", '<%1', Today);
-                SetFilter("Expected Return Date", '<>%1', 0D);
+                SetFilter("Expected Return Date", '<%1&%2', 0D, Today);
             end;
         }
     }
