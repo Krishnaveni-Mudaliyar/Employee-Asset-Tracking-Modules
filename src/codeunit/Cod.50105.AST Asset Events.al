@@ -1,9 +1,21 @@
 codeunit 50105 "AST Asset Events"
 {
+    // PURPOSE: Publisher events that allow other extensions to hook into
+    // our module without modifying our code. This is the extensibility layer.
+    //
+    // HOW IT WORKS:
+    // 1. We declare [IntegrationEvent] procedures here (publishers)
+    // 2. Other extensions subscribe to these events using [EventSubscriber]
+    // 3. When we raise the event, all subscribers are called automatically
+    //
+    // RULE: Publishers never contain logic. They are empty shells that
+    // BC uses as "event hooks". Logic lives in subscribers.
+
+    // Raised just before an asset assignment is posted
     [IntegrationEvent(false, false)]
     procedure OnBeforePostAssetAssignment(
-            var pRecHeader: Record "AST Asset Assignment Header";
-            var pBolHandled: Boolean)
+        var pRecHeader: Record "AST Asset Assignment Header";
+        var pBolHandled: Boolean)
     begin
         // Empty — subscribers add logic here
     end;

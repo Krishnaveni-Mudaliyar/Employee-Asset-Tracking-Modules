@@ -26,5 +26,4 @@ enum 50105 "AST Transaction Type"
     {
         Caption = 'Disposal';
     }
-
 }

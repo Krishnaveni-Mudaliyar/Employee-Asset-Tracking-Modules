@@ -4,8 +4,6 @@ page 50109 "AST Posted Assignment"
     SourceTable = "AST Posted Assignment Header";
     Caption = 'Posted Asset Assignment';
     UsageCategory = None;
-
-    // Posted documents are READ ONLY — user can never edit posted data
     Editable = false;
     InsertAllowed = false;
     ModifyAllowed = false;
@@ -52,11 +50,10 @@ page 50109 "AST Posted Assignment"
                 field(Purpose; Rec.Purpose)
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the purpose of the asset assignment.';
+                    ToolTip = 'Specifies the stated purpose of this assignment.';
                     MultiLine = true;
                 }
             }
-
             group(PostingDetails)
             {
                 Caption = 'Posting Details';
@@ -77,7 +74,6 @@ page 50109 "AST Posted Assignment"
                     ToolTip = 'Specifies whether this is an Assignment or Return transaction.';
                 }
             }
-
             part(Lines; "AST Posted Assign Line Subpage")
             {
                 ApplicationArea = All;
@@ -86,13 +82,13 @@ page 50109 "AST Posted Assignment"
         }
         area(FactBoxes)
         {
-            part(SystemInfo; "Workflow Status FactBox")
+            part(AssetHistory; "AST Asset History Factbox")
             {
                 ApplicationArea = All;
+                SubPageLink = "Document No." = field("No.");
             }
         }
     }
-
 
     actions
     {
@@ -103,20 +99,20 @@ page 50109 "AST Posted Assignment"
                 Caption = 'Process Return';
                 Image = Return;
                 ApplicationArea = All;
-                ToolTip = 'Process the return of all assets in this assignment. Assets will be set back to available status and a return log wntry will be created.';
+                ToolTip = 'Process the return of all assets in this assignment back to Available status.';
                 Enabled = IsAssignmentType;
 
                 trigger OnAction()
                 var
                     lCodReturnMgt: Codeunit "AST Asset Return Mgt.";
                 begin
-                    if not confirm(
-                        'Process return for assignment %1\n\nAll %2 assets will be set back to available status.',
+                    if not Confirm(
+                        'Process return for assignment %1?\n\nAll assets will be set back to Available status.',
                         true,
-                        Rec."No.",
-                        Rec."No. of Lines")
-                         then
+                        Rec."No.")
+                    then
                         exit;
+
                     lCodReturnMgt.ProcessReturn(Rec);
                     Message('Return processed successfully. Assets are now available.');
                     CurrPage.Update(false);
@@ -143,9 +139,10 @@ page 50109 "AST Posted Assignment"
         }
         area(Promoted)
         {
-            actionref(ProcessReturn_promoted; ProcessReturn) { }
+            actionref(ProcessReturn_Promoted; ProcessReturn) { }
         }
     }
+
     var
         IsAssignmentType: Boolean;
 

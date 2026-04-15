@@ -12,8 +12,13 @@ report 50102 "AST Employee Asset Summary"
             RequestFilterFields = "No.", "Global Dimension 1 Code";
 
             column(Employee_No; "No.") { }
-            column(Employee_FullName; "First Name" + ' ' + "Last Name") { }
+            column(Employee_FirstName; "First Name") { }
+            column(Employee_LastName; "Last Name") { }
+            // FIX: Cannot use expressions in column() — must be single field references.
+            // Concatenate First + Last name in the RDLC layout expression:
+            // =Fields!Employee_FirstName.Value & " " & Fields!Employee_LastName.Value
             column(Department; "Global Dimension 1 Code") { }
+            column(Employee_Email; "Company E-Mail") { }
 
             dataitem("AST Company Asset"; "AST Company Asset")
             {
@@ -49,9 +54,9 @@ report 50102 "AST Employee Asset Summary"
     {
         layout(RDLCLayout)
         {
-            LayoutFile = '.src/reportlayout/AssetSummary.rdl';
             Type = RDLC;
             Caption = 'Employee Asset Summary (RDLC)';
+            LayoutFile = '.src/reportlayout/AssetHistory.rdl';
         }
     }
 }

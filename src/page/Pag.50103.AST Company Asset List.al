@@ -74,10 +74,6 @@ page 50103 "AST Company Asset List"
                 ApplicationArea = All;
                 SubPageLink = "Asset No." = field("No.");
             }
-            part(SystemInfo; "Workflow Status FactBox")
-            {
-                ApplicationArea = All;
-            }
         }
     }
 
@@ -90,21 +86,22 @@ page 50103 "AST Company Asset List"
                 Caption = 'Import Assets';
                 Image = Import;
                 ApplicationArea = All;
-                ToolTip = 'Import company assets from a CSV file usinf the asset migration XMLPort.';
+                ToolTip = 'Import company assets from a CSV file using the Asset Migration XMLport.';
 
                 trigger OnAction()
                 var
-                    lxmlport: XmlPort "AST Asset Migration";
+                    lXmlPort: XmlPort "AST Asset Migration";
                 begin
-                    lxmlport.Run();
+                    lXmlPort.Run();
                 end;
             }
+
             action(ExportToExcel)
             {
                 Caption = 'Export to Excel';
                 Image = ExportToExcel;
                 ApplicationArea = All;
-                ToolTip = 'Export the current asset list to an Excel File.';
+                ToolTip = 'Export the current asset list to an Excel file.';
 
                 trigger OnAction()
                 var
@@ -128,10 +125,19 @@ page 50103 "AST Company Asset List"
                     lRecPostedHeader: Record "AST Posted Assignment Header";
                     lRecPostedLine: Record "AST Posted Assignment Line";
                 begin
-                    // Filter posted lines to this asset then open posted headers
+                    // FIX: Original code used FindFirst() then filtered header to ONE document.
+                    // If an asset was assigned 5 times, this only ever showed the first assignment.
+                    // Correct: collect all Document Nos for this asset, filter header to all of them.
                     lRecPostedLine.SetRange("Asset No.", Rec."No.");
-                    if lRecPostedLine.FindFirst() then begin
-                        lRecPostedHeader.SetRange("No.", lRecPostedLine."Document No.");
+                    if lRecPostedLine.FindSet() then begin
+                        // Build filter string covering all document numbers for this asset
+                        repeat
+                            if lRecPostedHeader.GetFilter("No.") = '' then
+                                lRecPostedHeader.SetRange("No.", lRecPostedLine."Document No.")
+                            else
+                                lRecPostedHeader.SetFilter("No.",
+                                    lRecPostedHeader.GetFilter("No.") + '|' + lRecPostedLine."Document No.");
+                        until lRecPostedLine.Next() = 0;
                         Page.Run(Page::"AST Posted Assignment List", lRecPostedHeader);
                     end else
                         Message('No posted assignments found for asset %1.', Rec."No.");
@@ -153,7 +159,6 @@ page 50103 "AST Company Asset List"
                 end;
             }
         }
-
         area(Reporting)
         {
             action(AssetRegister)
@@ -165,30 +170,28 @@ page 50103 "AST Company Asset List"
                 RunObject = report "AST Asset Register";
             }
         }
-
+        // BC 21+ — promote to top bar
         area(Promoted)
         {
             actionref(ImportAssets_Promoted; ImportAssets) { }
         }
-
     }
     var
         StatusStyle: Text;
 
     trigger OnAfterGetRecord()
     begin
-        // StyleExpr — drives row colouring in the list
         case Rec.Status of
             Rec.Status::Available:
-                StatusStyle := 'Favorable';     // Green text
+                StatusStyle := 'Favorable';
             Rec.Status::Assigned:
-                StatusStyle := 'Strong';        // Bold text
+                StatusStyle := 'Strong';
             Rec.Status::UnderMaintenance:
-                StatusStyle := 'Ambiguous';     // Orange/amber text
+                StatusStyle := 'Ambiguous';
             Rec.Status::Lost:
-                StatusStyle := 'Unfavorable';   // Red text
+                StatusStyle := 'Unfavorable';
             Rec.Status::Disposed:
-                StatusStyle := 'Subordinate';   // Grey text
+                StatusStyle := 'Subordinate';
             else
                 StatusStyle := 'None';
         end;

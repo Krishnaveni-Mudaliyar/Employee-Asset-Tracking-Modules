@@ -1,7 +1,11 @@
 codeunit 50100 "AST Asset Validation"
 {
+    // PURPOSE:
+    // Central place for all validation logic
+    // Called by Posting Codeunit before posting
+    // Called by pages for real-time checks
     procedure ValidateAssignmentHeader(
-      var pRecHeader: Record "AST Asset Assignment Header")
+        var pRecHeader: Record "AST Asset Assignment Header")
     begin
         // Check 1 : Employee No. must be filled
         pRecHeader.TestField("Employee No.");

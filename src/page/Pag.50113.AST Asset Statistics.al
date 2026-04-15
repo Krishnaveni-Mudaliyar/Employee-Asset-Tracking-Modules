@@ -56,6 +56,7 @@ page 50113 "AST Asset Statistics"
             }
         }
     }
+
     var
         TotalAssets: Integer;
         AvailableAssets: Integer;

@@ -13,6 +13,7 @@ page 50104 "AST Company Asset Card"
             group(General)
             {
                 Caption = 'General';
+
                 field("No."; Rec."No.")
                 {
                     ApplicationArea = All;
@@ -51,7 +52,6 @@ page 50104 "AST Company Asset Card"
                     ToolTip = 'Specifies the physical condition of the asset.';
                 }
             }
-
             group(Assignment)
             {
                 Caption = 'Assignment Information';
@@ -60,13 +60,13 @@ page 50104 "AST Company Asset Card"
                 field("Assigned to Employee No."; Rec."Assigned to Employee No.")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the employee this asset is asssigned to.';
+                    ToolTip = 'Specifies the employee this asset is assigned to.';
                     Editable = false;
                 }
                 field("Assigned to Employee Name"; Rec."Assigned to Employee Name")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the name of the assigned employee';
+                    ToolTip = 'Specifies the name of the assigned employee.';
                     Editable = false;
                 }
                 field("Last Assignment Date"; Rec."Last Assignment Date")
@@ -76,7 +76,6 @@ page 50104 "AST Company Asset Card"
                     Editable = false;
                 }
             }
-
             group(Purchase)
             {
                 Caption = 'Purchase Details';
@@ -102,7 +101,6 @@ page 50104 "AST Company Asset Card"
                     ToolTip = 'Specifies the vendor this asset was purchased from.';
                 }
             }
-
             group(Note)
             {
                 Caption = 'Notes';
@@ -110,11 +108,10 @@ page 50104 "AST Company Asset Card"
                 field(Notes; Rec.Notes)
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies any additional notes or remark about the asset.';
+                    ToolTip = 'Specifies any additional notes or remarks about this asset.';
                     MultiLine = true;
                 }
             }
-
             group(Audit)
             {
                 Caption = 'Audit Information';
@@ -153,10 +150,6 @@ page 50104 "AST Company Asset Card"
                 Caption = 'Asset History';
                 SubPageLink = "Asset No." = field("No.");
             }
-            part(SystemInfo; "Workflow Status FactBox")
-            {
-                ApplicationArea = All;
-            }
         }
     }
 
@@ -178,14 +171,14 @@ page 50104 "AST Company Asset Card"
                     lRecLine: Record "AST Asset Assignment Line";
                     lPageAssignment: Page "AST Asset Assignment";
                 begin
-                    // Create a new assignment header
                     lRecHeader.Init();
                     lRecHeader.Insert(true);
-                    // OnInsert handles: No. Series, Status = Open, Assignment Date, defaults
+
                     lRecLine.Init();
                     lRecLine."Document No." := lRecHeader."No.";
                     lRecLine."Asset No." := Rec."No.";
                     lRecLine."Condition at Handover" := Rec.Condition;
+                    lRecLine.Insert(true);
 
                     lPageAssignment.SetRecord(lRecHeader);
                     lPageAssignment.Run();
@@ -199,7 +192,7 @@ page 50104 "AST Company Asset Card"
                 Caption = 'Asset Log';
                 Image = Log;
                 ApplicationArea = All;
-                ToolTip = 'View the complete history of this asset - all assignments, returns and status changes.';
+                ToolTip = 'View the complete history of this asset.';
 
                 trigger OnAction()
                 var
@@ -215,7 +208,6 @@ page 50104 "AST Company Asset Card"
             actionref(CreateAssignment_Promoted; CreateAssignment) { }
         }
     }
-
     var
         IsAssigned: Boolean;
         IsAvailable: Boolean;

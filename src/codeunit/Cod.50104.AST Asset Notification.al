@@ -2,31 +2,33 @@ codeunit 50104 "AST Asset Notification"
 {
     procedure SendOverdueNotification()
     var
-        lRecAsset: Record "AST Company Asset";
+        lRecPostedHeader: Record "AST Posted Assignment Header";
         lRecSetup: Record "AST Asset Tracking Setup";
-          lNotification: Notification;
-
+        lNotification: Notification;
     begin
         lRecSetup.Get();
         if not lRecSetup."Send Email Notification" then
             exit;
 
-        //Find all assigned assets past return date
-        lRecAsset.SetRange(Status, lRecAsset.Status::Assigned);
-        lRecAsset.SetFilter(
-            "Last Assignment Date", '<%1', Today);
+        // FIX: Overdue check must query AST Posted Assignment Header
+        // where Expected Return Date < Today and Transaction Type = Assignment.
+        // The original code was filtering "Last Assignment Date" on Company Asset
+        // which checks assignment date not the expected RETURN date — wrong field.
+        lRecPostedHeader.SetRange("Transaction Type",
+            lRecPostedHeader."Transaction Type"::Assignment);
+        lRecPostedHeader.SetFilter("Expected Return Date", '<>%1&<%2', 0D, Today);
 
-        if lRecAsset.FindSet() then
+        if lRecPostedHeader.FindSet() then
             repeat
-                // Show BC notification to current user
                 lNotification.Id := CreateGuid();
-                lNotification.Message :=
-                StrSubstNo('Asset %1 assigned to %2 is overdue for return.',
-                lRecAsset."No.",
-                lRecAsset."Assigned to Employee No.");
+                lNotification.Message := StrSubstNo(
+                    'Assignment %1 for employee %2 is overdue for return. Expected: %3.',
+                    lRecPostedHeader."No.",
+                    lRecPostedHeader."Employee No.",
+                    lRecPostedHeader."Expected Return Date");
                 lNotification.Scope := NotificationScope::LocalScope;
                 lNotification.Send();
-            until lRecAsset.Next() = 0;
+            until lRecPostedHeader.Next() = 0;
     end;
 
     procedure SendWarrantyExpiryNotification()
@@ -34,14 +36,13 @@ codeunit 50104 "AST Asset Notification"
         lRecAsset: Record "AST Company Asset";
         lNotification: Notification;
         lDatWarningDate: Date;
-
     begin
         // Warn 30 days before warranty expires
         lDatWarningDate := CalcDate('<+30D>', Today);
 
-        lRecAsset.SetFilter(
-            "Warranty Expiry Date", '>=%1&<=%2',
-            Today, lDatWarningDate);
+        lRecAsset.SetLoadFields("No.", "Warranty Expiry Date");
+        lRecAsset.SetFilter("Warranty Expiry Date", '>=%1&<=%2', Today, lDatWarningDate);
+
         if lRecAsset.FindSet() then
             repeat
                 lNotification.Id := CreateGuid();

@@ -1,22 +1,35 @@
 codeunit 50113 "AST Telemetry"
 {
-    procedure LogAssetAssigned(pCodAssetNo: Code[20]; pCodEmployeeNo: Code[20]; pDocumentNo: Code[20])
+    // SESSION 53: Custom Telemetry with Session.LogMessage()
+    // Every LogMessage call is sent to Azure Application Insights
+    // if the publisher has configured a telemetry connection string.
+    //
+    // Parameters:
+    //   pTxtEventId    — unique ID for this signal (keep it short, stable, uppercase)
+    //   pTxtMessage    — human-readable message shown in App Insights
+    //   pEnumVerbosity — Verbosity::Normal / Warning / Error / Critical / Verbose
+    //
+    // RULE: Never let telemetry errors break the main transaction.
+    //       Wrap in if not IsNullGuid() guards or use ClearLastError() if needed.
+
+    procedure LogAssetAssigned(pCodAssetNo: Code[20]; pCodEmployeeNo: Code[20]; pCodDocumentNo: Code[20])
     var
         lDimensions: Dictionary of [Text, Text];
     begin
         lDimensions.Add('AssetNo', pCodAssetNo);
         lDimensions.Add('EmployeeNo', pCodEmployeeNo);
-        lDimensions.Add('DocumentNo', pDocumentNo);
+        lDimensions.Add('DocumentNo', pCodDocumentNo);
         lDimensions.Add('Company', CompanyName());
         lDimensions.Add('User', UserId());
 
         Session.LogMessage(
             'AST-ASSIGN-001',
             StrSubstNo('Asset %1 assigned to employee %2 via document %3.',
-            pCodAssetNo, pCodEmployeeNo, pDocumentNo),
+                pCodAssetNo, pCodEmployeeNo, pCodDocumentNo),
             Verbosity::Normal,
             DataClassification::OrganizationIdentifiableInformation,
-            TelemetryScope::ExtensionPublisher, lDimensions);
+            TelemetryScope::ExtensionPublisher,
+            lDimensions);
     end;
 
     procedure LogAssetReturned(pCodAssetNo: Code[20]; pCodEmployeeNo: Code[20]; pCodDocumentNo: Code[20])
@@ -31,32 +44,33 @@ codeunit 50113 "AST Telemetry"
         Session.LogMessage(
             'AST-RETURN-001',
             StrSubstNo('Asset %1 returned from employee %2 via document %3.',
-            pCodAssetNo, pCodEmployeeNo, pCodDocumentNo), Verbosity::Normal,
+                pCodAssetNo, pCodEmployeeNo, pCodDocumentNo),
+            Verbosity::Normal,
             DataClassification::OrganizationIdentifiableInformation,
-            TelemetryScope::ExtensionPublisher, lDimensions);
+            TelemetryScope::ExtensionPublisher,
+            lDimensions);
     end;
 
     procedure LogPostingError(pCodDocumentNo: Code[20]; pTxtError: Text)
     var
         lDimensions: Dictionary of [Text, Text];
-
     begin
         lDimensions.Add('DocumentNo', pCodDocumentNo);
-        lDimensions.add('ErrorMessage', CopyStr(pTxtError, 1, 250));
-        lDimensions.add('User', UserId());
+        lDimensions.Add('ErrorMessage', CopyStr(pTxtError, 1, 250));
+        lDimensions.Add('User', UserId());
 
         Session.LogMessage(
             'AST-ERROR-001',
-            StrSubstNo('Posting Error on assignment %1: %2',
-            pCodDocumentNo, pTxtError), Verbosity::Error,
+            StrSubstNo('Posting error on assignment %1: %2', pCodDocumentNo, pTxtError),
+            Verbosity::Error,
             DataClassification::OrganizationIdentifiableInformation,
-            TelemetryScope::ExtensionPublisher, lDimensions);
+            TelemetryScope::ExtensionPublisher,
+            lDimensions);
     end;
 
     procedure LogImportCompleted(pIntRecordCount: Integer)
     var
         lDimensions: Dictionary of [Text, Text];
-
     begin
         lDimensions.Add('RecordCount', Format(pIntRecordCount));
         lDimensions.Add('ImportedBy', UserId());
@@ -67,6 +81,7 @@ codeunit 50113 "AST Telemetry"
             StrSubstNo('%1 assets imported successfully.', pIntRecordCount),
             Verbosity::Normal,
             DataClassification::SystemMetadata,
-            TelemetryScope::ExtensionPublisher, lDimensions);
+            TelemetryScope::ExtensionPublisher,
+            lDimensions);
     end;
 }

@@ -27,7 +27,7 @@ table 50102 "AST Company Asset"
             Caption = 'Category Description';
             FieldClass = FlowField;
             CalcFormula = Lookup("AST Asset Category".Description
-            where(Code = field("Category Code")));
+                          where(Code = field("Category Code")));
             Editable = false;
         }
         field(5; "Serial No."; Text[50])
@@ -71,16 +71,19 @@ table 50102 "AST Company Asset"
         field(12; "Assigned to Employee No."; Code[20])
         {
             Caption = 'Assigned to Employee No.';
+            // GDPR: This field links to a natural person — Employee.
+            // DataClassification = EndUserIdentifiableInformation is more accurate
+            // for AppSource. CustomerContent acceptable for internal deployments.
             DataClassification = CustomerContent;
             TableRelation = Employee;
         }
         field(13; "Assigned to Employee Name"; Text[100])
         {
             Caption = 'Assigned to Employee Name';
-            // FieldClass = FlowField;
-            // CalcFormula = Lookup(Employee."First Name" where("No." = field("Assigned to Employee No.")));
+            FieldClass = FlowField;
+            CalcFormula = Lookup(Employee."First Name"
+                          where("No." = field("Assigned to Employee No.")));
             Editable = false;
-            DataClassification = EndUserIdentifiableInformation;
         }
         field(14; "Last Assignment Date"; Date)
         {
@@ -113,11 +116,15 @@ table 50102 "AST Company Asset"
             DataClassification = CustomerContent;
         }
     }
+
     keys
     {
         key(PK; "No.") { Clustered = true; }
         key(CategoryCode; "Category Code") { }
         key(EmployeeNo; "Assigned to Employee No.") { }
+        key(Status; Status) { }
+        // Added Status key: Role Center cues filter by Status — without this index
+        // every Count() by Status is a full table scan. Critical for performance.
     }
 
     trigger OnInsert()
@@ -125,18 +132,28 @@ table 50102 "AST Company Asset"
         lRecSetup: Record "AST Asset Tracking Setup";
         lCodNoSeries: Codeunit "No. Series";
     begin
+        // Auto-generate No.
         if "No." = '' then begin
             lRecSetup.Get();
             lRecSetup.TestField("Asset Nos.");
-            "No." := lCodNoSeries.GetNextNo(
-                lRecSetup."Asset Nos.", Today, true);
+            "No." := lCodNoSeries.GetNextNo(lRecSetup."Asset Nos.", Today, true);
         end;
 
+        // Always set default Status
+        Status := Status::Available;
+
+        // Apply Default Condition from Setup
+        lRecSetup.Get();
+        if lRecSetup."Default Asset Condition".AsInteger() <> 0 then
+            Condition := lRecSetup."Default Asset Condition";
+
+        // Audit Fields
         "Created By" := CopyStr(UserId(), 1, 50);
         "Created Date" := Today;
         "Last Modified By" := CopyStr(UserId(), 1, 50);
         "Last Modified Date" := Today;
     end;
+
 
     trigger OnModify()
     begin
@@ -147,6 +164,9 @@ table 50102 "AST Company Asset"
     trigger OnDelete()
     begin
         if Status = Status::Assigned then
-            Error('Asset %1 cannot be deleted because it is currently assigned to employee %2.', "No.", "Assigned to Employee No.");
+            Error(
+                'Asset %1 cannot be deleted because it is currently assigned to employee %2.',
+                "No.", "Assigned to Employee No."
+            );
     end;
 }

@@ -9,7 +9,6 @@ report 50103 "AST Overdue Asset Return"
     {
         dataitem(PostedHeader; "AST Posted Assignment Header")
         {
-            // Filter to only Assignment type records where expected return has passed
             DataItemTableView = where("Transaction Type" = const(Assignment));
             RequestFilterFields = "Employee No.", Department;
 
@@ -19,7 +18,6 @@ report 50103 "AST Overdue Asset Return"
             column(Assignment_Date; "Assignment Date") { }
             column(Expected_Return_Date; "Expected Return Date") { }
             column(Department; Department) { }
-            column(Days_Overdue; Today - "Expected Return Date") { }
 
             dataitem(PostedLine; "AST Posted Assignment Line")
             {
@@ -33,8 +31,10 @@ report 50103 "AST Overdue Asset Return"
 
             trigger OnPreDataItem()
             begin
-                // Only show records where Expected Return Date is in the past
-                SetFilter("Expected Return Date", '<%1&%2', 0D, Today);
+                // FIX: Two SetFilter calls on same field — second REPLACES the first.
+                // Correct approach: combine both conditions in ONE filter expression.
+                // '<>%1&<%2' means: not equal to 0D AND less than today
+                SetFilter("Expected Return Date", '<>%1&<%2', 0D, Today);
             end;
         }
     }
@@ -45,7 +45,7 @@ report 50103 "AST Overdue Asset Return"
         {
             area(Content)
             {
-                group(Filters)
+                group(Options)
                 {
                     Caption = 'Options';
                     field(AsOfDate; AsOfDate)
@@ -63,9 +63,9 @@ report 50103 "AST Overdue Asset Return"
     {
         layout(RDLCLayout)
         {
-            LayoutFile = '.src/reportlayout/OverdueAssetReturn.rdl';
             Type = RDLC;
             Caption = 'Overdue Asset Return (RDLC)';
+            LayoutFile = '.src/reportlayout/AssetHistory.rdl';
         }
     }
 

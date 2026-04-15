@@ -16,7 +16,7 @@ page 50101 "AST Asset Category List"
                 field(Code; Rec.Code)
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the category code.';
+                    ToolTip = 'Specifies the unique category code.';
                 }
                 field(Description; Rec.Description)
                 {
@@ -26,7 +26,7 @@ page 50101 "AST Asset Category List"
                 field("Category Type"; Rec."Category Type")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the category type.';
+                    ToolTip = 'Specifies the type of assets in this category.';
                 }
                 field("Require Approval"; Rec."Require Approval")
                 {
@@ -36,9 +36,9 @@ page 50101 "AST Asset Category List"
                 field("No. of Assets"; Rec."No. of Assets")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the number of assets in this category.';
+                    ToolTip = 'Specifies the total number of assets in this category. Click to view them.';
                     DrillDown = true;
-
+                    // DrillDown opens filtered Company Asset List for this category
                     trigger OnDrillDown()
                     var
                         lRecAsset: Record "AST Company Asset";

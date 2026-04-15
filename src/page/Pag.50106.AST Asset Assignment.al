@@ -16,7 +16,7 @@ page 50106 "AST Asset Assignment"
                 field("No."; Rec."No.")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the unique number of asset assignment.';
+                    ToolTip = 'Specifies the unique number of the asset assignment.';
                 }
                 field("Employee No."; Rec."Employee No.")
                 {
@@ -27,11 +27,12 @@ page 50106 "AST Asset Assignment"
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the employee name.';
+                    Editable = false;
                 }
                 field("Assignment Date"; Rec."Assignment Date")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the asset assignment date.';
+                    ToolTip = 'Specifies the date of assignment.';
                 }
                 field("Expected Return Date"; Rec."Expected Return Date")
                 {
@@ -41,29 +42,31 @@ page 50106 "AST Asset Assignment"
                 field(Department; Rec.Department)
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the department with whom you are assigned the asset.';
+                    ToolTip = 'Specifies the department.';
                 }
                 field(Purpose; Rec.Purpose)
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the purpose of assigning the asset.';
+                    ToolTip = 'Specifies the purpose of the assignment.';
                     MultiLine = true;
                 }
             }
-            group("Status group")
+            group(StatusGroup)
             {
                 Caption = 'Status';
+
                 field(Status; Rec.Status)
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the status of asset assignment.';
+                    ToolTip = 'Specifies the document status.';
                     Editable = false;
                 }
                 field("Approval Status"; Rec."Approval Status")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the current approval status of the assignment.';
+                    ToolTip = 'Specifies the current approval status.';
                     Editable = false;
+                    StyleExpr = ApprovalStyle;
                 }
             }
             part(Lines; "AST Assignment Lines Subpage")
@@ -77,9 +80,14 @@ page 50106 "AST Asset Assignment"
             part(AssetHistory; "AST Asset History Factbox")
             {
                 ApplicationArea = All;
+                // FIX: SubPageLink was missing — FactBox was showing ALL log entries
+                // from the entire system instead of entries for assets on THIS assignment.
+                // Correct link: Document No. on log entry = current assignment No.
+                SubPageLink = "Document No." = field("No.");
             }
         }
     }
+
     actions
     {
         area(Processing)
@@ -89,27 +97,28 @@ page 50106 "AST Asset Assignment"
                 Caption = 'Post';
                 Image = Post;
                 ApplicationArea = All;
-                ToolTip = 'Posts the asset assignment document.';
+                ToolTip = 'Post the asset assignment document.';
                 Enabled = IsOpen;
 
                 trigger OnAction()
                 var
                     lCodPostingMgt: Codeunit "AST Asset Posting Mgt.";
                 begin
-                    if not Confirm('Post assignment %1?', true, Rec."No.")
-                    then
+                    if not Confirm('Post assignment %1?', true, Rec."No.") then
                         exit;
                     lCodPostingMgt.PostAssetAssignment(Rec);
                     Message('Assignment %1 posted successfully.', Rec."No.");
                     CurrPage.Close();
                 end;
             }
+
+            // SESSION 30: Approval actions
             action(SendForApproval)
             {
                 Caption = 'Send for Approval';
                 Image = SendApprovalRequest;
                 ApplicationArea = All;
-                ToolTip = 'Sends the assignment for manager approval.';
+                ToolTip = 'Send this assignment to the approver for review.';
                 Enabled = IsOpen;
 
                 trigger OnAction()
@@ -120,12 +129,13 @@ page 50106 "AST Asset Assignment"
                     CurrPage.Update(false);
                 end;
             }
+
             action(Approve)
             {
                 Caption = 'Approve';
                 Image = Approve;
                 ApplicationArea = All;
-                ToolTip = 'Approve the assignment for posting.';
+                ToolTip = 'Approve this assignment for posting.';
                 Enabled = IsPendingApproval;
 
                 trigger OnAction()
@@ -136,6 +146,7 @@ page 50106 "AST Asset Assignment"
                     CurrPage.Update(false);
                 end;
             }
+
             action(Reject)
             {
                 Caption = 'Reject';
@@ -147,13 +158,13 @@ page 50106 "AST Asset Assignment"
                 trigger OnAction()
                 var
                     lCodPostingMgt: Codeunit "AST Asset Posting Mgt.";
-
                 begin
                     lCodPostingMgt.RejectAssignment(Rec);
                     CurrPage.Update(false);
                 end;
             }
         }
+
         area(Navigation)
         {
             action(ViewLog)
@@ -161,7 +172,7 @@ page 50106 "AST Asset Assignment"
                 Caption = 'Asset Log';
                 Image = Log;
                 ApplicationArea = All;
-                ToolTip = 'View audit log enteries related to this assignment.';
+                ToolTip = 'View audit log entries related to this assignment.';
 
                 trigger OnAction()
                 var
@@ -175,9 +186,10 @@ page 50106 "AST Asset Assignment"
         area(Promoted)
         {
             actionref(Post_Promoted; Post) { }
-            actionref(SendForApproval_promoted; SendForApproval) { }
+            actionref(SendForApproval_Promoted; SendForApproval) { }
         }
     }
+
     var
         IsOpen: Boolean;
         IsPendingApproval: Boolean;
@@ -186,13 +198,14 @@ page 50106 "AST Asset Assignment"
     trigger OnAfterGetRecord()
     begin
         IsOpen := Rec.Status = Rec.Status::Open;
-        IsPendingApproval := Rec."Approval Status" = Rec."Approval Status"::PendingApproval;
+        IsPendingApproval :=
+            Rec."Approval Status" = Rec."Approval Status"::PendingApproval;
 
         case Rec."Approval Status" of
             Rec."Approval Status"::Approved:
                 ApprovalStyle := 'Favorable';
             Rec."Approval Status"::Rejected:
-                ApprovalStyle := 'UnFavorable';
+                ApprovalStyle := 'Unfavorable';
             Rec."Approval Status"::PendingApproval:
                 ApprovalStyle := 'Ambiguous';
             else

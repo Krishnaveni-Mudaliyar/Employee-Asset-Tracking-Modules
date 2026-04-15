@@ -1,6 +1,7 @@
 page 50115 "AST Asset Cue"
 {
     PageType = CardPart;
+    // CardPart = correct type for Role Center activity tiles
     Caption = 'Asset Activities';
     ApplicationArea = All;
     RefreshOnActivate = true;
@@ -103,6 +104,15 @@ page 50115 "AST Asset Cue"
         PostedToday: Integer;
 
     trigger OnOpenPage()
+    begin
+        CalculateCues();
+    end;
+
+    trigger OnAfterGetCurrRecord()
+    // FIX: RefreshOnActivate = true means BC re-activates this page when the user
+    // returns to the Role Center. But OnOpenPage only fires on first open.
+    // OnAfterGetCurrRecord fires every time the page activates — this ensures
+    // cue counts are always fresh when the user navigates back to the Role Center.
     begin
         CalculateCues();
     end;

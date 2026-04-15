@@ -2,8 +2,6 @@ query 50101 "AST Asset Statistics Query"
 {
     Caption = 'Asset Statistics Query';
     QueryType = Normal;
-    // Used for: Role Center cues, Power BI dashboard
-    // Returns asset counts grouped by Status and Category
 
     elements
     {
@@ -12,10 +10,15 @@ query 50101 "AST Asset Statistics Query"
             column(CategoryCode; "Category Code") { }
             column(AssetStatus; Status) { }
             column(AssetCondition; Condition) { }
+
+            // FIX: Method = Count must have NO field source.
+            // Count counts dataitem rows — it does not operate on a specific field.
             column(Count)
             {
                 Method = Count;
             }
+
+            // Method = Sum requires a numeric field source — correct as-is.
             column(TotalPurchasePrice; "Purchase Price")
             {
                 Method = Sum;
@@ -25,6 +28,6 @@ query 50101 "AST Asset Statistics Query"
 
     trigger OnBeforeOpen()
     begin
-        // No default filter — returns all assets grouped
+        // No default filter — returns all assets grouped by Status and Category
     end;
 }

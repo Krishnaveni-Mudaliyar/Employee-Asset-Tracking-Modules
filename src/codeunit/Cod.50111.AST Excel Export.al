@@ -1,50 +1,54 @@
 codeunit 50111 "AST Excel Export"
 {
+    // SESSION 38: Excel Buffer Pattern
+    // The Excel Buffer table is BC's standard way to build Excel files.
+    // Pattern: Init buffer → AddColumn headers → loop data rows → CreateBook
+    // This codeunit exports the Company Asset list to Excel.
+
     procedure ExportAssetsToExcel()
     var
         lRecAsset: Record "AST Company Asset";
-        lTmpExcelBuff: Record "Excel Buffer" temporary;
+        lTmpExcelBuf: Record "Excel Buffer" temporary;
         lIntRow: Integer;
         lTxtSheetName: Text[250];
-
     begin
         lTxtSheetName := 'Asset Register';
         lIntRow := 1;
 
-        //Row 1: Column Headers
-        AddHeader(lTmpExcelBuff, lIntRow, 1, 'Asset No.');
-        AddHeader(lTmpExcelBuff, lIntRow, 2, 'Description');
-        AddHeader(lTmpExcelBuff, lIntRow, 3, 'Category Code');
-        AddHeader(lTmpExcelBuff, lIntRow, 4, 'Serial No.');
-        AddHeader(lTmpExcelBuff, lIntRow, 5, 'Status');
-        AddHeader(lTmpExcelBuff, lIntRow, 6, 'Condition');
-        AddHeader(lTmpExcelBuff, lIntRow, 7, 'Purchase Date');
-        AddHeader(lTmpExcelBuff, lIntRow, 8, 'Purchase Price');
-        AddHeader(lTmpExcelBuff, lIntRow, 9, 'Assigned Employee');
+        // Row 1: Column headers
+        AddHeader(lTmpExcelBuf, lIntRow, 1, 'Asset No.');
+        AddHeader(lTmpExcelBuf, lIntRow, 2, 'Description');
+        AddHeader(lTmpExcelBuf, lIntRow, 3, 'Category Code');
+        AddHeader(lTmpExcelBuf, lIntRow, 4, 'Serial No.');
+        AddHeader(lTmpExcelBuf, lIntRow, 5, 'Status');
+        AddHeader(lTmpExcelBuf, lIntRow, 6, 'Condition');
+        AddHeader(lTmpExcelBuf, lIntRow, 7, 'Purchase Date');
+        AddHeader(lTmpExcelBuf, lIntRow, 8, 'Purchase Price');
+        AddHeader(lTmpExcelBuf, lIntRow, 9, 'Assigned Employee');
 
-        //Data Rows
-
+        // Data rows — SetLoadFields: only load what we export, not all 15 fields
+        lRecAsset.SetLoadFields("No.", Description, "Category Code", "Serial No.", Status,
+            Condition, "Purchase Date", "Purchase Price", "Assigned to Employee No.");
         if lRecAsset.FindSet() then
             repeat
                 lIntRow += 1;
-                AddText(lTmpExcelBuff, lIntRow, 1, lRecAsset."No.");
-                AddText(lTmpExcelBuff, lIntRow, 2, lRecAsset.Description);
-                AddText(lTmpExcelBuff, lIntRow, 3, lRecAsset."Category Code");
-                AddText(lTmpExcelBuff, lIntRow, 4, lRecAsset."Serial No.");
-                AddText(lTmpExcelBuff, lIntRow, 5, lRecAsset.Status);
-                AddText(lTmpExcelBuff, lIntRow, 6, lRecAsset.Condition);
-                AddText(lTmpExcelBuff, lIntRow, 7, lRecAsset."Purchase Date");
-                AddText(lTmpExcelBuff, lIntRow, 8, lRecAsset."Purchase Price");
-                AddText(lTmpExcelBuff, lIntRow, 9, lRecAsset."Assigned to Employee No.");
-
+                AddText(lTmpExcelBuf, lIntRow, 1, lRecAsset."No.");
+                AddText(lTmpExcelBuf, lIntRow, 2, lRecAsset.Description);
+                AddText(lTmpExcelBuf, lIntRow, 3, lRecAsset."Category Code");
+                AddText(lTmpExcelBuf, lIntRow, 4, lRecAsset."Serial No.");
+                AddText(lTmpExcelBuf, lIntRow, 5, Format(lRecAsset.Status));
+                AddText(lTmpExcelBuf, lIntRow, 6, Format(lRecAsset.Condition));
+                AddDate(lTmpExcelBuf, lIntRow, 7, lRecAsset."Purchase Date");
+                AddDecimal(lTmpExcelBuf, lIntRow, 8, lRecAsset."Purchase Price");
+                AddText(lTmpExcelBuf, lIntRow, 9, lRecAsset."Assigned to Employee No.");
             until lRecAsset.Next() = 0;
 
-        // Create and download Excel File
-        lTmpExcelBuff.CreateNewBook(lTxtSheetName);
-        lTmpExcelBuff.WriteSheet(lTxtSheetName, CompanyName(), UserId());
-        lTmpExcelBuff.CloseBook();
-        lTmpExcelBuff.SetFriendlyFilename('AssetRegister_' + Format(Today, 0, '<Year4><Month,2><Day,2>'));
-        lTmpExcelBuff.OpenExcel();
+        // Create and download Excel file
+        lTmpExcelBuf.CreateNewBook(lTxtSheetName);
+        lTmpExcelBuf.WriteSheet(lTxtSheetName, CompanyName(), UserId());
+        lTmpExcelBuf.CloseBook();
+        lTmpExcelBuf.SetFriendlyFilename('AssetRegister_' + Format(Today, 0, '<Year4><Month,2><Day,2>'));
+        lTmpExcelBuf.OpenExcel();
     end;
 
     local procedure AddHeader(var pTmpBuf: Record "Excel Buffer" temporary; pRow: Integer; pCol: Integer; pTxt: Text)
@@ -83,7 +87,7 @@ codeunit 50111 "AST Excel Export"
         pTmpBuf.Init();
         pTmpBuf.Validate("Row No.", pRow);
         pTmpBuf.Validate("Column No.", pCol);
-        pTmpBuf."Cell Type" := pTmpBuf."Cell Type"::Text;
+        pTmpBuf."Cell Type" := pTmpBuf."Cell Type"::Number;
         pTmpBuf."Cell Value as Text" := Format(pDec);
         pTmpBuf.Insert();
     end;

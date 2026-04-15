@@ -2,56 +2,58 @@ codeunit 50101 "AST Asset Posting Mgt."
 {
     TableNo = "AST Asset Assignment Header";
 
-    // TableNo = the table this codeunit operates on
-    // Allows: Codeunit.Run(Codeunit::"AST Asset Posting Mgt.", Rec)
-
     trigger OnRun()
     begin
         PostAssetAssignment(Rec);
     end;
 
-    procedure PostAssetAssignment(
-        var pRecHeader: Record "AST Asset Assignment Header")
+    procedure PostAssetAssignment(var pRecHeader: Record "AST Asset Assignment Header")
     var
         lCodValidation: Codeunit "AST Asset Validation";
         lRecLine: Record "AST Asset Assignment Line";
         lRecSetup: Record "AST Asset Tracking Setup";
         lCodEvents: Codeunit "AST Asset Events";
+        lCodTelemetry: Codeunit "AST Telemetry";
         lBolHandled: Boolean;
-
+        lRecPostedHeader: Record "AST Posted Assignment Header";
     begin
-
         lRecSetup.Get();
         if lRecSetup."Require Approval" then
             if pRecHeader."Approval Status" <> pRecHeader."Approval Status"::Approved then
-                Error('Assignment %1 must be approved before posting.Current approval status: %2.',
-                pRecHeader."No.", pRecHeader."Approval Status");
+                Error('Assignment %1 must be approved before posting. Approval status: %2.',
+                    pRecHeader."No.", pRecHeader."Approval Status");
 
+        // Raise before-event — allow other extensions to intercept or cancel
         lCodEvents.OnBeforePostAssetAssignment(pRecHeader, lBolHandled);
-
         if lBolHandled then
             exit;
 
         // STEP 1: Validate Header
         lCodValidation.ValidateAssignmentHeader(pRecHeader);
 
-        //STEP 2: Validate each line
+        // STEP 2: Validate every Line
         lRecLine.SetRange("Document No.", pRecHeader."No.");
         if lRecLine.FindSet() then
             repeat
                 lCodValidation.ValidateAssignmentLine(lRecLine, pRecHeader);
             until lRecLine.Next() = 0;
 
-        //STEP 3: Create posted header
+        // STEP 3: Create Posted Header
         InsertPostedHeader(pRecHeader);
 
-        //STEP 4: Created posted lines + update assets
+        // STEP 4: Create Posted Lines + Update Asset statuses + Write log entries
         PostLines(pRecHeader);
 
-        //Step 5 : Delete Original document
+        // STEP 5: Delete the original open document
         DeleteOriginalDocument(pRecHeader);
 
-        lCodEvents.OnAfterPostAssetAssignment(GetPostedHeader(pRecHeader."No."));
+        // Raise after-event + telemetry
+        // FIX: Telemetry codeunit existed but was never called from posting.
+        // This is the integration point — after a successful post.
+        lRecPostedHeader := GetPostedHeader(pRecHeader."No.");
+        lCodEvents.OnAfterPostAssetAssignment(lRecPostedHeader);
+        lCodTelemetry.LogAssetAssigned(
+            'MULTI', pRecHeader."Employee No.", pRecHeader."No.");
     end;
 
     procedure SendForApproval(var pRecHeader: Record "AST Asset Assignment Header")
@@ -60,14 +62,13 @@ codeunit 50101 "AST Asset Posting Mgt."
         pRecHeader.TestField("Assignment Date");
 
         if pRecHeader.Status <> pRecHeader.Status::Open then
-            Error('Only open assignments can be sent for approval.');
+            Error('Only Open assignments can be sent for approval.');
 
         if pRecHeader."Approval Status" = pRecHeader."Approval Status"::PendingApproval then
             Error('Assignment %1 is already pending approval.', pRecHeader."No.");
 
         pRecHeader."Approval Status" := pRecHeader."Approval Status"::PendingApproval;
         pRecHeader.Modify(true);
-
         Message('Assignment %1 has been sent for approval.', pRecHeader."No.");
     end;
 
@@ -85,13 +86,13 @@ codeunit 50101 "AST Asset Posting Mgt."
     begin
         if pRecHeader."Approval Status" <> pRecHeader."Approval Status"::PendingApproval then
             Error('Assignment %1 is not pending approval.', pRecHeader."No.");
+
         pRecHeader."Approval Status" := pRecHeader."Approval Status"::Rejected;
         pRecHeader.Modify(true);
         Message('Assignment %1 has been rejected.', pRecHeader."No.");
     end;
 
-    local procedure InsertPostedHeader(
-        var pRecHeader: Record "AST Asset Assignment Header")
+    local procedure InsertPostedHeader(var pRecHeader: Record "AST Asset Assignment Header")
     var
         lRecPostedHeader: Record "AST Posted Assignment Header";
     begin
@@ -112,16 +113,15 @@ codeunit 50101 "AST Asset Posting Mgt."
         lRecAsset: Record "AST Company Asset";
         lCodLogMgt: Codeunit "AST Asset Log Mgt.";
         lEnumStatusBefore: Enum "AST Asset Status";
-
     begin
+        lRecLine.SetLoadFields("Document No.", "Line No.", "Asset No.", "Condition at Handover", Notes);
         lRecLine.SetRange("Document No.", pRecHeader."No.");
         if lRecLine.FindSet() then
             repeat
-                //snapshot asset data at posting time
                 lRecAsset.Get(lRecLine."Asset No.");
                 lEnumStatusBefore := lRecAsset.Status;
 
-                //Create Posted Line
+                // Snapshot asset data at posting time into Posted Line
                 lRecPostedLine.Init();
                 lRecPostedLine."Document No." := pRecHeader."No.";
                 lRecPostedLine."Line No." := lRecLine."Line No.";
@@ -133,22 +133,21 @@ codeunit 50101 "AST Asset Posting Mgt."
                 lRecPostedLine.Notes := lRecLine.Notes;
                 lRecPostedLine.Insert(true);
 
-                //Update asset status
+                // Update asset status
                 lRecAsset.Status := lRecAsset.Status::Assigned;
                 lRecAsset."Assigned to Employee No." := pRecHeader."Employee No.";
                 lRecAsset."Last Assignment Date" := pRecHeader."Assignment Date";
                 lRecAsset.Modify(true);
 
-                //Create log entry
+                // Write audit log
                 lCodLogMgt.CreateLogEntry(
                     lRecAsset,
                     lEnumStatusBefore,
                     lRecAsset.Status::Assigned,
                     "AST Transaction Type"::Assignment,
                     pRecHeader."No.",
-                pRecHeader."Employee No.",
-                pRecHeader."Employee Name");
-
+                    pRecHeader."Employee No.",
+                    pRecHeader."Employee Name");
             until lRecLine.Next() = 0;
     end;
 

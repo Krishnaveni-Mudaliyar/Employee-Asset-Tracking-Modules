@@ -1,11 +1,9 @@
 permissionset 50100 "AST-ADMIN"
 {
     Assignable = true;
-    Caption = 'AST-ADMIN (FUll access)';
+    Caption = 'AST - Admin (Full Access)';
 
     Permissions =
-        // Table Data
-
         tabledata "AST Asset Tracking Setup" = RIMD,
         tabledata "AST Asset Category" = RIMD,
         tabledata "AST Company Asset" = RIMD,
@@ -14,8 +12,6 @@ permissionset 50100 "AST-ADMIN"
         tabledata "AST Posted Assignment Header" = RIMD,
         tabledata "AST Posted Assignment Line" = RIMD,
         tabledata "AST Asset Log Entry" = RI,
-
-        // Objects (Pages,Codeunit,reports)
 
         page "AST Asset Tracking Setup" = X,
         page "AST Asset Category List" = X,
@@ -37,7 +33,6 @@ permissionset 50100 "AST-ADMIN"
         page "AST Asset Assignment API" = X,
         page "AST Posted Assignment API" = X,
 
-        // Codeunits
         codeunit "AST Asset Validation" = X,
         codeunit "AST Asset Posting Mgt." = X,
         codeunit "AST Asset Return Mgt." = X,
@@ -49,17 +44,14 @@ permissionset 50100 "AST-ADMIN"
         codeunit "AST Performance Helpers" = X,
         codeunit "AST Telemetry" = X,
 
-         // Reports
-         report "AST Asset Register" = X,
+        report "AST Asset Register" = X,
         report "AST Asset Handover Letter" = X,
         report "AST Employee Asset Summary" = X,
         report "AST Overdue Asset Return" = X,
         report "AST Asset History" = X,
 
-        //Query
         query "AST Asset Assignment Query" = X,
         query "AST Asset Statistics Query" = X,
 
-        //  XMLport 
         xmlport "AST Asset Migration" = X;
 }

@@ -17,27 +17,27 @@ page 50102 "AST Asset Category Card"
                 field(Code; Rec.Code)
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the code.';
+                    ToolTip = 'Specifies the unique code for this asset category.';
                 }
                 field(Description; Rec.Description)
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies Category Description.';
+                    ToolTip = 'Specifies the full description of the category.';
                 }
                 field("Category Type"; Rec."Category Type")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the category type.';
+                    ToolTip = 'Specifies the type of assets in this category.';
                 }
                 field("Require Approval"; Rec."Require Approval")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies whether this asset category requires approval before assignment.';
+                    ToolTip = 'Specifies whether assignment of assets in this category requires approval.';
                 }
                 field("Default Condition"; Rec."Default Condition")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the condition of assets.';
+                    ToolTip = 'Specifies the default condition applied to new assets in this category.';
                 }
             }
             group(Statistics)
@@ -48,13 +48,13 @@ page 50102 "AST Asset Category Card"
                 {
                     ApplicationArea = All;
                     DrillDown = true;
-                    ToolTip = 'Specifies the number of assets in this category.';
+                    ToolTip = 'Specifies the total number of assets in this category. Click to view them.';
 
                     trigger OnDrillDown()
                     var
                         lRecAsset: Record "AST Company Asset";
                     begin
-                        lRecAsset.SetRange("Category Code", rec.Code);
+                        lRecAsset.SetRange("Category Code", Rec.Code);
                         Page.Run(Page::"AST Company Asset List", lRecAsset);
                     end;
                 }
@@ -78,13 +78,13 @@ page 50102 "AST Asset Category Card"
                     lRecAsset: Record "AST Company Asset";
                 begin
                     lRecAsset.SetRange("Category Code", Rec.Code);
-                    page.Run(Page::"AST Company Asset List", lRecAsset);
+                    Page.Run(Page::"AST Company Asset List", lRecAsset);
                 end;
             }
         }
         area(Promoted)
         {
-            actionref(ViewAssets_promoted; ViewAssets) { }
+            actionref(ViewAssets_Promoted; ViewAssets) { }
         }
     }
 }

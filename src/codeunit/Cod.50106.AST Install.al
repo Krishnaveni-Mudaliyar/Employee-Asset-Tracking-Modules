@@ -1,11 +1,8 @@
 codeunit 50106 "AST Install"
 {
     Subtype = Install;
-    // Subtype = Install → BC knows this runs
-    // only on first installation
 
     trigger OnInstallAppPerCompany()
-    //Runs once per company in the tenant
     begin
         CreateDefaultSetup();
         CreateDefaultNumberSeries();
@@ -18,7 +15,6 @@ codeunit 50106 "AST Install"
     begin
         if lRecSetup.Get() then
             exit;
-
         lRecSetup.Init();
         lRecSetup."Primary Key" := '';
         lRecSetup."Default Return Days" := 30;
@@ -32,9 +28,7 @@ codeunit 50106 "AST Install"
         lRecNoSeries: Record "No. Series";
         lRecNoSeriesLine: Record "No. Series Line";
         lRecSetup: Record "AST Asset Tracking Setup";
-
     begin
-        // Asset Number Series
         if not lRecNoSeries.Get('AST-ASSET') then begin
             lRecNoSeries.Init();
             lRecNoSeries.Code := 'AST-ASSET';
@@ -51,7 +45,6 @@ codeunit 50106 "AST Install"
             lRecNoSeriesLine.Insert(true);
         end;
 
-        // Assignment Number Series
         if not lRecNoSeries.Get('AST-ASSIGN') then begin
             lRecNoSeries.Init();
             lRecNoSeries.Code := 'AST-ASSIGN';
@@ -68,23 +61,30 @@ codeunit 50106 "AST Install"
             lRecNoSeriesLine.Insert(true);
         end;
 
-        // Link to setup
-        lRecSetup.Get(); // Already created above
+        lRecSetup.Get();
         lRecSetup."Asset Nos." := 'AST-ASSET';
         lRecSetup."Assignment Nos." := 'AST-ASSIGN';
         lRecSetup.Modify(true);
     end;
 
     local procedure CreateDefaultCategories()
-    var
-        lRecCategory: Record "AST Asset Category";
     begin
-        InsertCategory('IT-EQUIP', 'IT Equipment',
-        "AST Asset Category Type"::"IT Equipment");
-        InsertCategory('FURNITURE', 'Furniture',
-        "AST Asset Category Type"::Furniture);
-        InsertCategory('VEHICLE', 'Vehicle',
-        "AST Asset Category Type"::Vehicle);
+        // FIX: Original install created IT-EQUIP, FURNITURE, VEHICLE.
+        // The migration CSV uses: IT-HW, IT-ACC, IT-MOB, IT-NW, COMM, FURN, AV.
+        // This mismatch caused ALL 55 CSV rows to fail on import because
+        // Tab.50102 has TableRelation = "AST Asset Category" on Category Code.
+        // Install must create categories that match what the data migration uses.
+        InsertCategory('IT-HW', 'IT Hardware', "AST Asset Category Type"::"IT Equipment");
+        InsertCategory('IT-ACC', 'IT Accessories', "AST Asset Category Type"::"IT Equipment");
+        InsertCategory('IT-MOB', 'Mobile Devices', "AST Asset Category Type"::"IT Equipment");
+        InsertCategory('IT-NW', 'Network Equipment', "AST Asset Category Type"::"IT Equipment");
+        InsertCategory('COMM', 'Communication', "AST Asset Category Type"::Other);
+        InsertCategory('FURN', 'Furniture', "AST Asset Category Type"::Furniture);
+        InsertCategory('AV', 'Audio Visual', "AST Asset Category Type"::Other);
+        // General-purpose categories
+        InsertCategory('IT-EQUIP', 'IT Equipment', "AST Asset Category Type"::"IT Equipment");
+        InsertCategory('VEHICLE', 'Vehicle', "AST Asset Category Type"::Vehicle);
+        InsertCategory('MACHINERY', 'Machinery', "AST Asset Category Type"::Machinery);
     end;
 
     local procedure InsertCategory(
