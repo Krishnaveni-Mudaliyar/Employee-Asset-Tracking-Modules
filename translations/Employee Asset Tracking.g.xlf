@@ -1683,11 +1683,6 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Report AST Asset History - Control Filters - Property Caption</note>
         </trans-unit>
-        <trans-unit id="Report 1867245160 - ReportLayout 3367648989 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Asset History (RDLC)</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Report AST Asset History - ReportLayout RDLCLayout - Property Caption</note>
-        </trans-unit>
         <trans-unit id="Report 626620913 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Asset Register</source>
           <note from="Developer" annotates="general" priority="2"></note>
