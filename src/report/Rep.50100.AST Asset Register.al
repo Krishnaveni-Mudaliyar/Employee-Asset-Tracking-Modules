@@ -52,7 +52,7 @@ report 50100 "AST Asset Register"
         layout(RDLCLayout)
         {
             Type = RDLC;
-            LayoutFile = 'RDL/src/reportlayout/ASTAssetRegister.rdl';
+            LayoutFile = 'src/reportlayout/RDL/ASTAssetRegister.rdl';
         }
 
     }

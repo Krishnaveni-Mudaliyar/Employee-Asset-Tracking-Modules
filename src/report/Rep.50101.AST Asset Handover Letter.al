@@ -61,7 +61,7 @@ report 50101 "AST Asset Handover Letter"
         layout(RDLCLayout)
         {
             Type = RDLC;
-            LayoutFile = 'RDL/src/reportlayout/ASTAssetHandoverLetter.rdl';
+            LayoutFile = 'src/reportlayout/RDL/ASTAssetHandoverLetter.rdl';
         }
     }
 }

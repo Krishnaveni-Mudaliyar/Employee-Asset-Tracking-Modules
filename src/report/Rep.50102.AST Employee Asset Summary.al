@@ -55,7 +55,7 @@ report 50102 "AST Employee Asset Summary"
         layout(RDLCLayout)
         {
             Type = RDLC;
-            LayoutFile = 'RDL/src/reportlayout/ASTEmployeeAssetSummary.rdl';
+            LayoutFile = 'src/reportlayout/RDL/ASTEmployeeAssetSummary.rdl';
             Caption = 'Employee Asset Summary (RDLC)';
         }
     }
