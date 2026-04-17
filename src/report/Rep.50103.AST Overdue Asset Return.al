@@ -64,8 +64,8 @@ report 50103 "AST Overdue Asset Return"
         layout(RDLCLayout)
         {
             Type = RDLC;
+            LayoutFile = 'src/reportlayout/ASTOverdueAssetReturn.rdlc';
             Caption = 'Overdue Asset Return (RDLC)';
-            LayoutFile = 'src/reportlayout/AssetHistory.rdl';
         }
     }
 

@@ -92,9 +92,6 @@ page 50101 "AST Asset Category List"
                 end;
             }
         }
-        area(Promoted)
-        {
-            actionref(NewAsset_Promoted; NewAsset) { }
-        }
+        actionref(NewAsset_Promoted; NewAsset) { }
     }
 }

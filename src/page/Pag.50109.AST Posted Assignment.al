@@ -137,10 +137,7 @@ page 50109 "AST Posted Assignment"
                 end;
             }
         }
-        area(Promoted)
-        {
-            actionref(ProcessReturn_Promoted; ProcessReturn) { }
-        }
+        actionref(ProcessReturn_Promoted; ProcessReturn) { }
     }
 
     var

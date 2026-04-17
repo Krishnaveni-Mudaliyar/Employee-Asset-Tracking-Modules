@@ -1,4 +1,4 @@
-codeunit 50109 "AST Posting Test"
+codeunit 50151 "AST Posting Test"
 {
     Subtype = Test;
     TestPermissions = Disabled;

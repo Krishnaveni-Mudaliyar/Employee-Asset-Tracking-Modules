@@ -171,11 +171,9 @@ page 50103 "AST Company Asset List"
             }
         }
         // BC 21+ — promote to top bar
-        area(Promoted)
-        {
-            actionref(ImportAssets_Promoted; ImportAssets) { }
-        }
+        actionref(ImportAssets_Promoted; ImportAssets) { }
     }
+
     var
         StatusStyle: Text;
 

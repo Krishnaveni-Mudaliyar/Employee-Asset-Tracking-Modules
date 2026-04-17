@@ -183,11 +183,9 @@ page 50106 "AST Asset Assignment"
                 end;
             }
         }
-        area(Promoted)
-        {
-            actionref(Post_Promoted; Post) { }
-            actionref(SendForApproval_Promoted; SendForApproval) { }
-        }
+
+        actionref(Post_Promoted; Post) { }
+        actionref(SendForApproval_Promoted; SendForApproval) { }
     }
 
     var

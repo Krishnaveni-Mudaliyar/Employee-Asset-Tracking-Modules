@@ -127,33 +127,40 @@ table 50102 "AST Company Asset"
         // every Count() by Status is a full table scan. Critical for performance.
     }
 
+    var
+        ErrAssetAssignedLbl: Label 'Asset %1 cannot be deleted because it is currently assigned to employee %2.', Comment = '%1 = Asset No., %2 = Employee No.';
+        ErrAssetDefaultConditionLbl: Label 'Default condition applied from setup.', Locked = true;
+
     trigger OnInsert()
     var
         lRecSetup: Record "AST Asset Tracking Setup";
         lCodNoSeries: Codeunit "No. Series";
     begin
-        // Auto-generate No.
         if "No." = '' then begin
             lRecSetup.Get();
             lRecSetup.TestField("Asset Nos.");
             "No." := lCodNoSeries.GetNextNo(lRecSetup."Asset Nos.", Today, true);
         end;
 
-        // Always set default Status
-        Status := Status::Available;
+        // FIX: Status was never defaulted when creating assets manually.
+        // Only the XMLport set it. Any asset created through the Card page
+        // or from code had Status = 0 (blank) — causing filtering failures
+        // and incorrect cue counts.
+        if Status = Status::" " then
+            Status := Status::Available;
 
-        // Apply Default Condition from Setup
-        lRecSetup.Get();
-        if lRecSetup."Default Asset Condition".AsInteger() <> 0 then
-            Condition := lRecSetup."Default Asset Condition";
+        // Apply Default Condition from Setup if not already set
+        if Condition = Condition::" " then begin
+            lRecSetup.Get();
+            if lRecSetup."Default Asset Condition" <> lRecSetup."Default Asset Condition"::" " then
+                Condition := lRecSetup."Default Asset Condition";
+        end;
 
-        // Audit Fields
         "Created By" := CopyStr(UserId(), 1, 50);
         "Created Date" := Today;
         "Last Modified By" := CopyStr(UserId(), 1, 50);
         "Last Modified Date" := Today;
     end;
-
 
     trigger OnModify()
     begin
@@ -164,9 +171,6 @@ table 50102 "AST Company Asset"
     trigger OnDelete()
     begin
         if Status = Status::Assigned then
-            Error(
-                'Asset %1 cannot be deleted because it is currently assigned to employee %2.',
-                "No.", "Assigned to Employee No."
-            );
+            Error(ErrAssetAssignedLbl, "No.", "Assigned to Employee No.");
     end;
 }

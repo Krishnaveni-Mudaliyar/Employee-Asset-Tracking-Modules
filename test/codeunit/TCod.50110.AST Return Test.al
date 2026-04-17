@@ -1,4 +1,4 @@
-codeunit 50110 "AST Return Test"
+codeunit 50152 "AST Return Test"
 {
     Subtype = Test;
     TestPermissions = Disabled;

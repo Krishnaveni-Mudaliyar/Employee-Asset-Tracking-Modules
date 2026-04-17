@@ -101,7 +101,7 @@ page 50104 "AST Company Asset Card"
                     ToolTip = 'Specifies the vendor this asset was purchased from.';
                 }
             }
-            group(Note)
+            group(Notes)
             {
                 Caption = 'Notes';
 
@@ -203,11 +203,9 @@ page 50104 "AST Company Asset Card"
                 end;
             }
         }
-        area(Promoted)
-        {
-            actionref(CreateAssignment_Promoted; CreateAssignment) { }
-        }
+        actionref(CreateAssignment_Promoted; CreateAssignment) { }
     }
+
     var
         IsAssigned: Boolean;
         IsAvailable: Boolean;
