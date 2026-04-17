@@ -82,6 +82,9 @@ page 50102 "AST Asset Category Card"
                 end;
             }
         }
-        actionref(ViewAssets_Promoted; ViewAssets) { }
+        area(Promoted)
+        {
+            actionref(ViewAssets_Promoted; ViewAssets) { }
+        }
     }
 }

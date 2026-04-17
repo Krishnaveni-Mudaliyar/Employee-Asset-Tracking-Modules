@@ -2,9 +2,9 @@ enum 50101 "AST Asset Condition"
 {
     Extensible = true;
 
-    value(0; "")
+    value(0; " ")
     {
-        Caption = '';
+        Caption = ' ';
     }
     value(1; Excellent)
     {

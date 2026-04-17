@@ -2,9 +2,9 @@ enum 50100 "AST Asset Status"
 {
     Extensible = true;
 
-    value(0; "")
+    value(0; " ")
     {
-        Caption = '';
+        Caption = ' ';
     }
     value(1; Available)
     {
