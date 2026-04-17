@@ -52,8 +52,9 @@ report 50100 "AST Asset Register"
         layout(RDLCLayout)
         {
             Type = RDLC;
-            LayoutFile = 'src/reportlayout/ASTAssetRegister.rdlc';
+            LayoutFile = 'RDL/src/reportlayout/ASTAssetRegister.rdl';
         }
+
     }
     var
         StatusFilter: Enum "AST Asset Status";

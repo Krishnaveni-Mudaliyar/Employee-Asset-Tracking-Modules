@@ -56,8 +56,7 @@ report 50104 "AST Asset History"
         layout(RDLCLayout)
         {
             Type = RDLC;
-            LayoutFile = 'src/reportlayout/ASTAssetHistory.rdlc';
-            Caption = 'Asset History (RDLC)';
+            LayoutFile = 'RDL/src/reportlayout/ASTAssetHistory.rdl';
         }
     }
 }
