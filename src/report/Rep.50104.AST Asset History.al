@@ -56,7 +56,12 @@ report 50104 "AST Asset History"
         layout(RDLCLayout)
         {
             Type = RDLC;
-            LayoutFile = 'src/reportlayout/RDL/ASTAssetHistory.rdl';
+            LayoutFile = 'src\reportlayout\RDL\ASTAssetHistory.rdl';
+        }
+        layout(WordLayout)
+        {
+            Type = Word;
+            LayoutFile = 'src\reportlayout\WORD\ASTAssetHistory.docx';
         }
     }
 }

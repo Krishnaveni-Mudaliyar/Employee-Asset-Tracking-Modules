@@ -1713,11 +1713,6 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Report AST Employee Asset Summary - Control Filters - Property Caption</note>
         </trans-unit>
-        <trans-unit id="Report 4095690460 - ReportLayout 3367648989 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Employee Asset Summary (RDLC)</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Report AST Employee Asset Summary - ReportLayout RDLCLayout - Property Caption</note>
-        </trans-unit>
         <trans-unit id="Report 1227199218 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Overdue Asset Return</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -1737,11 +1732,6 @@
           <source>Overdue As Of</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Report AST Overdue Asset Return - Control AsOfDate - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Report 1227199218 - ReportLayout 3367648989 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Overdue Asset Return (RDLC)</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Report AST Overdue Asset Return - ReportLayout RDLCLayout - Property Caption</note>
         </trans-unit>
         <trans-unit id="Query 2010620929 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Asset Assignment Query</source>
