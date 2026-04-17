@@ -24,61 +24,6 @@
       <rd:DataSourceID>d683af63-adad-4912-8905-67c7d454469f</rd:DataSourceID>
     </DataSource>
   </DataSources>
-  <DataSets>
-    <DataSet Name="DataSet_Result">
-      <Query>
-        <DataSourceName>DataSource</DataSourceName>
-        <CommandText />
-      </Query>
-      <Fields>
-        <Field Name="No_">
-          <DataField>No_</DataField>
-        </Field>
-        <Field Name="Employee_No_">
-          <DataField>Employee_No_</DataField>
-        </Field>
-        <Field Name="Employee_Name">
-          <DataField>Employee_Name</DataField>
-        </Field>
-        <Field Name="Assignment_Date">
-          <DataField>Assignment_Date</DataField>
-        </Field>
-        <Field Name="Expected_Return_Date">
-          <DataField>Expected_Return_Date</DataField>
-        </Field>
-        <Field Name="Department">
-          <DataField>Department</DataField>
-        </Field>
-        <Field Name="Purpose">
-          <DataField>Purpose</DataField>
-        </Field>
-        <Field Name="Posting_Date">
-          <DataField>Posting_Date</DataField>
-        </Field>
-        <Field Name="Posted_By">
-          <DataField>Posted_By</DataField>
-        </Field>
-        <Field Name="Asset_No_">
-          <DataField>Asset_No_</DataField>
-        </Field>
-        <Field Name="Asset_Description">
-          <DataField>Asset_Description</DataField>
-        </Field>
-        <Field Name="Serial_No_">
-          <DataField>Serial_No_</DataField>
-        </Field>
-        <Field Name="Category_Code">
-          <DataField>Category_Code</DataField>
-        </Field>
-        <Field Name="Condition_at_Handover">
-          <DataField>Condition_at_Handover</DataField>
-        </Field>
-        <Field Name="Notes">
-          <DataField>Notes</DataField>
-        </Field>
-      </Fields>
-    </DataSet>
-  </DataSets>
   <ReportSections>
     <ReportSection>
       <Body>
@@ -1633,12 +1578,6 @@
       </Page>
     </ReportSection>
   </ReportSections>
-  <ReportParametersLayout>
-    <GridLayoutDefinition>
-      <NumberOfColumns>4</NumberOfColumns>
-      <NumberOfRows>2</NumberOfRows>
-    </GridLayoutDefinition>
-  </ReportParametersLayout>
   <Code>Public Function BlankZero(ByVal Value As Decimal)
     if Value = 0 then
         Return ""
@@ -1676,4 +1615,59 @@ End Function
 </Code>
   <Language>=User!Language</Language>
   <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Fields>
+        <Field Name="No_">
+          <DataField>No_</DataField>
+        </Field>
+        <Field Name="Employee_No_">
+          <DataField>Employee_No_</DataField>
+        </Field>
+        <Field Name="Employee_Name">
+          <DataField>Employee_Name</DataField>
+        </Field>
+        <Field Name="Assignment_Date">
+          <DataField>Assignment_Date</DataField>
+        </Field>
+        <Field Name="Expected_Return_Date">
+          <DataField>Expected_Return_Date</DataField>
+        </Field>
+        <Field Name="Department">
+          <DataField>Department</DataField>
+        </Field>
+        <Field Name="Purpose">
+          <DataField>Purpose</DataField>
+        </Field>
+        <Field Name="Posting_Date">
+          <DataField>Posting_Date</DataField>
+        </Field>
+        <Field Name="Posted_By">
+          <DataField>Posted_By</DataField>
+        </Field>
+        <Field Name="Asset_No_">
+          <DataField>Asset_No_</DataField>
+        </Field>
+        <Field Name="Asset_Description">
+          <DataField>Asset_Description</DataField>
+        </Field>
+        <Field Name="Serial_No_">
+          <DataField>Serial_No_</DataField>
+        </Field>
+        <Field Name="Category_Code">
+          <DataField>Category_Code</DataField>
+        </Field>
+        <Field Name="Condition_at_Handover">
+          <DataField>Condition_at_Handover</DataField>
+        </Field>
+        <Field Name="Notes">
+          <DataField>Notes</DataField>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+    </DataSet>
+  </DataSets>
 </Report>

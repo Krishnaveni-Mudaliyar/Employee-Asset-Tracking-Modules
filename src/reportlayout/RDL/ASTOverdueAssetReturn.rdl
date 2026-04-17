@@ -24,46 +24,6 @@
       <rd:DataSourceID>7c844024-86b3-44c7-84cf-7c596a89e1d4</rd:DataSourceID>
     </DataSource>
   </DataSources>
-  <DataSets>
-    <DataSet Name="DataSet_Result">
-      <Query>
-        <DataSourceName>DataSource</DataSourceName>
-        <CommandText />
-      </Query>
-      <Fields>
-        <Field Name="DocNo">
-          <DataField>DocNo</DataField>
-        </Field>
-        <Field Name="Employee_No">
-          <DataField>Employee_No</DataField>
-        </Field>
-        <Field Name="Employee_Name">
-          <DataField>Employee_Name</DataField>
-        </Field>
-        <Field Name="Assignment_Date">
-          <DataField>Assignment_Date</DataField>
-        </Field>
-        <Field Name="Expected_Return_Date">
-          <DataField>Expected_Return_Date</DataField>
-        </Field>
-        <Field Name="Department">
-          <DataField>Department</DataField>
-        </Field>
-        <Field Name="Asset_No">
-          <DataField>Asset_No</DataField>
-        </Field>
-        <Field Name="Asset_Description">
-          <DataField>Asset_Description</DataField>
-        </Field>
-        <Field Name="Serial_No">
-          <DataField>Serial_No</DataField>
-        </Field>
-        <Field Name="Category_Code">
-          <DataField>Category_Code</DataField>
-        </Field>
-      </Fields>
-    </DataSet>
-  </DataSets>
   <ReportSections>
     <ReportSection>
       <Body>
@@ -931,12 +891,6 @@
       </Page>
     </ReportSection>
   </ReportSections>
-  <ReportParametersLayout>
-    <GridLayoutDefinition>
-      <NumberOfColumns>4</NumberOfColumns>
-      <NumberOfRows>2</NumberOfRows>
-    </GridLayoutDefinition>
-  </ReportParametersLayout>
   <Code>Public Function BlankZero(ByVal Value As Decimal)
     if Value = 0 then
         Return ""
@@ -974,4 +928,44 @@ End Function
 </Code>
   <Language>=User!Language</Language>
   <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Fields>
+        <Field Name="DocNo">
+          <DataField>DocNo</DataField>
+        </Field>
+        <Field Name="Employee_No">
+          <DataField>Employee_No</DataField>
+        </Field>
+        <Field Name="Employee_Name">
+          <DataField>Employee_Name</DataField>
+        </Field>
+        <Field Name="Assignment_Date">
+          <DataField>Assignment_Date</DataField>
+        </Field>
+        <Field Name="Expected_Return_Date">
+          <DataField>Expected_Return_Date</DataField>
+        </Field>
+        <Field Name="Department">
+          <DataField>Department</DataField>
+        </Field>
+        <Field Name="Asset_No">
+          <DataField>Asset_No</DataField>
+        </Field>
+        <Field Name="Asset_Description">
+          <DataField>Asset_Description</DataField>
+        </Field>
+        <Field Name="Serial_No">
+          <DataField>Serial_No</DataField>
+        </Field>
+        <Field Name="Category_Code">
+          <DataField>Category_Code</DataField>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+    </DataSet>
+  </DataSets>
 </Report>

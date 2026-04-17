@@ -24,55 +24,6 @@
       <rd:DataSourceID>ec64ce22-6141-44a8-b15f-28e781b32b79</rd:DataSourceID>
     </DataSource>
   </DataSources>
-  <DataSets>
-    <DataSet Name="DataSet_Result">
-      <Query>
-        <DataSourceName>DataSource</DataSourceName>
-        <CommandText />
-      </Query>
-      <Fields>
-        <Field Name="Employee_No">
-          <DataField>Employee_No</DataField>
-        </Field>
-        <Field Name="Employee_FirstName">
-          <DataField>Employee_FirstName</DataField>
-        </Field>
-        <Field Name="Employee_LastName">
-          <DataField>Employee_LastName</DataField>
-        </Field>
-        <Field Name="Department">
-          <DataField>Department</DataField>
-        </Field>
-        <Field Name="Employee_Email">
-          <DataField>Employee_Email</DataField>
-        </Field>
-        <Field Name="Asset_No">
-          <DataField>Asset_No</DataField>
-        </Field>
-        <Field Name="Asset_Description">
-          <DataField>Asset_Description</DataField>
-        </Field>
-        <Field Name="Asset_CategoryCode">
-          <DataField>Asset_CategoryCode</DataField>
-        </Field>
-        <Field Name="Asset_SerialNo">
-          <DataField>Asset_SerialNo</DataField>
-        </Field>
-        <Field Name="Asset_Condition">
-          <DataField>Asset_Condition</DataField>
-        </Field>
-        <Field Name="Asset_PurchasePrice">
-          <DataField>Asset_PurchasePrice</DataField>
-        </Field>
-        <Field Name="Asset_PurchasePriceFormat">
-          <DataField>Asset_PurchasePriceFormat</DataField>
-        </Field>
-        <Field Name="Asset_LastAssignmentDate">
-          <DataField>Asset_LastAssignmentDate</DataField>
-        </Field>
-      </Fields>
-    </DataSet>
-  </DataSets>
   <ReportSections>
     <ReportSection>
       <Body>
@@ -990,12 +941,6 @@
       </Page>
     </ReportSection>
   </ReportSections>
-  <ReportParametersLayout>
-    <GridLayoutDefinition>
-      <NumberOfColumns>4</NumberOfColumns>
-      <NumberOfRows>2</NumberOfRows>
-    </GridLayoutDefinition>
-  </ReportParametersLayout>
   <Code>Public Function BlankZero(ByVal Value As Decimal)
     if Value = 0 then
         Return ""
@@ -1033,4 +978,53 @@ End Function
 </Code>
   <Language>=User!Language</Language>
   <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Fields>
+        <Field Name="Employee_No">
+          <DataField>Employee_No</DataField>
+        </Field>
+        <Field Name="Employee_FirstName">
+          <DataField>Employee_FirstName</DataField>
+        </Field>
+        <Field Name="Employee_LastName">
+          <DataField>Employee_LastName</DataField>
+        </Field>
+        <Field Name="Department">
+          <DataField>Department</DataField>
+        </Field>
+        <Field Name="Employee_Email">
+          <DataField>Employee_Email</DataField>
+        </Field>
+        <Field Name="Asset_No">
+          <DataField>Asset_No</DataField>
+        </Field>
+        <Field Name="Asset_Description">
+          <DataField>Asset_Description</DataField>
+        </Field>
+        <Field Name="Asset_CategoryCode">
+          <DataField>Asset_CategoryCode</DataField>
+        </Field>
+        <Field Name="Asset_SerialNo">
+          <DataField>Asset_SerialNo</DataField>
+        </Field>
+        <Field Name="Asset_Condition">
+          <DataField>Asset_Condition</DataField>
+        </Field>
+        <Field Name="Asset_PurchasePrice">
+          <DataField>Asset_PurchasePrice</DataField>
+        </Field>
+        <Field Name="Asset_PurchasePriceFormat">
+          <DataField>Asset_PurchasePriceFormat</DataField>
+        </Field>
+        <Field Name="Asset_LastAssignmentDate">
+          <DataField>Asset_LastAssignmentDate</DataField>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+    </DataSet>
+  </DataSets>
 </Report>
