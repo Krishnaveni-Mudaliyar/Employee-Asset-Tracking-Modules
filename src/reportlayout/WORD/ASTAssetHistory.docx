@@ -1,0 +1,12 @@
+<Report>
+  <DataSets>
+    <DataSet Name="AssetHistory">
+      <Fields>
+        <Field Name="Asset_No_"><DataField>Asset_No_</DataField></Field>
+        <Field Name="Employee_Name"><DataField>Employee_Name</DataField></Field>
+        <Field Name="Assignment_Date"><DataField>Assignment_Date</DataField></Field>
+        <Field Name="Return_Date"><DataField>Return_Date</DataField></Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+</Report>

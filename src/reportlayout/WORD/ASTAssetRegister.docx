@@ -1,1 +1,12 @@
-﻿
+﻿<Report>
+  <DataSets>
+    <DataSet Name="AssetRegister">
+      <Fields>
+        <Field Name="Asset_No_"><DataField>Asset_No_</DataField></Field>
+        <Field Name="Description"><DataField>Description</DataField></Field>
+        <Field Name="Category_Code"><DataField>Category_Code</DataField></Field>
+        <Field Name="Status"><DataField>Status</DataField></Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+</Report>

@@ -1,1 +1,35 @@
-﻿
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition">
+  <DataSets>
+    <DataSet Name="AssetHandover">
+      <Fields>
+        <Field Name="Employee_Name"><DataField>Employee_Name</DataField></Field>
+        <Field Name="Asset_Description"><DataField>Asset_Description</DataField></Field>
+        <Field Name="Asset_No_"><DataField>Asset_No_</DataField></Field>
+        <Field Name="Assignment_Date"><DataField>Assignment_Date</DataField></Field>
+        <Field Name="Condition_at_Handover"><DataField>Condition_at_Handover</DataField></Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+
+  <ReportSections>
+    <ReportSection>
+      <Body>
+        <ReportItems>
+          <Textbox Name="Title">
+            <Value>Asset Handover Letter</Value>
+          </Textbox>
+
+          <Textbox Name="BodyText">
+            <Value>
+="This is to confirm that " & Fields!Employee_Name.Value &
+" has received asset " & Fields!Asset_Description.Value &
+" (" & Fields!Asset_No_.Value & ") on " &
+Fields!Assignment_Date.Value
+            </Value>
+          </Textbox>
+        </ReportItems>
+      </Body>
+    </ReportSection>
+  </ReportSections>
+</Report>

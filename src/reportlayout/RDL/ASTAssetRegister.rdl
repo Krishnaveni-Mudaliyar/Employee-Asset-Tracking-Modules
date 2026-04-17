@@ -1,1 +1,43 @@
-﻿
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Fields>
+        <Field Name="No_">
+          <DataField>No_</DataField>
+        </Field>
+        <Field Name="Description">
+          <DataField>Description</DataField>
+        </Field>
+        <Field Name="Category_Code">
+          <DataField>Category_Code</DataField>
+        </Field>
+        <Field Name="Status">
+          <DataField>Status</DataField>
+        </Field>
+        <Field Name="Condition">
+          <DataField>Condition</DataField>
+        </Field>
+        <Field Name="Purchase_Date">
+          <DataField>Purchase_Date</DataField>
+        </Field>
+        <Field Name="Purchase_Price">
+          <DataField>Purchase_Price</DataField>
+        </Field>
+        <Field Name="Purchase_PriceFormat">
+          <DataField>Purchase_PriceFormat</DataField>
+        </Field>
+        <Field Name="AssignedEmployee">
+          <DataField>AssignedEmployee</DataField>
+        </Field>
+        <Field Name="Serial_No_">
+          <DataField>Serial_No_</DataField>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+    </DataSet>
+  </DataSets>
+</Report>
