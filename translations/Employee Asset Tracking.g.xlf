@@ -48,6 +48,16 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table AST Asset Assignment Header - Field Expected Return Date - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Table 3995666550 - Field 3708568500 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Last Modified By</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table AST Asset Assignment Header - Field Last Modified By - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3995666550 - Field 2626717425 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Last Modified Date</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table AST Asset Assignment Header - Field Last Modified Date - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Table 3995666550 - Field 4200184881 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>No.</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -278,6 +288,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table AST Company Asset - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Table 3247191795 - NamedType 1356622769" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Asset %1 cannot be deleted because it is currently assigned to employee %2.</source>
+          <note from="Developer" annotates="general" priority="2">%1 = Asset No., %2 = Employee No.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table AST Company Asset - NamedType ErrAssetAssignedLbl</note>
+        </trans-unit>
         <trans-unit id="Table 3247191795 - Field 2115922498 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Assigned to Employee Name</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -499,12 +514,12 @@
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Assignment - Control General - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 1968368079 - Control 1368313561 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Specifies the asset assignment date.</source>
+          <source>Specifies the date of assignment.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Assignment - Control Assignment Date - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="Page 1968368079 - Control 1651921640 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Specifies the department with whom you are assigned the asset.</source>
+          <source>Specifies the department.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Assignment - Control Department - Property ToolTip</note>
         </trans-unit>
@@ -524,32 +539,52 @@
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Assignment - Control Expected Return Date - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="Page 1968368079 - Control 4200184881 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Specifies the unique number of asset assignment.</source>
+          <source>Specifies the unique number of the asset assignment.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Assignment - Control No. - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="Page 1968368079 - Control 1834324738 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Specifies the purpose of assigning the asset.</source>
+          <source>Specifies the purpose of the assignment.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Assignment - Control Purpose - Property ToolTip</note>
         </trans-unit>
-        <trans-unit id="Page 1968368079 - Control 4280764805 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+        <trans-unit id="Page 1968368079 - Control 3498551853 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Status</source>
           <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Assignment - Control Status group - Property Caption</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Assignment - Control StatusGroup - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 1968368079 - Control 1878856189 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Specifies the current approval status of the assignment.</source>
+          <source>Specifies the current approval status.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Assignment - Control Approval Status - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="Page 1968368079 - Control 513339096 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Specifies the status of asset assignment.</source>
+          <source>Specifies the document status.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Assignment - Control Status - Property ToolTip</note>
         </trans-unit>
+        <trans-unit id="Page 1968368079 - Action 4000661843 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>View audit log entries related to this assignment.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Assignment - Action ViewLog - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 1968368079 - Action 4000661843 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Asset Log</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Assignment - Action ViewLog - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 1968368079 - Action 803889193 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Approve this assignment for posting.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Assignment - Action Approve - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 1968368079 - Action 803889193 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Approve</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Assignment - Action Approve - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Page 1968368079 - Action 2282416948 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Posts the asset assignment document.</source>
+          <source>Post the asset assignment document.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Assignment - Action Post - Property ToolTip</note>
         </trans-unit>
@@ -558,15 +593,70 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Assignment - Action Post - Property Caption</note>
         </trans-unit>
-        <trans-unit id="Page 1968368079 - Action 1234931829 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Sends the assignment for manager approval.</source>
+        <trans-unit id="Page 1968368079 - Action 113888489 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Reject this assignment request.</source>
           <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Assignment - Action SendApproval - Property ToolTip</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Assignment - Action Reject - Property ToolTip</note>
         </trans-unit>
-        <trans-unit id="Page 1968368079 - Action 1234931829 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+        <trans-unit id="Page 1968368079 - Action 113888489 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Reject</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Assignment - Action Reject - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 1968368079 - Action 3345212148 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Send this assignment to the approver for review.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Assignment - Action SendForApproval - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 1968368079 - Action 3345212148 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Send for Approval</source>
           <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Assignment - Action SendApproval - Property Caption</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Assignment - Action SendForApproval - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 822526839 - Control 2459035849 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the assignment date.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Assignment API - Control assignmentDate - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 822526839 - Control 3874508232 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the department.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Assignment API - Control department - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 822526839 - Control 1020011527 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the employee name.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Assignment API - Control employeeName - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 822526839 - Control 514871541 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the employee number.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Assignment API - Control employeeNo - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 822526839 - Control 2741015772 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the expected return date.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Assignment API - Control expectedReturnDate - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 822526839 - Control 2757394829 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the posted assignment number.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Assignment API - Control number - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 822526839 - Control 3388681014 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies who posted this assignment.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Assignment API - Control postedBy - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 822526839 - Control 1260828904 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the posting date.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Assignment API - Control postingDate - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 822526839 - Control 3189546032 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the transaction type.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Assignment API - Control transactionType - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="Page 4154038489 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Asset Assignment</source>
@@ -624,27 +714,27 @@
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Category Card - Control General - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 3741903566 - Control 2005114036 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Specifies the category type.</source>
+          <source>Specifies the type of assets in this category.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Category Card - Control Category Type - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="Page 3741903566 - Control 3004954119 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Specifies the code.</source>
+          <source>Specifies the unique code for this asset category.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Category Card - Control Code - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="Page 3741903566 - Control 1578203076 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Specifies the condition of assets.</source>
+          <source>Specifies the default condition applied to new assets in this category.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Category Card - Control Default Condition - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="Page 3741903566 - Control 3461834954 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Specifies Category Description.</source>
+          <source>Specifies the full description of the category.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Category Card - Control Description - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="Page 3741903566 - Control 3568443742 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Specifies whether this asset category requires approval before assignment.</source>
+          <source>Specifies whether assignment of assets in this category requires approval.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Category Card - Control Require Approval - Property ToolTip</note>
         </trans-unit>
@@ -654,9 +744,19 @@
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Category Card - Control Statistics - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 3741903566 - Control 4094423959 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Specifies the number of assets in this category.</source>
+          <source>Specifies the total number of assets in this category. Click to view them.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Category Card - Control No. of Assets - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3741903566 - Action 2113626066 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>View all assets assigned to this category.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Category Card - Action ViewAssets - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3741903566 - Action 2113626066 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Assets in Category</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Category Card - Action ViewAssets - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 2625888680 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Asset Categories</source>
@@ -664,12 +764,12 @@
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Category List - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 2625888680 - Control 2005114036 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Specifies the category type.</source>
+          <source>Specifies the type of assets in this category.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Category List - Control Category Type - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="Page 2625888680 - Control 3004954119 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Specifies the category code.</source>
+          <source>Specifies the unique category code.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Category List - Control Code - Property ToolTip</note>
         </trans-unit>
@@ -679,19 +779,99 @@
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Category List - Control Description - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="Page 2625888680 - Control 4094423959 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Specifies the number of assets in this category.</source>
+          <source>Specifies the total number of assets in this category. Click to view them.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Category List - Control No. of Assets - Property ToolTip</note>
         </trans-unit>
+        <trans-unit id="Page 2625888680 - Control 3568443742 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies whether assignments in this category require approval.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Category List - Control Require Approval - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 2625888680 - Action 2113626066 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>View all assets in this category.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Category List - Action ViewAssets - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 2625888680 - Action 2113626066 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Assets</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Category List - Action ViewAssets - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2625888680 - Action 2137240000 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Create a new asset in this category.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Category List - Action NewAsset - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 2625888680 - Action 2137240000 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>New Asset</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Category List - Action NewAsset - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Page 3611378207 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>AST Asset Cue</source>
+          <source>Asset Activities</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Cue - Property Caption</note>
         </trans-unit>
-        <trans-unit id="Page 3611378207 - Control 2445482498 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>General</source>
+        <trans-unit id="Page 3611378207 - Control 798512912 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Asset Status</source>
           <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Cue - Control General - Property Caption</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Cue - Control AssetStatus - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3611378207 - Control 2332309661 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Shows the number of assets currently assigned to employees.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Cue - Control AssignedCount - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3611378207 - Control 2332309661 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Assigned</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Cue - Control AssignedCount - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3611378207 - Control 2448959678 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Shows the number of assets currently available for assignment.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Cue - Control AvailableCount - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3611378207 - Control 2448959678 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Available</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Cue - Control AvailableCount - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3611378207 - Control 1103312426 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Shows the number of assets currently under maintenance.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Cue - Control MaintenanceCount - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3611378207 - Control 1103312426 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Under Maintenance</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Cue - Control MaintenanceCount - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3611378207 - Control 2045583972 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Assignments</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Cue - Control Assignments - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3611378207 - Control 2928932288 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Shows the number of assignment documents currently open.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Cue - Control OpenAssignments - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3611378207 - Control 2928932288 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Open Assignments</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Cue - Control OpenAssignments - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3611378207 - Control 3557722538 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Shows the number of assignments posted today.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Cue - Control PostedToday - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3611378207 - Control 3557722538 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Posted Today</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Cue - Control PostedToday - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 194920099 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Asset History</source>
@@ -729,39 +909,184 @@
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset History Factbox - Control Transaction Type - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="Page 2759013493 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>AST Asset Statistics</source>
+          <source>Asset Statistics</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Statistics - Property Caption</note>
         </trans-unit>
-        <trans-unit id="Page 2759013493 - Control 2445482498 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>General</source>
+        <trans-unit id="Page 2759013493 - Control 873771301 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Asset Overview</source>
           <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Statistics - Control General - Property Caption</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Statistics - Control Overview - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2759013493 - Control 3838011437 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the number of assets currently assigned to employees.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Statistics - Control AssignedAssets - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 2759013493 - Control 3838011437 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Assigned</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Statistics - Control AssignedAssets - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2759013493 - Control 3556888534 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the number of assets currently available for assignment.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Statistics - Control AvailableAssets - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 2759013493 - Control 3556888534 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Available</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Statistics - Control AvailableAssets - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2759013493 - Control 3276897372 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the number of assets that have been disposed.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Statistics - Control DisposedAssets - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 2759013493 - Control 3276897372 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Disposed</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Statistics - Control DisposedAssets - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2759013493 - Control 1212567331 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the total number of assets in the system.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Statistics - Control TotalAssets - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 2759013493 - Control 1212567331 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Total Assets</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Statistics - Control TotalAssets - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2759013493 - Control 1777603798 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the total purchase value of all assets.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Statistics - Control TotalPurchaseValue - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 2759013493 - Control 1777603798 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Total Purchase Value</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Statistics - Control TotalPurchaseValue - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2759013493 - Control 3613026106 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the number of assets currently under maintenance.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Statistics - Control UnderMaintenanceAssets - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 2759013493 - Control 3613026106 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Under Maintenance</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Statistics - Control UnderMaintenanceAssets - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 215919018 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Asset Tracking</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Tracking Role Center - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Page 215919018 - Action 2264264800 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Print the full history of assets.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Tracking Role Center - Action AssetHistoryReport - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 215919018 - Action 2264264800 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Asset History</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Tracking Role Center - Action AssetHistoryReport - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 215919018 - Action 2076096905 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Print the full asset register.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Tracking Role Center - Action AssetRegisterReport - Property ToolTip</note>
+        </trans-unit>
         <trans-unit id="Page 215919018 - Action 2076096905 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Asset Register</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Tracking Role Center - Action AssetRegisterReport - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 215919018 - Action 3623586740 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Print a summary of assets per employee.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Tracking Role Center - Action EmployeeSummaryReport - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 215919018 - Action 3623586740 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Employee Asset Summary</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Tracking Role Center - Action EmployeeSummaryReport - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 215919018 - Action 1395934759 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Print an asset handover letter for a posted assignment.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Tracking Role Center - Action HandoverLetterReport - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="Page 215919018 - Action 1395934759 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Asset Handover Letter</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Tracking Role Center - Action HandoverLetterReport - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Page 215919018 - Action 1973076330 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Print a list of assets with overdue returns.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Tracking Role Center - Action OverdueReturnReport - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 215919018 - Action 1973076330 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Overdue Asset Returns</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Tracking Role Center - Action OverdueReturnReport - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 215919018 - Action 1569466922 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Administration</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Tracking Role Center - Action Administration - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 215919018 - Action 1263681689 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Configure the Asset Tracking module settings.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Tracking Role Center - Action AssetSetup - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 215919018 - Action 1263681689 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Asset Tracking Setup</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Tracking Role Center - Action AssetSetup - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 215919018 - Action 4244032754 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Import assets from a CSV file.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Tracking Role Center - Action ImportAssets - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 215919018 - Action 4244032754 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Import Assets</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Tracking Role Center - Action ImportAssets - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Page 215919018 - Action 661859261 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Assets</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Tracking Role Center - Action Assets - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Page 215919018 - Action 4094119250 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>View and manage asset categories.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Tracking Role Center - Action AssetCategories - Property ToolTip</note>
+        </trans-unit>
         <trans-unit id="Page 215919018 - Action 4094119250 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Asset Categories</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Tracking Role Center - Action AssetCategories - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 215919018 - Action 3756633599 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>View a statistical overview of all assets.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Tracking Role Center - Action AssetStatistics - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 215919018 - Action 3756633599 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Asset Statistics</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Tracking Role Center - Action AssetStatistics - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 215919018 - Action 441289152 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>View and manage all company assets.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Tracking Role Center - Action CompanyAssets - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="Page 215919018 - Action 441289152 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Company Assets</source>
@@ -773,25 +1098,25 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Tracking Role Center - Action Assignments - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Page 215919018 - Action 1650897020 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Create and manage open asset assignment documents.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Tracking Role Center - Action AssetAssignments - Property ToolTip</note>
+        </trans-unit>
         <trans-unit id="Page 215919018 - Action 1650897020 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Asset Assignments</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Tracking Role Center - Action AssetAssignments - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Page 215919018 - Action 2830174347 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>View all posted assignment and return documents.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Tracking Role Center - Action PostedAssignments - Property ToolTip</note>
+        </trans-unit>
         <trans-unit id="Page 215919018 - Action 2830174347 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Posted Assignments</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Tracking Role Center - Action PostedAssignments - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Page 215919018 - Action 1514883969 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Setup</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Tracking Role Center - Action Setup - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Page 215919018 - Action 1263681689 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Asset Tracking Setup</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page AST Asset Tracking Role Center - Action AssetSetup - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 3597122754 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Asset Tracking Setup</source>
@@ -899,17 +1224,17 @@
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Company Asset Card - Control Assignment - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 3881568871 - Control 2115922498 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Specifies the assigned to employee name.</source>
+          <source>Specifies the name of the assigned employee.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Company Asset Card - Control Assigned to Employee Name - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="Page 3881568871 - Control 2003522154 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Specifies the assigned to employee number.</source>
+          <source>Specifies the employee this asset is assigned to.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Company Asset Card - Control Assigned to Employee No. - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="Page 3881568871 - Control 2073035455 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Specifies the last assignment date.</source>
+          <source>Specifies the date this asset was last assigned.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Company Asset Card - Control Last Assignment Date - Property ToolTip</note>
         </trans-unit>
@@ -924,7 +1249,7 @@
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Company Asset Card - Control Created By - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="Page 3881568871 - Control 2500892784 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Specifies the date and time when this record was created.</source>
+          <source>Specifies the date this record was created.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Company Asset Card - Control Created Date - Property ToolTip</note>
         </trans-unit>
@@ -934,9 +1259,14 @@
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Company Asset Card - Control Last Modified By - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="Page 3881568871 - Control 2626717425 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Specifies the date and time when this record was last modified.</source>
+          <source>Specifies the date this record was last modified.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Company Asset Card - Control Last Modified Date - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3881568871 - Control 2445482498 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>General</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Company Asset Card - Control General - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 3881568871 - Control 3877927551 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Specifies the category code.</source>
@@ -949,7 +1279,7 @@
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Company Asset Card - Control Category Description - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="Page 3881568871 - Control 696389717 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Specifies the condition.</source>
+          <source>Specifies the physical condition of the asset.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Company Asset Card - Control Condition - Property ToolTip</note>
         </trans-unit>
@@ -969,7 +1299,7 @@
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Company Asset Card - Control Serial No. - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="Page 3881568871 - Control 513339096 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Specifies the status of the asset.</source>
+          <source>Specifies the current status of the asset.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Company Asset Card - Control Status - Property ToolTip</note>
         </trans-unit>
@@ -979,7 +1309,7 @@
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Company Asset Card - Control Note - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 3881568871 - Control 222620933 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Specifies any additional notes about the asset.</source>
+          <source>Specifies any additional notes or remarks about this asset.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Company Asset Card - Control Notes - Property ToolTip</note>
         </trans-unit>
@@ -989,27 +1319,42 @@
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Company Asset Card - Control Purchase - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 3881568871 - Control 3920280169 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Specifies the purchase date.</source>
+          <source>Specifies the date the asset was purchased.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Company Asset Card - Control Purchase Date - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="Page 3881568871 - Control 3105979010 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Specifies the purchase price.</source>
+          <source>Specifies the original purchase price of the asset.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Company Asset Card - Control Purchase Price - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="Page 3881568871 - Control 1527594213 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Specifies the vendor number.</source>
+          <source>Specifies the vendor this asset was purchased from.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Company Asset Card - Control Vendor No. - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="Page 3881568871 - Control 3831326737 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Specifies the warranty expiry date.</source>
+          <source>Specifies the date the warranty expires.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Company Asset Card - Control Warranty Expiry Date - Property ToolTip</note>
         </trans-unit>
+        <trans-unit id="Page 3881568871 - Control 1898034126 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Asset History</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Company Asset Card - Control AssetHistory - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3881568871 - Action 3683400689 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>View the complete history of this asset.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Company Asset Card - Action ViewHistory - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3881568871 - Action 3683400689 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Asset Log</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Company Asset Card - Action ViewHistory - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Page 3881568871 - Action 1443702793 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Creates a new assignment for this asset.</source>
+          <source>Creates a new asset assignment document for this asset.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Company Asset Card - Action CreateAssignment - Property ToolTip</note>
         </trans-unit>
@@ -1024,7 +1369,7 @@
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Company Asset List - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 3133042845 - Control 2003522154 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Specifies the assigned to employee number.</source>
+          <source>Specifies the employee this asset is currently assigned to.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Company Asset List - Control Assigned to Employee No. - Property ToolTip</note>
         </trans-unit>
@@ -1039,12 +1384,12 @@
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Company Asset List - Control Category Description - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="Page 3133042845 - Control 696389717 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Specifies the condition.</source>
+          <source>Specifies the physical condition of the asset.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Company Asset List - Control Condition - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="Page 3133042845 - Control 3461834954 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Specifies the description of the assets.</source>
+          <source>Specifies the description of the asset.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Company Asset List - Control Description - Property ToolTip</note>
         </trans-unit>
@@ -1069,29 +1414,94 @@
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Company Asset List - Control Serial No. - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="Page 3133042845 - Control 513339096 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Specifies the status.</source>
+          <source>Specifies the current status of the asset.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Company Asset List - Control Status - Property ToolTip</note>
         </trans-unit>
-        <trans-unit id="Page 3133042845 - Action 2415944817 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Creates a new assignment document for the selected asset.</source>
+        <trans-unit id="Page 3133042845 - Action 4042652293 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>View all assignment documents for the selected asset.</source>
           <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page AST Company Asset List - Action NewAssignment - Property ToolTip</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Company Asset List - Action AssetAssignment - Property ToolTip</note>
         </trans-unit>
-        <trans-unit id="Page 3133042845 - Action 2415944817 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Create Assignment</source>
+        <trans-unit id="Page 3133042845 - Action 4042652293 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Assignments</source>
           <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page AST Company Asset List - Action NewAssignment - Property Caption</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Company Asset List - Action AssetAssignment - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3133042845 - Action 2079010408 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>View the full audit log for the selected asset.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Company Asset List - Action AssetLog - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3133042845 - Action 2079010408 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Asset Log</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Company Asset List - Action AssetLog - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3133042845 - Action 2851454604 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Export the current asset list to an Excel file.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Company Asset List - Action ExportToExcel - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3133042845 - Action 2851454604 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Export to Excel</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Company Asset List - Action ExportToExcel - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3133042845 - Action 4244032754 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Import company assets from a CSV file using the Asset Migration XMLport.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Company Asset List - Action ImportAssets - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3133042845 - Action 4244032754 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Import Assets</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Company Asset List - Action ImportAssets - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3133042845 - Action 1748817795 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Print or preview the full asset register report.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Company Asset List - Action AssetRegister - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3133042845 - Action 1748817795 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Asset Register</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Company Asset List - Action AssetRegister - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 1178799947 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>AST Employee Asset Factbox</source>
+          <source>Employee Assets</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Employee Asset Factbox - Property Caption</note>
         </trans-unit>
-        <trans-unit id="Page 1178799947 - Control 2445482498 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>General</source>
+        <trans-unit id="Page 1178799947 - Control 291717483 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the employee number.</source>
           <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page AST Employee Asset Factbox - Control General - Property Caption</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Employee Asset Factbox - Control EmployeeNoDisplay - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 1178799947 - Control 291717483 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Employee No.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Employee Asset Factbox - Control EmployeeNoDisplay - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 1178799947 - Control 586249971 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the total number of assets currently assigned to this employee.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Employee Asset Factbox - Control TotalAssignedAssets - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 1178799947 - Control 586249971 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Assigned Assets</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Employee Asset Factbox - Control TotalAssignedAssets - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 1178799947 - Control 4084313270 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the total purchase value of assets assigned to this employee.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Employee Asset Factbox - Control TotalAssignmentValue - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 1178799947 - Control 4084313270 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Total Asset Value</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Employee Asset Factbox - Control TotalAssignmentValue - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 2462947121 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Lines</source>
@@ -1139,12 +1549,12 @@
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Posted Assignment - Control General - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 1631900448 - Control 1368313561 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Specifies the date when the asset was assigned.</source>
+          <source>Specifies the date when assets were assigned.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Posted Assignment - Control Assignment Date - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="Page 1631900448 - Control 1651921640 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Specifies the department to which the asset is assigned.</source>
+          <source>Specifies the department the asset was assigned to.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Posted Assignment - Control Department - Property ToolTip</note>
         </trans-unit>
@@ -1159,39 +1569,59 @@
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Posted Assignment - Control Employee No. - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="Page 1631900448 - Control 2443976460 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Specifies the expected return date of the asset.</source>
+          <source>Specifies the expected date for asset return.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Posted Assignment - Control Expected Return Date - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="Page 1631900448 - Control 4200184881 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Specifies the unique identifier of the posted asset assignment.</source>
+          <source>Specifies the posted assignment number.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Posted Assignment - Control No. - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="Page 1631900448 - Control 1834324738 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Specifies the purpose of the asset assignment.</source>
+          <source>Specifies the stated purpose of this assignment.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Posted Assignment - Control Purpose - Property ToolTip</note>
         </trans-unit>
-        <trans-unit id="Page 1631900448 - Control 2808404044 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+        <trans-unit id="Page 1631900448 - Control 622982646 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Posting Details</source>
           <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page AST Posted Assignment - Control Posting - Property Caption</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Posted Assignment - Control PostingDetails - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 1631900448 - Control 1964822230 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Specifies the user who posted the assignment.</source>
+          <source>Specifies the user who posted this assignment.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Posted Assignment - Control Posted By - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="Page 1631900448 - Control 3710982960 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Specifies the date when the assignment was posted.</source>
+          <source>Specifies the date this assignment was posted.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Posted Assignment - Control Posting Date - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="Page 1631900448 - Control 3773776616 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Specifies the type of transaction recorded.</source>
+          <source>Specifies whether this is an Assignment or Return transaction.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page AST Posted Assignment - Control Transaction Type - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 1631900448 - Action 2826040483 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>View all log entries related to this assignment.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Posted Assignment - Action ViewAssetLog - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 1631900448 - Action 2826040483 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Asset Log</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Posted Assignment - Action ViewAssetLog - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 1631900448 - Action 1306700803 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Process the return of all assets in this assignment back to Available status.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Posted Assignment - Action ProcessReturn - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 1631900448 - Action 1306700803 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Process Return</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page AST Posted Assignment - Action ProcessReturn - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 129206674 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Posted Asset Assignment</source>
@@ -1244,9 +1674,19 @@
           <note from="Xliff Generator" annotates="general" priority="3">Report AST Asset Handover Letter - Control Filters - Property Caption</note>
         </trans-unit>
         <trans-unit id="Report 1867245160 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>AST Asset History</source>
+          <source>Asset History</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Report AST Asset History - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 1867245160 - Control 284195533 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Filters</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report AST Asset History - Control Filters - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 1867245160 - ReportLayout 3367648989 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Asset History (RDLC)</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report AST Asset History - ReportLayout RDLCLayout - Property Caption</note>
         </trans-unit>
         <trans-unit id="Report 626620913 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Asset Register</source>
@@ -1269,14 +1709,69 @@
           <note from="Xliff Generator" annotates="general" priority="3">Report AST Asset Register - Control StatusFilter - Property Caption</note>
         </trans-unit>
         <trans-unit id="Report 4095690460 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>AST Employee Asset Summary</source>
+          <source>Employee Asset Summary</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Report AST Employee Asset Summary - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Report 4095690460 - Control 284195533 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Filters</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report AST Employee Asset Summary - Control Filters - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 4095690460 - ReportLayout 3367648989 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Employee Asset Summary (RDLC)</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report AST Employee Asset Summary - ReportLayout RDLCLayout - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Report 1227199218 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>AST Overdue Asset Return</source>
+          <source>Overdue Asset Return</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Report AST Overdue Asset Return - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 1227199218 - Control 2346885236 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Options</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report AST Overdue Asset Return - Control Options - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 1227199218 - Control 3144493105 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the date to check overdue assets against. Defaults to today.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report AST Overdue Asset Return - Control AsOfDate - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Report 1227199218 - Control 3144493105 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Overdue As Of</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report AST Overdue Asset Return - Control AsOfDate - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 1227199218 - ReportLayout 3367648989 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Overdue Asset Return (RDLC)</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report AST Overdue Asset Return - ReportLayout RDLCLayout - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Query 2010620929 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Asset Assignment Query</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Query AST Asset Assignment Query - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Query 1957341699 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Asset Statistics Query</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Query AST Asset Statistics Query - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="XmlPort 3683406622 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Asset Migration</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">XmlPort AST Asset Migration - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Profile 1843934831 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Asset Manager</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Profile AST-ASSET-MANAGER - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Profile 1843934831 - Property 4111922599" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Role for managing company assets, assignments and returns.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Profile AST-ASSET-MANAGER - Property ProfileDescription</note>
         </trans-unit>
         <trans-unit id="Enum 844183087 - EnumValue 18652612 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source></source>
@@ -1333,15 +1828,20 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Enum AST Asset Category Type - EnumValue Vehicle - Property Caption</note>
         </trans-unit>
-        <trans-unit id="Enum 1680649607 - EnumValue 18652612 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source></source>
+        <trans-unit id="Enum 1680649607 - EnumValue 1371923692 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source> </source>
           <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Enum AST Asset Condition - EnumValue  - Property Caption</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum AST Asset Condition - EnumValue   - Property Caption</note>
         </trans-unit>
         <trans-unit id="Enum 1680649607 - EnumValue 1692570945 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Damaged</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Enum AST Asset Condition - EnumValue Damaged - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 1680649607 - EnumValue 1680140304 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Excellent</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum AST Asset Condition - EnumValue Excellent - Property Caption</note>
         </trans-unit>
         <trans-unit id="Enum 1680649607 - EnumValue 1770341360 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Fair</source>
@@ -1363,10 +1863,10 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Enum AST Asset Condition - EnumValue Poor - Property Caption</note>
         </trans-unit>
-        <trans-unit id="Enum 639921062 - EnumValue 18652612 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source></source>
+        <trans-unit id="Enum 639921062 - EnumValue 1371923692 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source> </source>
           <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Enum AST Asset Status - EnumValue  - Property Caption</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum AST Asset Status - EnumValue   - Property Caption</note>
         </trans-unit>
         <trans-unit id="Enum 639921062 - EnumValue 1005746868 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Assigned</source>
@@ -1454,22 +1954,22 @@
           <note from="Xliff Generator" annotates="general" priority="3">Enum AST Transaction Type - EnumValue Transfer - Property Caption</note>
         </trans-unit>
         <trans-unit id="PermissionSet 2816300592 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>AST-ADMIN</source>
+          <source>AST - Admin (Full Access)</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PermissionSet AST-ADMIN - Property Caption</note>
         </trans-unit>
         <trans-unit id="PermissionSet 2911558430 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>AST-ASSIGN</source>
+          <source>AST - Assign (Assignment Access)</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PermissionSet AST-ASSIGN - Property Caption</note>
         </trans-unit>
         <trans-unit id="PermissionSet 2976678464 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>AST-SETUP</source>
+          <source>AST - Setup (Administration Access)</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PermissionSet AST-SETUP - Property Caption</note>
         </trans-unit>
         <trans-unit id="PermissionSet 4186039138 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>AST-VIEW</source>
+          <source>AST-View Only (Read Access)</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PermissionSet AST-VIEW - Property Caption</note>
         </trans-unit>

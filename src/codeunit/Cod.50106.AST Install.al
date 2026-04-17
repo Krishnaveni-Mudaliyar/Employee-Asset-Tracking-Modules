@@ -95,7 +95,6 @@ codeunit 50106 "AST Install"
         // Schedule daily overdue notification at 08:00
         lRecJobQueueEntry.SetRange("Object Type to Run", lRecJobQueueEntry."Object Type to Run"::Codeunit);
         lRecJobQueueEntry.SetRange("Object ID to Run", Codeunit::"AST Asset Notification");
-        lRecJobQueueEntry.SetRange("Method Name", 'SendOverdueNotification');
         if lRecJobQueueEntry.FindFirst() then
             exit;
 
