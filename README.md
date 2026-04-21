@@ -58,4 +58,4 @@ shows all events for that asset
   SMTP configuration required
 
 ## Support
-Contact: [your email]
+Contact: Krishnaveni.sathish1411@gmail.com

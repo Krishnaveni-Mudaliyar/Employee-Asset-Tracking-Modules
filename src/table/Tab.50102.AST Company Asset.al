@@ -80,9 +80,11 @@ table 50102 "AST Company Asset"
         field(13; "Assigned to Employee Name"; Text[100])
         {
             Caption = 'Assigned to Employee Name';
-            FieldClass = FlowField;
-            CalcFormula = Lookup(Employee."First Name"
-                          where("No." = field("Assigned to Employee No.")));
+            // FIX: A FlowField can only Lookup a single field — it cannot concatenate
+            // First Name + Last Name. Changed to a stored Text field.
+            // Populated in the Posting codeunit when an assignment is posted,
+            // and cleared when the asset is returned.
+            DataClassification = CustomerContent;
             Editable = false;
         }
         field(14; "Last Assignment Date"; Date)

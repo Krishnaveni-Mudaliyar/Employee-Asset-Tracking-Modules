@@ -55,12 +55,12 @@ report 50102 "AST Employee Asset Summary"
         layout(RDLCLayout)
         {
             Type = RDLC;
-            LayoutFile = 'src\reportlayout\RDL\ASTEmployeeAssetSummary.rdl';
+            LayoutFile = 'src/reportlayout/RDL/ASTEmployeeAssetSummary.rdl';
         }
         layout(WordLayout)
         {
             Type = Word;
-            LayoutFile = 'src\reportlayout\WORD\ASTEmployeeAssetSummary.docx';
+            LayoutFile = 'src/reportlayout/WORD/ASTEmployeeAssetSummary.docx';
         }
     }
 }

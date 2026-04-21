@@ -133,9 +133,11 @@ codeunit 50101 "AST Asset Posting Mgt."
                 lRecPostedLine.Notes := lRecLine.Notes;
                 lRecPostedLine.Insert(true);
 
-                // Update asset status
+                // Update asset status and employee reference
                 lRecAsset.Status := lRecAsset.Status::Assigned;
                 lRecAsset."Assigned to Employee No." := pRecHeader."Employee No.";
+                // FIX: Populate the stored Employee Name field (no longer a FlowField)
+                lRecAsset."Assigned to Employee Name" := CopyStr(pRecHeader."Employee Name", 1, 100);
                 lRecAsset."Last Assignment Date" := pRecHeader."Assignment Date";
                 lRecAsset.Modify(true);
 
@@ -155,6 +157,11 @@ codeunit 50101 "AST Asset Posting Mgt."
     var
         lRecLine: Record "AST Asset Assignment Line";
     begin
+        // Reset to Open so the OnDelete trigger's Status guard passes.
+        pRecHeader.Status := pRecHeader.Status::Open;
+        pRecHeader."Approval Status" := pRecHeader."Approval Status"::Rejected;
+        pRecHeader.Modify(false); // false = skip OnModify telemetry; this is a transient state
+
         lRecLine.SetRange("Document No.", pRecHeader."No.");
         lRecLine.DeleteAll(true);
         pRecHeader.Delete(true);

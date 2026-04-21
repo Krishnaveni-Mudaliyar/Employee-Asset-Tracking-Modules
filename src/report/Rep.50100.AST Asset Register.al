@@ -23,7 +23,12 @@ report 50100 "AST Asset Register"
 
             trigger OnPreDataItem()
             begin
-                if StatusFilter.AsInteger() > 0 then
+                // FIX: RequestFilterFields already handles Status filtering from the request page.
+                // Applying a secondary SetRange via StatusFilter would override the user's own
+                // filter expression — e.g. "Available|Assigned" — making multi-select impossible.
+                // The separate StatusFilter var is kept for backward compatibility; we only apply
+                // it when no Status filter has been set by the user on the request page.
+                if (GetFilter(Status) = '') and (StatusFilter.AsInteger() > 0) then
                     SetRange(Status, StatusFilter);
             end;
         }
@@ -52,12 +57,12 @@ report 50100 "AST Asset Register"
         layout(RDLCLayout)
         {
             Type = RDLC;
-            LayoutFile = 'src\reportlayout\RDL\ASTAssetRegister.rdl';
+            LayoutFile = 'src/reportlayout/RDL/ASTAssetRegister.rdl';
         }
         layout(WordLayout)
         {
             Type = Word;
-            LayoutFile = 'src\reportlayout\WORD\ASTAssetRegister.docx';
+            LayoutFile = 'src/reportlayout/WORD/ASTAssetRegister.docx';
         }
     }
     var

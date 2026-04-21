@@ -61,12 +61,12 @@ report 50101 "AST Asset Handover Letter"
         layout(RDLCLayout)
         {
             Type = RDLC;
-            LayoutFile = 'src\reportlayout\RDL\ASTAssetHandoverLetter.rdl';
+            LayoutFile = 'src/reportlayout/RDL/ASTAssetHandoverLetter.rdl';
         }
         layout(WordLayout)
         {
             Type = Word;
-            LayoutFile = 'src\reportlayout\WORD\ASTAssetHandoverLetter.docx';
+            LayoutFile = 'src/reportlayout/WORD/ASTAssetHandoverLetter.docx';
         }
     }
 }

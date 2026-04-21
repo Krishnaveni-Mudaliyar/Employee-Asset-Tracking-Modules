@@ -27,6 +27,8 @@ codeunit 50102 "AST Asset Return Mgt."
 
                 lRecAsset.Status := lRecAsset.Status::Available;
                 lRecAsset."Assigned to Employee No." := '';
+                // FIX: Clear stored employee name on return (no longer FlowField)
+                lRecAsset."Assigned to Employee Name" := '';
                 lRecAsset."Last Assignment Date" := 0D;
                 lRecAsset.Modify(true);
 

@@ -34,7 +34,7 @@ report 50103 "AST Overdue Asset Return"
                 // FIX: Two SetFilter calls on same field — second REPLACES the first.
                 // Correct approach: combine both conditions in ONE filter expression.
                 // '<>%1&<%2' means: not equal to 0D AND less than today
-                SetFilter("Expected Return Date", '<>%1&<%2', 0D, Today);
+                SetFilter("Expected Return Date", '<>%1&<%2', 0D, AsOfDate);
             end;
         }
     }
@@ -64,12 +64,12 @@ report 50103 "AST Overdue Asset Return"
         layout(RDLCLayout)
         {
             Type = RDLC;
-            LayoutFile = 'src\reportlayout\RDL\ASTOverdueAssetReturn.rdl';
+            LayoutFile = 'src/reportlayout/RDL/ASTOverdueAssetReturn.rdl';
         }
         layout(WordLayout)
         {
             Type = Word;
-            LayoutFile = 'src\reportlayout\WORD\ASTOverdueAssetReturn.docx';
+            LayoutFile = 'src/reportlayout/WORD/ASTOverdueAssetReturn.docx';
         }
     }
 
