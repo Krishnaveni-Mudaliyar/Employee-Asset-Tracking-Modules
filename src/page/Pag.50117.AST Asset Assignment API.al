@@ -4,8 +4,8 @@ page 50117 "AST Asset Assignment API"
     APIPublisher = 'KrishnaveniMudaliyar';
     APIGroup = 'assetTracking';
     APIVersion = 'v1.0';
-    EntityName = 'PostedAssignment';
-    EntitySetName = 'PostedAssignments';
+    EntityName = 'postedAssignment';
+    EntitySetName = 'postedAssignments';
     SourceTable = "AST Posted Assignment Header";
     ODataKeyFields = "No.";
     Editable = false;

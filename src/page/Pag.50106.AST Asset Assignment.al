@@ -80,10 +80,17 @@ page 50106 "AST Asset Assignment"
             part(AssetHistory; "AST Asset History Factbox")
             {
                 ApplicationArea = All;
-                // FIX: SubPageLink was missing — FactBox was showing ALL log entries
-                // from the entire system instead of entries for assets on THIS assignment.
-                // Correct link: Document No. on log entry = current assignment No.
+                // Log entries written during posting carry the Assignment Document No.
+                // in their "Document No." field — so this SubPageLink is correct:
+                // it shows all log entries that belong to THIS assignment document.
                 SubPageLink = "Document No." = field("No.");
+            }
+            part(EmployeeAssets; "AST Employee Asset Factbox")
+            {
+                ApplicationArea = All;
+                // Wire Employee Asset FactBox to the current assignment's employee.
+                // Shows live count and total value of assets held by this employee.
+                SubPageLink = "Assigned to Employee No." = field("Employee No.");
             }
         }
     }

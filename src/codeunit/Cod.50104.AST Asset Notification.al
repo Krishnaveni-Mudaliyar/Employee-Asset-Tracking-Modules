@@ -1,5 +1,14 @@
 codeunit 50104 "AST Asset Notification"
 {
+    // OnRun is required for Job Queue execution.
+    // The Job Queue calls the codeunit by ID and fires OnRun.
+    // Without OnRun the Job Queue entry runs but nothing happens.
+    trigger OnRun()
+    begin
+        SendOverdueNotification();
+        SendWarrantyExpiryNotification();
+    end;
+
     procedure SendOverdueNotification()
     var
         lRecPostedHeader: Record "AST Posted Assignment Header";

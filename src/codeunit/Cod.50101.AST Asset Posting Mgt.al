@@ -13,7 +13,6 @@ codeunit 50101 "AST Asset Posting Mgt."
         lRecLine: Record "AST Asset Assignment Line";
         lRecSetup: Record "AST Asset Tracking Setup";
         lCodEvents: Codeunit "AST Asset Events";
-        lCodTelemetry: Codeunit "AST Telemetry";
         lBolHandled: Boolean;
         lRecPostedHeader: Record "AST Posted Assignment Header";
     begin
@@ -47,13 +46,9 @@ codeunit 50101 "AST Asset Posting Mgt."
         // STEP 5: Delete the original open document
         DeleteOriginalDocument(pRecHeader);
 
-        // Raise after-event + telemetry
-        // FIX: Telemetry codeunit existed but was never called from posting.
-        // This is the integration point — after a successful post.
+        // Raise after-event — telemetry per asset is already logged inside PostLines.
         lRecPostedHeader := GetPostedHeader(pRecHeader."No.");
         lCodEvents.OnAfterPostAssetAssignment(lRecPostedHeader);
-        lCodTelemetry.LogAssetAssigned(
-            'MULTI', pRecHeader."Employee No.", pRecHeader."No.");
     end;
 
     procedure SendForApproval(var pRecHeader: Record "AST Asset Assignment Header")
@@ -112,6 +107,7 @@ codeunit 50101 "AST Asset Posting Mgt."
         lRecPostedLine: Record "AST Posted Assignment Line";
         lRecAsset: Record "AST Company Asset";
         lCodLogMgt: Codeunit "AST Asset Log Mgt.";
+        lCodTelemetry: Codeunit "AST Telemetry";
         lEnumStatusBefore: Enum "AST Asset Status";
     begin
         lRecLine.SetLoadFields("Document No.", "Line No.", "Asset No.", "Condition at Handover", Notes);
@@ -150,6 +146,15 @@ codeunit 50101 "AST Asset Posting Mgt."
                     pRecHeader."No.",
                     pRecHeader."Employee No.",
                     pRecHeader."Employee Name");
+
+                // FIX: Log one telemetry event per asset line — not a single 'MULTI'
+                // placeholder. Application Insights receives a distinct signal per asset,
+                // enabling accurate per-asset analytics and alerting.
+                lCodTelemetry.LogAssetAssigned(
+                    lRecLine."Asset No.",
+                    pRecHeader."Employee No.",
+                    pRecHeader."No.");
+
             until lRecLine.Next() = 0;
     end;
 
@@ -157,10 +162,13 @@ codeunit 50101 "AST Asset Posting Mgt."
     var
         lRecLine: Record "AST Asset Assignment Line";
     begin
-        // Reset to Open so the OnDelete trigger's Status guard passes.
+        // Reset Status to Open so the OnDelete trigger's guard passes
+        // (it blocks delete on Approved/Posted — Open is always deletable).
+        // Do NOT touch Approval Status — setting it to Rejected before delete
+        // would write a misleading audit record showing the document was rejected
+        // when it was actually posted successfully.
         pRecHeader.Status := pRecHeader.Status::Open;
-        pRecHeader."Approval Status" := pRecHeader."Approval Status"::Rejected;
-        pRecHeader.Modify(false); // false = skip OnModify telemetry; this is a transient state
+        pRecHeader.Modify(false); // RunTrigger = false — skip OnModify audit stamp; transient state
 
         lRecLine.SetRange("Document No.", pRecHeader."No.");
         lRecLine.DeleteAll(true);

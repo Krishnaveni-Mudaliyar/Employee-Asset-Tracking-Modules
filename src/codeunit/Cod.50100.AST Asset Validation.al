@@ -6,6 +6,8 @@ codeunit 50100 "AST Asset Validation"
     // Called by pages for real-time checks
     procedure ValidateAssignmentHeader(
         var pRecHeader: Record "AST Asset Assignment Header")
+    var
+        lRecSetup: Record "AST Asset Tracking Setup";
     begin
         // Check 1 : Employee No. must be filled
         pRecHeader.TestField("Employee No.");
@@ -13,7 +15,7 @@ codeunit 50100 "AST Asset Validation"
         //Check 2 : Assignment Date must be filled
         pRecHeader.TestField("Assignment Date");
 
-        //Check 3 : Must have atleast one line
+        //Check 3 : Must have at least one line
         CheckLinesExist(pRecHeader);
 
         //Check 4 : Status must be Open or Approved
@@ -22,6 +24,15 @@ codeunit 50100 "AST Asset Validation"
         pRecHeader.Status::Approved]) then
             Error('Assignment %1 cannot be posted with status %2.',
             pRecHeader."No.", pRecHeader.Status);
+
+        //Check 5 : If Require Approval is enabled, Approval Status must be Approved.
+        // This closes the bypass where a PendingApproval document could be posted
+        // by calling the codeunit directly without going through PostAssetAssignment.
+        if lRecSetup.Get() then
+            if lRecSetup."Require Approval" then
+                if pRecHeader."Approval Status" <> pRecHeader."Approval Status"::Approved then
+                    Error('Assignment %1 requires approval before posting. Current approval status: %2.',
+                        pRecHeader."No.", pRecHeader."Approval Status");
     end;
 
     procedure ValidateAssignmentLine(

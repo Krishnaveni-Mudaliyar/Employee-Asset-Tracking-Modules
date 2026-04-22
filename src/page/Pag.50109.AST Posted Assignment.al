@@ -87,6 +87,11 @@ page 50109 "AST Posted Assignment"
                 ApplicationArea = All;
                 SubPageLink = "Document No." = field("No.");
             }
+            part(EmployeeAssets; "AST Employee Asset Factbox")
+            {
+                ApplicationArea = All;
+                SubPageLink = "Assigned to Employee No." = field("Employee No.");
+            }
         }
     }
 

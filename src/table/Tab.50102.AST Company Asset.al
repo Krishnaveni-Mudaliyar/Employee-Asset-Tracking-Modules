@@ -137,9 +137,15 @@ table 50102 "AST Company Asset"
     var
         lRecSetup: Record "AST Asset Tracking Setup";
         lCodNoSeries: Codeunit "No. Series";
+        lBolSetupLoaded: Boolean;
     begin
+        // Load setup once and reuse — avoids duplicate Get() calls
+        // and guards cleanly if setup hasn't been created yet (fresh company).
+        lBolSetupLoaded := lRecSetup.Get();
+
         if "No." = '' then begin
-            lRecSetup.Get();
+            if not lBolSetupLoaded then
+                Error('Asset Tracking Setup has not been configured. Run the Install codeunit or open Asset Tracking Setup to initialise it.');
             lRecSetup.TestField("Asset Nos.");
             "No." := lCodNoSeries.GetNextNo(lRecSetup."Asset Nos.", Today, true);
         end;
@@ -152,11 +158,10 @@ table 50102 "AST Company Asset"
             Status := Status::Available;
 
         // Apply Default Condition from Setup if not already set
-        if Condition = Condition::" " then begin
-            lRecSetup.Get();
+        // Use the already-loaded setup record — no second Get() needed.
+        if (Condition = Condition::" ") and lBolSetupLoaded then
             if lRecSetup."Default Asset Condition" <> lRecSetup."Default Asset Condition"::" " then
                 Condition := lRecSetup."Default Asset Condition";
-        end;
 
         "Created By" := CopyStr(UserId(), 1, 50);
         "Created Date" := Today;

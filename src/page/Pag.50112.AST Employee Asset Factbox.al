@@ -3,13 +3,12 @@ page 50112 "AST Employee Asset Factbox"
     PageType = CardPart;
     Caption = 'Employee Assets';
     ApplicationArea = All;
-    // FIX: This FactBox was not wired up — SetEmployee() was never called.
-    // Pattern: Parent page sets EmployeeNo via SubPageLink, which calls
-    // OnAfterGetCurrRecord to recalculate. No SetEmployee() needed.
-    // The correct pattern for CardPart FactBoxes is:
-    //   1. Declare variables for what you want to show
-    //   2. Use SubPageLink on the parent page to pass the key field
-    //   3. Re-query in trigger OnAfterGetCurrRecord
+    // This FactBox is wired via SubPageLink on parent pages:
+    //   SubPageLink = "Assigned to Employee No." = field("Employee No.")
+    // BC passes the field value from the parent record into this page's
+    // SourceTable filter. OnAfterGetCurrRecord then recalculates stats
+    // every time the parent record changes — keeping the display live.
+    SourceTable = "AST Company Asset";
 
     layout
     {
@@ -19,7 +18,7 @@ page 50112 "AST Employee Asset Factbox"
             {
                 ApplicationArea = All;
                 Caption = 'Employee No.';
-                ToolTip = 'Specifies the employee number.';
+                ToolTip = 'Specifies the employee whose assets are shown.';
                 Editable = false;
             }
             field(TotalAssignedAssets; TotalAssignedAssets)
@@ -45,18 +44,26 @@ page 50112 "AST Employee Asset Factbox"
         TotalAssignedAssets: Integer;
         TotalAssignmentValue: Decimal;
 
-    // Called from parent page via SubPageLink or directly
-    procedure SetEmployee(pCodEmployeeNo: Code[20])
+    trigger OnAfterGetCurrRecord()
     begin
-        EmployeeNo := pCodEmployeeNo;
+        // Fires whenever the parent page navigates to a different record.
+        // Rec is filtered by SubPageLink — read EmployeeNo from the filter
+        // that BC applied, then recalculate stats for that employee.
+        EmployeeNo := Rec.GetFilter("Assigned to Employee No.");
         CalculateStats();
-        CurrPage.Update(false);
     end;
 
     local procedure CalculateStats()
     var
         lRecAsset: Record "AST Company Asset";
     begin
+        if EmployeeNo = '' then begin
+            TotalAssignedAssets := 0;
+            TotalAssignmentValue := 0;
+            exit;
+        end;
+
+        lRecAsset.SetLoadFields("Assigned to Employee No.", Status, "Purchase Price");
         lRecAsset.SetRange("Assigned to Employee No.", EmployeeNo);
         lRecAsset.SetRange(Status, lRecAsset.Status::Assigned);
         TotalAssignedAssets := lRecAsset.Count();
