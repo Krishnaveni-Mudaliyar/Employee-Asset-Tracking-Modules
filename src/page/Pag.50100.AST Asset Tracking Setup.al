@@ -6,6 +6,8 @@ page 50100 "AST Asset Tracking Setup"
     UsageCategory = Administration;
     ApplicationArea = All;
     InsertAllowed = false;
+    AboutTitle = 'Asset Tracking Setup';
+    AboutText = 'Configure the Employee Asset Tracking module: number series, default return period, approval requirements and email notification settings.';
     DeleteAllowed = false;
 
     layout

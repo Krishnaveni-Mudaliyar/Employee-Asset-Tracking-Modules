@@ -4,6 +4,8 @@ page 50104 "AST Company Asset Card"
     SourceTable = "AST Company Asset";
     Caption = 'Company Asset';
     UsageCategory = None;
+    AboutTitle = 'Company Asset';
+    AboutText = 'View or edit a single asset. The Assignment group appears automatically when the asset is assigned. Use Create Assignment to assign it to an employee.';
     ApplicationArea = All;
 
     layout
@@ -182,6 +184,8 @@ page 50104 "AST Company Asset Card"
 
                     lPageAssignment.SetRecord(lRecHeader);
                     lPageAssignment.Run();
+                    Rec.Get(Rec."No.");
+                    CurrPage.Update(false);
                 end;
             }
         }

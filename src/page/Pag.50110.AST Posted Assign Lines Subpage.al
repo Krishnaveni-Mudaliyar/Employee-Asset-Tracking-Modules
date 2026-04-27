@@ -45,7 +45,6 @@ page 50110 "AST Posted Assign Line Subpage"
                     ToolTip = 'Specifies the Notes of the asset.';
                     MultiLine = true;
                 }
-
             }
         }
     }

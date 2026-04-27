@@ -3,16 +3,14 @@ page 50114 "AST Asset Tracking Role Center"
     PageType = RoleCenter;
     Caption = 'Asset Tracking';
     ApplicationArea = All;
+    AboutTitle = 'Asset Tracking Role Center';
+    AboutText = 'Your central hub for managing company assets. The activity tiles show live counts. Use the navigation menu to access assets, assignments, reports, and setup.';
 
     layout
     {
         area(RoleCenter)
         {
-            // Cue activities — the tiles at the top of the Role Center
-            part(AssetActivities; "AST Asset Cue")
-            {
-                ApplicationArea = All;
-            }
+            part(AssetActivities; "AST Asset Cue") { ApplicationArea = All; }
         }
     }
 

@@ -16,27 +16,27 @@ page 50117 "AST Asset Assignment API"
         {
             repeater(Group)
             {
-                field(number; Rec."No.")
+                field(Number; Rec."No.")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the posted assignment number.';
                 }
-                field(employeeNo; Rec."Employee No.")
+                field(EmployeeNo; Rec."Employee No.")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the employee number.';
                 }
-                field(employeeName; Rec."Employee Name")
+                field(EmployeeName; Rec."Employee Name")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the employee name.';
                 }
-                field(assignmentDate; Rec."Assignment Date")
+                field(AssignmentDate; Rec."Assignment Date")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the assignment date.';
                 }
-                field(expectedReturnDate; Rec."Expected Return Date")
+                field(ExpectedReturnDate; Rec."Expected Return Date")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the expected return date.';

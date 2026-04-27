@@ -1,43 +1,37 @@
 codeunit 50104 "AST Asset Notification"
 {
-    // OnRun is required for Job Queue execution.
-    // The Job Queue calls the codeunit by ID and fires OnRun.
-    // Without OnRun the Job Queue entry runs but nothing happens.
-    trigger OnRun()
-    begin
-        SendOverdueNotification();
-        SendWarrantyExpiryNotification();
-    end;
-
     procedure SendOverdueNotification()
     var
         lRecPostedHeader: Record "AST Posted Assignment Header";
         lRecSetup: Record "AST Asset Tracking Setup";
         lNotification: Notification;
+        lIntCount: Integer;
+
     begin
         lRecSetup.Get();
         if not lRecSetup."Send Email Notification" then
             exit;
 
-        // FIX: Overdue check must query AST Posted Assignment Header
-        // where Expected Return Date < Today and Transaction Type = Assignment.
-        // The original code was filtering "Last Assignment Date" on Company Asset
-        // which checks assignment date not the expected RETURN date — wrong field.
-        lRecPostedHeader.SetRange("Transaction Type",
-            lRecPostedHeader."Transaction Type"::Assignment);
+        lRecPostedHeader.SetRange("Transaction Type", lRecPostedHeader."Transaction Type"::Assignment);
         lRecPostedHeader.SetFilter("Expected Return Date", '<>%1&<%2', 0D, Today);
+        lIntCount := lRecPostedHeader.Count();
+        if lIntCount = 0 then
+            exit;
 
-        if lRecPostedHeader.FindSet() then
-            repeat
-                lNotification.Id := CreateGuid();
-                lNotification.Message := StrSubstNo(
-                    'Assignment %1 for employee %2 is overdue for return. Expected: %3.',
-                    lRecPostedHeader."No.",
-                    lRecPostedHeader."Employee No.",
-                    lRecPostedHeader."Expected Return Date");
-                lNotification.Scope := NotificationScope::LocalScope;
-                lNotification.Send();
-            until lRecPostedHeader.Next() = 0;
+        lNotification.Id := CreateGuid();
+        if lIntCount = 1 then begin
+            lRecPostedHeader.FindFirst();
+            lNotification.Message := StrSubstNo('1 asset assignment is overdue for return. Employee: %1, Due: %2.', lRecPostedHeader."Employee No.", lRecPostedHeader."Expected Return Date");
+        end else
+            lNotification.Message := StrSubstNo('%1 asset assignments are overdue for return. Review the Overdue Asset Return report.', lIntCount);
+        lNotification.Scope := NotificationScope::LocalScope;
+        lNotification.AddAction('View Overdue Report', Codeunit::"AST Asset Notification", 'OpenOverdueReport');
+        lNotification.Send();
+    end;
+
+    procedure OpenOverdueReport(pNotification: Notification)
+    begin
+        Report.RunModal(Report::"AST Overdue Asset Return");
     end;
 
     procedure SendWarrantyExpiryNotification()
@@ -45,22 +39,23 @@ codeunit 50104 "AST Asset Notification"
         lRecAsset: Record "AST Company Asset";
         lNotification: Notification;
         lDatWarningDate: Date;
+        lIntCount: Integer;
     begin
-        // Warn 30 days before warranty expires
-        lDatWarningDate := CalcDate('<+30D>', Today);
 
+        lDatWarningDate := CalcDate('<+30D>', Today);
         lRecAsset.SetLoadFields("No.", "Warranty Expiry Date");
         lRecAsset.SetFilter("Warranty Expiry Date", '>=%1&<=%2', Today, lDatWarningDate);
+        lIntCount := lRecAsset.Count();
+        if lIntCount = 0 then
+            exit;
 
-        if lRecAsset.FindSet() then
-            repeat
-                lNotification.Id := CreateGuid();
-                lNotification.Message := StrSubstNo(
-                    'Asset %1 warranty expires on %2.',
-                    lRecAsset."No.",
-                    lRecAsset."Warranty Expiry Date");
-                lNotification.Scope := NotificationScope::LocalScope;
-                lNotification.Send();
-            until lRecAsset.Next() = 0;
+        lNotification.Id := CreateGuid();
+        if lIntCount = 1 then begin
+            lRecAsset.FindFirst();
+            lNotification.Message := StrSubstNo('1 asset warranty expires within 30 days. Asset: %1, Expiry: %2.', lRecAsset."No.", lRecAsset."Warranty Expiry Date");
+        end else
+            lNotification.Message := StrSubstNo('%1 asset warranties expire within 30 days. Review your asset register.', lIntCount);
+        lNotification.Scope := NotificationScope::LocalScope;
+        lNotification.Send();
     end;
 }

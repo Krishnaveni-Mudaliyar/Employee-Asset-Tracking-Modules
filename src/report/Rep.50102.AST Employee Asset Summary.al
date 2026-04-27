@@ -14,9 +14,6 @@ report 50102 "AST Employee Asset Summary"
             column(Employee_No; "No.") { }
             column(Employee_FirstName; "First Name") { }
             column(Employee_LastName; "Last Name") { }
-            // FIX: Cannot use expressions in column() — must be single field references.
-            // Concatenate First + Last name in the RDLC layout expression:
-            // =Fields!Employee_FirstName.Value & " " & Fields!Employee_LastName.Value
             column(Department; "Global Dimension 1 Code") { }
             column(Employee_Email; "Company E-Mail") { }
 

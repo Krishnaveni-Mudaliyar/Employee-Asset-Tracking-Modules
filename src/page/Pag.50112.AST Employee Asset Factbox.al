@@ -3,12 +3,10 @@ page 50112 "AST Employee Asset Factbox"
     PageType = CardPart;
     Caption = 'Employee Assets';
     ApplicationArea = All;
-    // This FactBox is wired via SubPageLink on parent pages:
-    //   SubPageLink = "Assigned to Employee No." = field("Employee No.")
-    // BC passes the field value from the parent record into this page's
-    // SourceTable filter. OnAfterGetCurrRecord then recalculates stats
-    // every time the parent record changes — keeping the display live.
     SourceTable = "AST Company Asset";
+    Editable = false;
+    AboutTitle = 'Employee Assets';
+    AboutText = 'Shows a summary of assets currently assigned to this employee, total asset value, and any overdue return obligations.';
 
     layout
     {
@@ -36,6 +34,14 @@ page 50112 "AST Employee Asset Factbox"
                 ToolTip = 'Specifies the total purchase value of assets assigned to this employee.';
                 Editable = false;
             }
+            field(OverdueReturns; OverdueReturns)
+            {
+                ApplicationArea = All;
+                Caption = 'Overdue Returns';
+                ToolTip = 'Number of assignment documents past their expected return date for this employee.';
+                Editable = false;
+                StyleExpr = OverdueStyle;
+            }
         }
     }
 
@@ -43,32 +49,34 @@ page 50112 "AST Employee Asset Factbox"
         EmployeeNo: Code[20];
         TotalAssignedAssets: Integer;
         TotalAssignmentValue: Decimal;
+        OverdueReturns: Integer;
+        OverdueStyle: Text;
 
     trigger OnAfterGetCurrRecord()
     begin
-        // Fires whenever the parent page navigates to a different record.
-        // Rec is filtered by SubPageLink — read EmployeeNo from the filter
-        // that BC applied, then recalculate stats for that employee.
-        EmployeeNo := Rec.GetFilter("Assigned to Employee No.");
         CalculateStats();
     end;
 
     local procedure CalculateStats()
     var
         lRecAsset: Record "AST Company Asset";
+        lRecPostedHeader: Record "AST Posted Assignment Header";
     begin
-        if EmployeeNo = '' then begin
-            TotalAssignedAssets := 0;
-            TotalAssignmentValue := 0;
-            exit;
-        end;
-
-        lRecAsset.SetLoadFields("Assigned to Employee No.", Status, "Purchase Price");
-        lRecAsset.SetRange("Assigned to Employee No.", EmployeeNo);
+        lRecAsset.SetLoadFields("No.", "Purchase Price", Status, "Assigned to Employee No.");
+        lRecAsset.SetRange("Assigned to Employee No.", Rec."No.");
         lRecAsset.SetRange(Status, lRecAsset.Status::Assigned);
         TotalAssignedAssets := lRecAsset.Count();
-
         lRecAsset.CalcSums("Purchase Price");
         TotalAssignmentValue := lRecAsset."Purchase Price";
+
+        lRecPostedHeader.SetRange("Employee No.", Rec."No.");
+        lRecPostedHeader.SetRange("Transaction Type", lRecPostedHeader."Transaction Type"::Assignment);
+        lRecPostedHeader.SetFilter("Expected Return Date", '<>%1&<%2', 0D, Today);
+        OverdueReturns := lRecPostedHeader.Count();
+
+        if OverdueReturns > 0 then
+            OverdueStyle := 'Unfavorable'
+        else
+            OverdueStyle := 'Favorable'
     end;
 }

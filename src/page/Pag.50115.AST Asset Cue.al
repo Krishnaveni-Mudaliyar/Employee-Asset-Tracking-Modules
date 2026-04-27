@@ -1,10 +1,11 @@
 page 50115 "AST Asset Cue"
 {
     PageType = CardPart;
-    // CardPart = correct type for Role Center activity tiles
     Caption = 'Asset Activities';
     ApplicationArea = All;
     RefreshOnActivate = true;
+    AboutTitle = 'Asset Activity Tiles';
+    AboutText = 'Live counts of assets and assignments. Click any tile to drill down into the matching records. The Overdue tile turns red when returns are outstanding.';
 
     layout
     {
@@ -89,7 +90,19 @@ page 50115 "AST Asset Cue"
                         lRecPosted: Record "AST Posted Assignment Header";
                     begin
                         lRecPosted.SetRange("Posting Date", Today);
+                        lRecPosted.SetRange("Transaction Type", lRecPosted."Transaction Type"::Assignment);
                         Page.Run(Page::"AST Posted Assignment List", lRecPosted);
+                    end;
+                }
+                field(OverdueCount; OverdueCount)
+                {
+                    ApplicationArea = All;
+                    Caption = 'Overdue Returns';
+                    ToolTip = 'Assignments past their expected return date. Click to run the Overdue report.';
+                    StyleExpr = OverdueStyle;
+                    trigger OnDrillDown()
+                    begin
+                        Report.RunModal(Report::"AST Overdue Asset Return");
                     end;
                 }
             }
@@ -97,11 +110,9 @@ page 50115 "AST Asset Cue"
     }
 
     var
-        AvailableCount: Integer;
-        AssignedCount: Integer;
-        MaintenanceCount: Integer;
-        OpenAssignments: Integer;
-        PostedToday: Integer;
+        AvailableCount, AssignedCount, MaintenanceCount, OverdueCount : Integer;
+        OpenAssignments, PostedToday : Integer;
+        OverdueStyle: Text;
 
     trigger OnOpenPage()
     begin
@@ -109,10 +120,6 @@ page 50115 "AST Asset Cue"
     end;
 
     trigger OnAfterGetCurrRecord()
-    // FIX: RefreshOnActivate = true means BC re-activates this page when the user
-    // returns to the Role Center. But OnOpenPage only fires on first open.
-    // OnAfterGetCurrRecord fires every time the page activates — this ensures
-    // cue counts are always fresh when the user navigates back to the Role Center.
     begin
         CalculateCues();
     end;
@@ -123,6 +130,7 @@ page 50115 "AST Asset Cue"
         lRecHeader: Record "AST Asset Assignment Header";
         lRecPosted: Record "AST Posted Assignment Header";
     begin
+        lRecAsset.SetLoadFields("No.", Status);
         lRecAsset.SetRange(Status, lRecAsset.Status::Available);
         AvailableCount := lRecAsset.Count();
 
@@ -132,10 +140,28 @@ page 50115 "AST Asset Cue"
         lRecAsset.SetRange(Status, lRecAsset.Status::UnderMaintenance);
         MaintenanceCount := lRecAsset.Count();
 
+        lRecHeader.SetLoadFields("No.", Status);
         lRecHeader.SetRange(Status, lRecHeader.Status::Open);
         OpenAssignments := lRecHeader.Count();
 
+        lRecPosted.SetLoadFields("No.", "Posting Date", "Expected Return Date");
         lRecPosted.SetRange("Posting Date", Today);
+        lRecPosted.SetRange("Transaction Type", lRecPosted."Transaction Type"::Assignment);
         PostedToday := lRecPosted.Count();
+
+        lRecPosted.SetRange("Posting Date");
+        lRecPosted.SetRange("Transaction Type", lRecPosted."Transaction Type"::Assignment);
+        lRecPosted.SetFilter("Expected Return Date", '<>%1&<%2', 0D, Today);
+        OverdueCount := lRecPosted.Count();
+
+        if OverdueReturns() then
+            OverdueStyle := 'Unfavorable'
+        else
+            OverdueStyle := 'Favorable';
+    end;
+
+    local procedure OverdueReturns(): Boolean
+    begin
+        exit(OverdueCount > 0);
     end;
 }

@@ -4,6 +4,8 @@ page 50109 "AST Posted Assignment"
     SourceTable = "AST Posted Assignment Header";
     Caption = 'Posted Asset Assignment';
     UsageCategory = None;
+    AboutTitle = 'Posted Asset Assignment';
+    AboutText = 'A permanent record of a completed assignment. Use Process Return when the employee returns the assets — all listed assets will return to Available status.';
     Editable = false;
     InsertAllowed = false;
     ModifyAllowed = false;
@@ -152,7 +154,6 @@ page 50109 "AST Posted Assignment"
 
     trigger OnAfterGetRecord()
     begin
-        IsAssignmentType :=
-            Rec."Transaction Type" = Rec."Transaction Type"::Assignment;
+        IsAssignmentType := Rec."Transaction Type" = Rec."Transaction Type"::Assignment;
     end;
 }

@@ -2,8 +2,6 @@ query 50100 "AST Asset Assignment Query"
 {
     Caption = 'Asset Assignment Query';
     QueryType = Normal;
-    // Used for: Power BI, API consumers, and statistics page
-    // Returns active assignments — posted header joined with posted lines
 
     elements
     {
@@ -33,7 +31,6 @@ query 50100 "AST Asset Assignment Query"
 
     trigger OnBeforeOpen()
     begin
-        // Default filter: only Assignment type (not Returns)
         SetRange(TransactionType, "AST Transaction Type"::Assignment);
     end;
 }

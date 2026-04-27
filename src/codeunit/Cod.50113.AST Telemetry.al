@@ -1,17 +1,5 @@
 codeunit 50113 "AST Telemetry"
 {
-    // SESSION 53: Custom Telemetry with Session.LogMessage()
-    // Every LogMessage call is sent to Azure Application Insights
-    // if the publisher has configured a telemetry connection string.
-    //
-    // Parameters:
-    //   pTxtEventId    — unique ID for this signal (keep it short, stable, uppercase)
-    //   pTxtMessage    — human-readable message shown in App Insights
-    //   pEnumVerbosity — Verbosity::Normal / Warning / Error / Critical / Verbose
-    //
-    // RULE: Never let telemetry errors break the main transaction.
-    //       Wrap in if not IsNullGuid() guards or use ClearLastError() if needed.
-
     procedure LogAssetAssigned(pCodAssetNo: Code[20]; pCodEmployeeNo: Code[20]; pCodDocumentNo: Code[20])
     var
         lDimensions: Dictionary of [Text, Text];
@@ -22,14 +10,7 @@ codeunit 50113 "AST Telemetry"
         lDimensions.Add('Company', CompanyName());
         lDimensions.Add('User', UserId());
 
-        Session.LogMessage(
-            'AST-ASSIGN-001',
-            StrSubstNo('Asset %1 assigned to employee %2 via document %3.',
-                pCodAssetNo, pCodEmployeeNo, pCodDocumentNo),
-            Verbosity::Normal,
-            DataClassification::OrganizationIdentifiableInformation,
-            TelemetryScope::ExtensionPublisher,
-            lDimensions);
+        Session.LogMessage('AST-ASSIGN-001', StrSubstNo('Asset %1 assigned to employee %2 via document %3.', pCodAssetNo, pCodEmployeeNo, pCodDocumentNo), Verbosity::Normal, DataClassification::OrganizationIdentifiableInformation, TelemetryScope::ExtensionPublisher, lDimensions);
     end;
 
     procedure LogAssetReturned(pCodAssetNo: Code[20]; pCodEmployeeNo: Code[20]; pCodDocumentNo: Code[20])
@@ -41,14 +22,7 @@ codeunit 50113 "AST Telemetry"
         lDimensions.Add('DocumentNo', pCodDocumentNo);
         lDimensions.Add('Company', CompanyName());
 
-        Session.LogMessage(
-            'AST-RETURN-001',
-            StrSubstNo('Asset %1 returned from employee %2 via document %3.',
-                pCodAssetNo, pCodEmployeeNo, pCodDocumentNo),
-            Verbosity::Normal,
-            DataClassification::OrganizationIdentifiableInformation,
-            TelemetryScope::ExtensionPublisher,
-            lDimensions);
+        Session.LogMessage('AST-RETURN-001', StrSubstNo('Asset %1 returned from employee %2 via document %3.', pCodAssetNo, pCodEmployeeNo, pCodDocumentNo), Verbosity::Normal, DataClassification::OrganizationIdentifiableInformation, TelemetryScope::ExtensionPublisher, lDimensions);
     end;
 
     procedure LogPostingError(pCodDocumentNo: Code[20]; pTxtError: Text)
@@ -59,13 +33,7 @@ codeunit 50113 "AST Telemetry"
         lDimensions.Add('ErrorMessage', CopyStr(pTxtError, 1, 250));
         lDimensions.Add('User', UserId());
 
-        Session.LogMessage(
-            'AST-ERROR-001',
-            StrSubstNo('Posting error on assignment %1: %2', pCodDocumentNo, pTxtError),
-            Verbosity::Error,
-            DataClassification::OrganizationIdentifiableInformation,
-            TelemetryScope::ExtensionPublisher,
-            lDimensions);
+        Session.LogMessage('AST-ERROR-001', StrSubstNo('Posting error on assignment %1: %2', pCodDocumentNo, pTxtError), Verbosity::Error, DataClassification::OrganizationIdentifiableInformation, TelemetryScope::ExtensionPublisher, lDimensions);
     end;
 
     procedure LogImportCompleted(pIntRecordCount: Integer)
@@ -76,12 +44,6 @@ codeunit 50113 "AST Telemetry"
         lDimensions.Add('ImportedBy', UserId());
         lDimensions.Add('Company', CompanyName());
 
-        Session.LogMessage(
-            'AST-IMPORT-001',
-            StrSubstNo('%1 assets imported successfully.', pIntRecordCount),
-            Verbosity::Normal,
-            DataClassification::SystemMetadata,
-            TelemetryScope::ExtensionPublisher,
-            lDimensions);
+        Session.LogMessage('AST-IMPORT-001', StrSubstNo('%1 assets imported successfully.', pIntRecordCount), Verbosity::Normal, DataClassification::SystemMetadata, TelemetryScope::ExtensionPublisher, lDimensions);
     end;
 }

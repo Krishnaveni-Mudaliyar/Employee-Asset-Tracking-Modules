@@ -6,42 +6,42 @@
   "brief": "Employee Asset Tracking Module for Business Central",
   "description": "Track and manage company assets assigned to employees",
    "dependencies": [
-{
-"id": "437dbf0e-84ff-417a-965d-ed2bb9650972",
-"name": "Base Application",
-"publisher": "Microsoft",
-"version": "27.4.45366.47530"
-},
-{
-"id": "f3552374-a1f2-4356-848e-196002525837",
-"name": "Business Foundation",
-"publisher": "Microsoft",
-"version": "27.4.45366.45675"
-},
-{
-"id": "63ca2fa4-4f03-4f2b-a480-172fef340d3f",
-"name": "System Application",
-"publisher": "Microsoft",
-"version": "27.4.45366.46024"
-}
-  ],
-  "screenshots": [],
-  "platform": "27.0.0.0",
-  "application": "27.0.0.0",
-  "idRanges": [
     {
-      "from": 50100,
-      "to": 50199
-    }
-  ],
-  "resourceExposurePolicy": {
-    "allowDebugging": true,
-    "allowDownloadingSource": true,
-    "includeSourceInSymbolFile": true
-  },
-  "runtime": "16.0",
-  "target": "Cloud",
-  "features": [
-    "NoImplicitWith","TranslationFile"
-  ]
+      "id": "437dbf0e-84ff-417a-965d-ed2bb9650972",
+      "name": "Base Application",
+      "publisher": "Microsoft",
+      "version": "27.4.45366.47530"
+    },
+    {
+        "id": "f3552374-a1f2-4356-848e-196002525837",
+        "name": "Business Foundation",
+        "publisher": "Microsoft",
+        "version": "27.4.45366.45675"
+      },
+      {
+        "id": "63ca2fa4-4f03-4f2b-a480-172fef340d3f",
+        "name": "System Application",
+        "publisher": "Microsoft",
+        "version": "27.4.45366.46024"
+      }
+      ],
+        "screenshots": [],
+        "platform": "27.0.0.0",
+        "application": "27.0.0.0",
+        "idRanges": [
+          {
+            "from": 50100,
+            "to": 50199
+          }
+        ],
+        "resourceExposurePolicy": {
+          "allowDebugging": true,
+          "allowDownloadingSource": true,
+          "includeSourceInSymbolFile": true
+        },
+        "runtime": "16.0",
+        "target": "Cloud","features":
+        [
+          "NoImplicitWith","TranslationFile"
+        ]
 }

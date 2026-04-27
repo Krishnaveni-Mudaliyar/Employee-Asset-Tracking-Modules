@@ -1,10 +1,5 @@
 codeunit 50111 "AST Excel Export"
 {
-    // SESSION 38: Excel Buffer Pattern
-    // The Excel Buffer table is BC's standard way to build Excel files.
-    // Pattern: Init buffer → AddColumn headers → loop data rows → CreateBook
-    // This codeunit exports the Company Asset list to Excel.
-
     procedure ExportAssetsToExcel()
     var
         lRecAsset: Record "AST Company Asset";
@@ -26,9 +21,8 @@ codeunit 50111 "AST Excel Export"
         AddHeader(lTmpExcelBuf, lIntRow, 8, 'Purchase Price');
         AddHeader(lTmpExcelBuf, lIntRow, 9, 'Assigned Employee');
 
-        // Data rows — SetLoadFields: only load what we export, not all 15 fields
         lRecAsset.SetLoadFields("No.", Description, "Category Code", "Serial No.", Status,
-            Condition, "Purchase Date", "Purchase Price", "Assigned to Employee No.");
+    Condition, "Purchase Date", "Purchase Price", "Assigned to Employee No.");
         if lRecAsset.FindSet() then
             repeat
                 lIntRow += 1;

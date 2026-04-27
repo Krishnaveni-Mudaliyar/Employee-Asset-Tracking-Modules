@@ -70,11 +70,6 @@ codeunit 50106 "AST Install"
 
     local procedure CreateDefaultCategories()
     begin
-        // FIX: Original install created IT-EQUIP, FURNITURE, VEHICLE.
-        // The migration CSV uses: IT-HW, IT-ACC, IT-MOB, IT-NW, COMM, FURN, AV.
-        // This mismatch caused ALL 55 CSV rows to fail on import because
-        // Tab.50102 has TableRelation = "AST Asset Category" on Category Code.
-        // Install must create categories that match what the data migration uses.
         InsertCategory('IT-HW', 'IT Hardware', "AST Asset Category Type"::"IT Equipment");
         InsertCategory('IT-ACC', 'IT Accessories', "AST Asset Category Type"::"IT Equipment");
         InsertCategory('IT-MOB', 'Mobile Devices', "AST Asset Category Type"::"IT Equipment");
@@ -82,7 +77,6 @@ codeunit 50106 "AST Install"
         InsertCategory('COMM', 'Communication', "AST Asset Category Type"::Other);
         InsertCategory('FURN', 'Furniture', "AST Asset Category Type"::Furniture);
         InsertCategory('AV', 'Audio Visual', "AST Asset Category Type"::Other);
-        // General-purpose categories
         InsertCategory('IT-EQUIP', 'IT Equipment', "AST Asset Category Type"::"IT Equipment");
         InsertCategory('VEHICLE', 'Vehicle', "AST Asset Category Type"::Vehicle);
         InsertCategory('MACHINERY', 'Machinery', "AST Asset Category Type"::Machinery);
@@ -92,7 +86,6 @@ codeunit 50106 "AST Install"
     var
         lRecJobQueueEntry: Record "Job Queue Entry";
     begin
-        // Schedule daily overdue notification at 08:00
         lRecJobQueueEntry.SetRange("Object Type to Run", lRecJobQueueEntry."Object Type to Run"::Codeunit);
         lRecJobQueueEntry.SetRange("Object ID to Run", Codeunit::"AST Asset Notification");
         if lRecJobQueueEntry.FindFirst() then
@@ -109,15 +102,28 @@ codeunit 50106 "AST Install"
         lRecJobQueueEntry."Run on Fridays" := true;
         lRecJobQueueEntry."Starting Time" := 080000T;
         lRecJobQueueEntry.Status := lRecJobQueueEntry.Status::"On Hold";
-        // Status = On Hold: admin must activate manually after verifying setup.
-        // Never auto-activate Job Queue on install — client must review first.
+
         lRecJobQueueEntry.Insert(true);
+        lRecJobQueueEntry.SetRange("Object ID to Run", Codeunit::"AST Asset Notification");
+        lRecJobQueueEntry.SetRange(Description, 'AST: Daily Warranty Expiry Notification');
+
+        if not lRecJobQueueEntry.FindFirst() then begin
+            lRecJobQueueEntry.Init();
+            lRecJobQueueEntry."Object Type to Run" := lRecJobQueueEntry."Object Type to Run"::Codeunit;
+            lRecJobQueueEntry."Object ID to Run" := Codeunit::"AST Asset Notification";
+            lRecJobQueueEntry.Description := 'AST: Daily Warranty Expiry Notification';
+            lRecJobQueueEntry."Run on Mondays" := true;
+            lRecJobQueueEntry."Run on Tuesdays" := true;
+            lRecJobQueueEntry."Run on Wednesdays" := true;
+            lRecJobQueueEntry."Run on Thursdays" := true;
+            lRecJobQueueEntry."Run on Fridays" := true;
+            lRecJobQueueEntry."Starting Time" := 083000T;
+            lRecJobQueueEntry.Status := lRecJobQueueEntry.Status::"On Hold";
+            lRecJobQueueEntry.Insert(true);
+        end;
     end;
 
-    local procedure InsertCategory(
-        pCodCode: Code[20];
-        pTxtDescription: Text[100];
-        pEnumType: Enum "AST Asset Category Type")
+    local procedure InsertCategory(pCodCode: Code[20]; pTxtDescription: Text[100]; pEnumType: Enum "AST Asset Category Type")
     var
         lRecCategory: Record "AST Asset Category";
     begin

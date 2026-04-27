@@ -23,12 +23,7 @@ report 50100 "AST Asset Register"
 
             trigger OnPreDataItem()
             begin
-                // FIX: RequestFilterFields already handles Status filtering from the request page.
-                // Applying a secondary SetRange via StatusFilter would override the user's own
-                // filter expression — e.g. "Available|Assigned" — making multi-select impossible.
-                // The separate StatusFilter var is kept for backward compatibility; we only apply
-                // it when no Status filter has been set by the user on the request page.
-                if (GetFilter(Status) = '') and (StatusFilter.AsInteger() > 0) then
+                               if (GetFilter(Status) = '') and (StatusFilter.AsInteger() > 0) then
                     SetRange(Status, StatusFilter);
             end;
         }

@@ -27,7 +27,6 @@ table 50104 "AST Asset Assignment Line"
             begin
                 if "Asset No." = '' then exit;
                 lRecAsset.Get("Asset No.");
-
                 if lRecAsset.Status <> lRecAsset.Status::Available then
                     Error('Asset %1 is not available. Current status: %2', "Asset No.", lRecAsset.Status);
             end;
@@ -69,10 +68,7 @@ where("No." = field("Asset No.")));
     }
     keys
     {
-        key(PK; "Document No.", "Line No.")
-        {
-            Clustered = true;
-        }
+        key(PK; "Document No.", "Line No.") { Clustered = true; }
         key(AssetNo; "Asset No.") { }
     }
 

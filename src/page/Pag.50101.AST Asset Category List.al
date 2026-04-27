@@ -5,6 +5,8 @@ page 50101 "AST Asset Category List"
     Caption = 'Asset Categories';
     CardPageId = "AST Asset Category Card";
     UsageCategory = Lists;
+    AboutTitle = 'Asset Categories';
+    AboutText = 'Define and manage asset categories. Each asset must belong to a category. The No. of Assets count shows how many assets are in each category — click it to drill down.';
     ApplicationArea = All;
 
     layout
@@ -38,7 +40,7 @@ page 50101 "AST Asset Category List"
                     ApplicationArea = All;
                     ToolTip = 'Specifies the total number of assets in this category. Click to view them.';
                     DrillDown = true;
-                    // DrillDown opens filtered Company Asset List for this category
+
                     trigger OnDrillDown()
                     var
                         lRecAsset: Record "AST Company Asset";
@@ -93,8 +95,6 @@ page 50101 "AST Asset Category List"
             }
         }
         area(Promoted)
-        {
-            actionref(NewAsset_Promoted; NewAsset) { }
-        }
+        { actionref(NewAsset_Promoted; NewAsset) { } }
     }
 }

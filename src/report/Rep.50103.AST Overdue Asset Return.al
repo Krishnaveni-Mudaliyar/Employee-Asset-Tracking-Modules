@@ -31,9 +31,6 @@ report 50103 "AST Overdue Asset Return"
 
             trigger OnPreDataItem()
             begin
-                // FIX: Two SetFilter calls on same field — second REPLACES the first.
-                // Correct approach: combine both conditions in ONE filter expression.
-                // '<>%1&<%2' means: not equal to 0D AND less than today
                 SetFilter("Expected Return Date", '<>%1&<%2', 0D, AsOfDate);
             end;
         }
@@ -72,7 +69,6 @@ report 50103 "AST Overdue Asset Return"
             LayoutFile = 'src/reportlayout/WORD/ASTOverdueAssetReturn.docx';
         }
     }
-
     var
         AsOfDate: Date;
 

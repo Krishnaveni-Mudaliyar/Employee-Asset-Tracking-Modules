@@ -5,6 +5,8 @@ page 50103 "AST Company Asset List"
     Caption = 'Company Assets';
     CardPageId = "AST Company Asset Card";
     UsageCategory = Lists;
+    AboutTitle = 'Company Assets';
+    AboutText = 'Full register of all company-owned assets. Use Import Assets to load from CSV. Use Export to Excel for reporting. Colour coding shows current status at a glance.';
     ApplicationArea = All;
 
     layout
@@ -125,14 +127,11 @@ page 50103 "AST Company Asset List"
                     lRecPostedHeader: Record "AST Posted Assignment Header";
                     lRecPostedLine: Record "AST Posted Assignment Line";
                 begin
-                    // FIX: Original code used FindFirst() then filtered header to ONE document.
-                    // If an asset was assigned 5 times, this only ever showed the first assignment.
-                    // Correct: collect all Document Nos for this asset, filter header to all of them.
                     lRecPostedLine.SetRange("Asset No.", Rec."No.");
                     if lRecPostedLine.FindSet() then begin
-                        // Build filter string covering all document numbers for this asset
                         repeat
-                            if lRecPostedHeader.GetFilter("No.") = '' then
+                            if
+                            lRecPostedHeader.GetFilter("No.") = '' then
                                 lRecPostedHeader.SetRange("No.", lRecPostedLine."Document No.")
                             else
                                 lRecPostedHeader.SetFilter("No.",
@@ -170,7 +169,6 @@ page 50103 "AST Company Asset List"
                 RunObject = report "AST Asset Register";
             }
         }
-        // BC 21+ — promote to top bar
         area(Promoted)
         {
             actionref(ImportAssets_Promoted; ImportAssets) { }

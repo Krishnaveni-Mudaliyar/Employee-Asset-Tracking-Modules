@@ -42,10 +42,7 @@ table 50101 "AST Asset Category"
     }
     keys
     {
-        key(PK; "Code")
-        {
-            Clustered = true;
-        }
+        key(PK; "Code") { Clustered = true; }
     }
     trigger OnDelete()
     var

@@ -8,7 +8,6 @@ page 50118 "AST Posted Assignment API"
     EntitySetName = 'postedAssignmentLines';
     SourceTable = "AST Posted Assignment Line";
     ODataKeyFields = "Document No.", "Line No.";
-    // Composite OData key for line table
     Editable = false;
 
     layout
@@ -51,11 +50,6 @@ page 50118 "AST Posted Assignment API"
                 {
                     ApplicationArea = All;
                     Caption = 'Condition at Handover';
-                }
-                field(notes; Rec.Notes)
-                {
-                    ApplicationArea = All;
-                    Caption = 'Notes';
                 }
             }
         }

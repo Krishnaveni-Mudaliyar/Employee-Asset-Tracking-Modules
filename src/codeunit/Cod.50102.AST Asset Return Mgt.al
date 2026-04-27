@@ -12,8 +12,9 @@ codeunit 50102 "AST Asset Return Mgt."
     begin
         pRecPostedHeader.TestField("No.");
 
-        // FIX: OnBeforeProcessReturn event existed in Cod.50105 but was NEVER raised.
-        // This broke the extensibility contract — subscribers registered but never fired.
+        if pRecPostedHeader."Transaction Type" = pRecPostedHeader."Transaction Type"::Return then
+            Error('Assignment %1 has already been returned. Double-Return not allowed.', pRecPostedHeader."No.");
+
         lCodEvents.OnBeforeProcessReturn(pRecPostedHeader, lBolHandled);
         if lBolHandled then
             exit;
@@ -27,29 +28,52 @@ codeunit 50102 "AST Asset Return Mgt."
 
                 lRecAsset.Status := lRecAsset.Status::Available;
                 lRecAsset."Assigned to Employee No." := '';
-                // FIX: Clear stored employee name on return (no longer FlowField)
                 lRecAsset."Assigned to Employee Name" := '';
                 lRecAsset."Last Assignment Date" := 0D;
                 lRecAsset.Modify(true);
 
-                lCodLogMgt.CreateLogEntry(
-                    lRecAsset,
-                    lEnumStatusBefore,
-                    lRecAsset.Status::Available,
-                    "AST Transaction Type"::Return,
-                    pRecPostedHeader."No.",
-                    pRecPostedHeader."Employee No.",
-                    pRecPostedHeader."Employee Name");
+                lCodLogMgt.CreateLogEntry(lRecAsset, lEnumStatusBefore, lRecAsset.Status::Available, "AST Transaction Type"::Return, pRecPostedHeader."No.", pRecPostedHeader."Employee No.", pRecPostedHeader."Employee Name");
 
-                // FIX: Telemetry was never called from Return — now integrated
-                lCodTelemetry.LogAssetReturned(
-                    lRecPostedLine."Asset No.",
-                    pRecPostedHeader."Employee No.",
-                    pRecPostedHeader."No.");
+                lCodTelemetry.LogAssetReturned(lRecPostedLine."Asset No.", pRecPostedHeader."Employee No.", pRecPostedHeader."No.");
 
             until lRecPostedLine.Next() = 0;
 
-        // FIX: OnAfterProcessReturn event existed but was NEVER raised
+        pRecPostedHeader."Transaction Type" := pRecPostedHeader."Transaction Type"::Return;
+        pRecPostedHeader.Modify(false);
+
+        CreateReturnDocument(pRecPostedHeader);
         lCodEvents.OnAfterProcessReturn(pRecPostedHeader);
+    end;
+
+    local procedure CreateReturnDocument(var pRecOriginal: Record "AST Posted Assignment Header")
+    var
+        lRecReturnHeader: Record "AST Posted Assignment Header";
+        lRecOrigLine: Record "AST Posted Assignment Line";
+        lRecReturnLine: Record "AST Posted Assignment Line";
+        lCodReturnNo: Code[20];
+    begin
+        lCodReturnNo := CopyStr('RET-' + pRecOriginal."No.", 1, 20);
+
+        if lRecReturnHeader.Get(lCodReturnNo) then
+            exit;
+
+        lRecReturnHeader.Init();
+        lRecReturnHeader.TransferFields(pRecOriginal);
+        lRecReturnHeader."No." := lCodReturnNo;
+        lRecReturnHeader."Transaction Type" := lRecReturnHeader."Transaction Type"::Return;
+        lRecReturnHeader."Posting Date" := Today;
+        lRecReturnHeader."Posted By" := CopyStr(UserId(), 1, 50);
+        lRecReturnHeader."Created By" := CopyStr(UserId(), 1, 50);
+        lRecReturnHeader."Created Date" := Today;
+        lRecReturnHeader.Insert(false);
+
+        lRecOrigLine.SetRange("Document No.", pRecOriginal."No.");
+        if lRecOrigLine.FindSet() then
+            repeat
+                lRecReturnLine.Init();
+                lRecReturnLine.TransferFields(lRecOrigLine);
+                lRecReturnLine."Document No." := lCodReturnNo;
+                lRecReturnLine.Insert(false);
+            until lRecOrigLine.Next() = 0;
     end;
 }

@@ -48,10 +48,7 @@ table 50106 "AST Posted Assignment Line"
     }
     keys
     {
-        key(PK; "Document No.", "Line No.")
-        {
-            Clustered = true;
-        }
+        key(PK; "Document No.", "Line No.") { Clustered = true; }
     }
 
     trigger OnDelete()

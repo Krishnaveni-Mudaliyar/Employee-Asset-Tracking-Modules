@@ -41,7 +41,6 @@ page 50111 "AST Asset History Factbox"
                     ApplicationArea = All;
                     ToolTip = 'Specifies the asset status after.';
                 }
-
             }
         }
     }

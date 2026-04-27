@@ -102,10 +102,7 @@ table 50103 "AST Asset Assignment Header"
     }
     keys
     {
-        key(PK; "No.")
-        {
-            Clustered = true;
-        }
+        key(PK; "No.") { Clustered = true; }
         key(EmployeeNo; "Employee No.") { }
         key(AssignmentDate; "Assignment Date") { }
     }

@@ -56,6 +56,3 @@ shows all events for that asset
 - XMLport data migration → not yet built
 - Email sending → notification structure ready,
   SMTP configuration required
-
-## Support
-Contact: Krishnaveni.sathish1411@gmail.com

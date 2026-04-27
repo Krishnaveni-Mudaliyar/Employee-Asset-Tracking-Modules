@@ -71,19 +71,12 @@ table 50102 "AST Company Asset"
         field(12; "Assigned to Employee No."; Code[20])
         {
             Caption = 'Assigned to Employee No.';
-            // GDPR: This field links to a natural person — Employee.
-            // DataClassification = EndUserIdentifiableInformation is more accurate
-            // for AppSource. CustomerContent acceptable for internal deployments.
             DataClassification = CustomerContent;
             TableRelation = Employee;
         }
         field(13; "Assigned to Employee Name"; Text[100])
         {
             Caption = 'Assigned to Employee Name';
-            // FIX: A FlowField can only Lookup a single field — it cannot concatenate
-            // First Name + Last Name. Changed to a stored Text field.
-            // Populated in the Posting codeunit when an assignment is posted,
-            // and cleared when the asset is returned.
             DataClassification = CustomerContent;
             Editable = false;
         }
@@ -125,8 +118,6 @@ table 50102 "AST Company Asset"
         key(CategoryCode; "Category Code") { }
         key(EmployeeNo; "Assigned to Employee No.") { }
         key(Status; Status) { }
-        // Added Status key: Role Center cues filter by Status — without this index
-        // every Count() by Status is a full table scan. Critical for performance.
     }
 
     var
@@ -137,31 +128,21 @@ table 50102 "AST Company Asset"
     var
         lRecSetup: Record "AST Asset Tracking Setup";
         lCodNoSeries: Codeunit "No. Series";
-        lBolSetupLoaded: Boolean;
     begin
-        // Load setup once and reuse — avoids duplicate Get() calls
-        // and guards cleanly if setup hasn't been created yet (fresh company).
-        lBolSetupLoaded := lRecSetup.Get();
-
         if "No." = '' then begin
-            if not lBolSetupLoaded then
-                Error('Asset Tracking Setup has not been configured. Run the Install codeunit or open Asset Tracking Setup to initialise it.');
+            lRecSetup.Get();
             lRecSetup.TestField("Asset Nos.");
             "No." := lCodNoSeries.GetNextNo(lRecSetup."Asset Nos.", Today, true);
         end;
 
-        // FIX: Status was never defaulted when creating assets manually.
-        // Only the XMLport set it. Any asset created through the Card page
-        // or from code had Status = 0 (blank) — causing filtering failures
-        // and incorrect cue counts.
         if Status = Status::" " then
             Status := Status::Available;
 
-        // Apply Default Condition from Setup if not already set
-        // Use the already-loaded setup record — no second Get() needed.
-        if (Condition = Condition::" ") and lBolSetupLoaded then
+        if Condition = Condition::" " then begin
+            lRecSetup.Get();
             if lRecSetup."Default Asset Condition" <> lRecSetup."Default Asset Condition"::" " then
                 Condition := lRecSetup."Default Asset Condition";
+        end;
 
         "Created By" := CopyStr(UserId(), 1, 50);
         "Created Date" := Today;

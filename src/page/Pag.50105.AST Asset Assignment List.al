@@ -4,6 +4,8 @@ page 50105 "AST Asset Assignment List"
     SourceTable = "AST Asset Assignment Header";
     CardPageId = "AST Asset Assignment";
     UsageCategory = Documents;
+    AboutTitle = 'Asset Assignments';
+    AboutText = 'Open assignment documents waiting to be posted. Open a document to add assets, set the employee, and post the assignment.';
     Caption = 'Asset Assignment';
     ApplicationArea = All;
 

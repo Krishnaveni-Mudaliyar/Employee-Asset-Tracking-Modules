@@ -4,6 +4,8 @@ page 50106 "AST Asset Assignment"
     SourceTable = "AST Asset Assignment Header";
     Caption = 'Asset Assignment';
     UsageCategory = None;
+    AboutTitle = 'Asset Assignment';
+    AboutText = 'An assignment document links one or more assets to an employee. Add lines for each asset, then Post (or Send for Approval if approval is required).';
 
     layout
     {
@@ -54,7 +56,6 @@ page 50106 "AST Asset Assignment"
             group(StatusGroup)
             {
                 Caption = 'Status';
-
                 field(Status; Rec.Status)
                 {
                     ApplicationArea = All;
@@ -80,21 +81,15 @@ page 50106 "AST Asset Assignment"
             part(AssetHistory; "AST Asset History Factbox")
             {
                 ApplicationArea = All;
-                // Log entries written during posting carry the Assignment Document No.
-                // in their "Document No." field — so this SubPageLink is correct:
-                // it shows all log entries that belong to THIS assignment document.
                 SubPageLink = "Document No." = field("No.");
             }
             part(EmployeeAssets; "AST Employee Asset Factbox")
             {
                 ApplicationArea = All;
-                // Wire Employee Asset FactBox to the current assignment's employee.
-                // Shows live count and total value of assets held by this employee.
                 SubPageLink = "Assigned to Employee No." = field("Employee No.");
             }
         }
     }
-
     actions
     {
         area(Processing)
@@ -110,16 +105,18 @@ page 50106 "AST Asset Assignment"
                 trigger OnAction()
                 var
                     lCodPostingMgt: Codeunit "AST Asset Posting Mgt.";
+                    lCodTelemetry: Codeunit "AST Telemetry";
                 begin
                     if not Confirm('Post assignment %1?', true, Rec."No.") then
                         exit;
-                    lCodPostingMgt.PostAssetAssignment(Rec);
+                    if not Codeunit.Run(Codeunit::"AST Asset Posting Mgt.", Rec) then begin
+                        lCodTelemetry.LogPostingError(Rec."No.", GetLastErrorText());
+                        Error(GetLastErrorText());
+                    end;
                     Message('Assignment %1 posted successfully.', Rec."No.");
                     CurrPage.Close();
                 end;
             }
-
-            // SESSION 30: Approval actions
             action(SendForApproval)
             {
                 Caption = 'Send for Approval';
@@ -136,7 +133,6 @@ page 50106 "AST Asset Assignment"
                     CurrPage.Update(false);
                 end;
             }
-
             action(Approve)
             {
                 Caption = 'Approve';
@@ -153,7 +149,6 @@ page 50106 "AST Asset Assignment"
                     CurrPage.Update(false);
                 end;
             }
-
             action(Reject)
             {
                 Caption = 'Reject';
@@ -171,7 +166,6 @@ page 50106 "AST Asset Assignment"
                 end;
             }
         }
-
         area(Navigation)
         {
             action(ViewLog)
@@ -192,15 +186,13 @@ page 50106 "AST Asset Assignment"
         }
         area(Promoted)
         {
-
             actionref(Post_Promoted; Post) { }
             actionref(SendForApproval_Promoted; SendForApproval) { }
         }
     }
 
     var
-        IsOpen: Boolean;
-        IsPendingApproval: Boolean;
+        IsOpen, IsPendingApproval : Boolean;
         ApprovalStyle: Text;
 
     trigger OnAfterGetRecord()

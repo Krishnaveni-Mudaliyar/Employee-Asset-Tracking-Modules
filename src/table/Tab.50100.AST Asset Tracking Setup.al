@@ -57,10 +57,7 @@ table 50100 "AST Asset Tracking Setup"
     }
     keys
     {
-        key(PK; "Primary Key")
-        {
-            Clustered = true;
-        }
+        key(PK; "Primary Key") { Clustered = true; }
     }
 
     trigger OnDelete()

@@ -78,10 +78,7 @@ table 50107 "AST Asset Log Entry"
     }
     keys
     {
-        key(PK; "Entry No.")
-        {
-            Clustered = true;
-        }
+        key(PK; "Entry No.") { Clustered = true; }
         key(AssetNo; "Asset No.") { }
         key(EmployeeNo; "Employee No.") { }
     }

@@ -24,5 +24,4 @@ permissionset 50103 "AST-SETUP"
         report "AST Asset Register" = X,
 
         xmlport "AST Asset Migration" = X;
-    // Added XMLport — Setup role needs to import assets
 }
