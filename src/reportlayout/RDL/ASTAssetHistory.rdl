@@ -1440,10 +1440,65 @@
       </Page>
     </ReportSection>
   </ReportSections>
-  <ReportParametersLayout>
-    <GridLayoutDefinition>
-      <NumberOfColumns>4</NumberOfColumns>
-      <NumberOfRows>2</NumberOfRows>
-    </GridLayoutDefinition>
-  </ReportParametersLayout>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Fields>
+        <Field Name="Asset_No">
+          <DataField>Asset_No</DataField>
+        </Field>
+        <Field Name="Asset_Description">
+          <DataField>Asset_Description</DataField>
+        </Field>
+        <Field Name="Asset_CategoryCode">
+          <DataField>Asset_CategoryCode</DataField>
+        </Field>
+        <Field Name="Asset_SerialNo">
+          <DataField>Asset_SerialNo</DataField>
+        </Field>
+        <Field Name="Asset_Status">
+          <DataField>Asset_Status</DataField>
+        </Field>
+        <Field Name="Asset_Condition">
+          <DataField>Asset_Condition</DataField>
+        </Field>
+        <Field Name="Asset_PurchaseDate">
+          <DataField>Asset_PurchaseDate</DataField>
+        </Field>
+        <Field Name="Asset_PurchasePrice">
+          <DataField>Asset_PurchasePrice</DataField>
+        </Field>
+        <Field Name="Asset_PurchasePriceFormat">
+          <DataField>Asset_PurchasePriceFormat</DataField>
+        </Field>
+        <Field Name="Log_EntryNo">
+          <DataField>Log_EntryNo</DataField>
+        </Field>
+        <Field Name="Log_TransactionType">
+          <DataField>Log_TransactionType</DataField>
+        </Field>
+        <Field Name="Log_DocumentNo">
+          <DataField>Log_DocumentNo</DataField>
+        </Field>
+        <Field Name="Log_EmployeeNo">
+          <DataField>Log_EmployeeNo</DataField>
+        </Field>
+        <Field Name="Log_EmployeeName">
+          <DataField>Log_EmployeeName</DataField>
+        </Field>
+        <Field Name="Log_Date">
+          <DataField>Log_Date</DataField>
+        </Field>
+        <Field Name="Log_StatusBefore">
+          <DataField>Log_StatusBefore</DataField>
+        </Field>
+        <Field Name="Log_StatusAfter">
+          <DataField>Log_StatusAfter</DataField>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+    </DataSet>
+  </DataSets>
 </Report>
