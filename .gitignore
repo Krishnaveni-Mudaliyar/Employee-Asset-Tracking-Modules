@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # AL Compiler Output
 *.app
 *.flf
@@ -36,3 +37,28 @@ desktop.ini
 
 # Node modules (if any tooling added later)
 node_modules/
+=======
+### AL ###
+#Template for AL projects for Dynamics 365 Business Central
+#launch.json folder
+.vscode/
+#Cache folder
+.alcache/
+#Symbols folder
+.alpackages/
+#Snapshots folder
+.snapshots/
+#Testing Output folder
+.output/
+#Extension App-file
+*.app
+#Rapid Application Development File
+rad.json
+#Translation Base-file
+*.g.xlf
+#License-files
+*.bclicense
+*.flf
+#Test results file
+TestResults.xml
+>>>>>>> 1dc19cb8d7d4875d41710e473a418da0b78bd44e

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Employee Asset Tracking Module
 **Publisher:** Krishnaveni Mudaliyar
 **Version:** 1.0.0.0
@@ -56,3 +57,7 @@ shows all events for that asset
 - XMLport data migration → not yet built
 - Email sending → notification structure ready,
   SMTP configuration required
+=======
+# Employee-Asset-Tracking-Modules
+Track and manage company assets assigned to employees
+>>>>>>> 1dc19cb8d7d4875d41710e473a418da0b78bd44e

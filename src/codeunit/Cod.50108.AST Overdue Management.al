@@ -9,15 +9,18 @@
 codeunit 50108 "AST Overdue Management"
 {
     TableNo = "Job Queue Entry";
-    trigger OnRun() begin RunOverdueCheck(); end;
+    trigger OnRun()
+    begin
+        RunOverdueCheck();
+    end;
 
     procedure RunOverdueCheck()
     var
-        lHdr:    Record "AST Posted Assignment Header";
-        lAsset:  Record "AST Company Asset";
-        lSetup:  Record "AST Asset Tracking Setup";
-        lEmail:  Codeunit "AST Email Mgt";
-        lCount:  Integer;
+        lHdr: Record "AST Posted Assignment Header";
+        lAsset: Record "AST Company Asset";
+        lSetup: Record "AST Asset Tracking Setup";
+        lEmail: Codeunit "AST Email Mgt";
+        lCount: Integer;
     begin
         lSetup.Get();
 
@@ -28,9 +31,9 @@ codeunit 50108 "AST Overdue Management"
         lHdr.SetRange("Is Overdue", false);
         if lHdr.FindSet(true) then
             repeat
-                lHdr."Is Overdue"         := true;
+                lHdr."Is Overdue" := true;
                 lHdr."Overdue Since Date" := lHdr."Expected Return Date";
-                lHdr."Overdue Days"       := Today - lHdr."Expected Return Date";
+                lHdr."Overdue Days" := Today - lHdr."Expected Return Date";
                 lHdr.Modify(false);
                 // Mirror flag on Company Asset
                 if lAsset.Get(GetAssetNoForDoc(lHdr."No.")) then begin
@@ -56,7 +59,7 @@ codeunit 50108 "AST Overdue Management"
         lHdr.SetFilter("Return Date", '>%1', 0D);
         if lHdr.FindSet(true) then
             repeat
-                lHdr."Is Overdue"   := false;
+                lHdr."Is Overdue" := false;
                 lHdr."Overdue Days" := 0;
                 lHdr.Modify(false);
             until lHdr.Next() = 0;
@@ -71,7 +74,8 @@ codeunit 50108 "AST Overdue Management"
     end;
 
     local procedure GetAssetNoForDoc(pDocNo: Code[20]): Code[20]
-    var lLine: Record "AST Posted Assignment Line";
+    var
+        lLine: Record "AST Posted Assignment Line";
     begin
         lLine.SetRange("Document No.", pDocNo);
         if lLine.FindFirst() then exit(lLine."Asset No.");
@@ -79,24 +83,31 @@ codeunit 50108 "AST Overdue Management"
     end;
 
     procedure CreateJobQueueEntry()
-    var lJQ: Record "Job Queue Entry"; lEnq: Codeunit "Job Queue - Enqueue";
+    var
+        lJQ: Record "Job Queue Entry";
+        lEnq: Codeunit "Job Queue - Enqueue";
     begin
         lJQ.SetRange("Object Type to Run", lJQ."Object Type to Run"::Codeunit);
         lJQ.SetRange("Object ID to Run", Codeunit::"AST Overdue Management");
         if not lJQ.IsEmpty() then exit;
         lJQ.Init();
-        lJQ."Object Type to Run"           := lJQ."Object Type to Run"::Codeunit;
-        lJQ."Object ID to Run"             := Codeunit::"AST Overdue Management";
-        lJQ.Description                    := 'AST – Daily Overdue & Warranty Check';
-        lJQ."Run on Mondays"    := true; lJQ."Run on Tuesdays"   := true;
-        lJQ."Run on Wednesdays" := true; lJQ."Run on Thursdays"  := true;
-        lJQ."Run on Fridays"    := true;
-        lJQ."Starting Time"    := 080000T;
-        lJQ."Recurring Job"    := true;
+        lJQ."Object Type to Run" := lJQ."Object Type to Run"::Codeunit;
+        lJQ."Object ID to Run" := Codeunit::"AST Overdue Management";
+        lJQ.Description := 'AST – Daily Overdue & Warranty Check';
+        lJQ."Run on Mondays" := true;
+        lJQ."Run on Tuesdays" := true;
+        lJQ."Run on Wednesdays" := true;
+        lJQ."Run on Thursdays" := true;
+        lJQ."Run on Fridays" := true;
+        lJQ."Starting Time" := 080000T;
+        lJQ."Recurring Job" := true;
         lJQ."No. of Minutes between Runs" := 1440;
         lEnq.EnqueueJobQueueEntry(lJQ);
     end;
 
     procedure RunManual()
-    begin RunOverdueCheck(); Message('Overdue check complete. Posted Assignments updated.'); end;
+    begin
+        RunOverdueCheck();
+        Message('Overdue check complete. Posted Assignments updated.');
+    end;
 }
