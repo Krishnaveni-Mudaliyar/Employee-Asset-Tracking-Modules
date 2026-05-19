@@ -23,7 +23,7 @@ codeunit 50114 "AST Depreciation Batch"
     end;
 
     procedure CreateJobQueueEntry()
-    var lJQ: Record "Job Queue Entry"; lEnq: Codeunit "Job Queue - Enqueue";
+    var lJQ: Record "Job Queue Entry";
     begin
         lJQ.SetRange("Object Type to Run", lJQ."Object Type to Run"::Codeunit);
         lJQ.SetRange("Object ID to Run", Codeunit::"AST Depreciation Batch");
@@ -36,6 +36,6 @@ codeunit 50114 "AST Depreciation Batch"
         lJQ."Starting Time"      := 070000T;
         lJQ."Recurring Job"      := true;
         lJQ."No. of Minutes between Runs" := 10080;
-        lEnq.EnqueueJobQueueEntry(lJQ);
+        lJQ.Insert();
     end;
 }

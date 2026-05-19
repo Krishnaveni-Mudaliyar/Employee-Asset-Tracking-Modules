@@ -1,4 +1,6 @@
-report 50105 "AST Asset Depreciation Schedule"
+namespace ASTModule;
+
+report 50105 "AST Asset Deprec Schedule"
 {
     Caption = 'Asset Depreciation Schedule';
     UsageCategory = ReportsAndAnalysis;

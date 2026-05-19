@@ -5,10 +5,10 @@ codeunit 50110 "AST Install Additions"
     Subtype = Install;
     trigger OnInstallAppPerCompany()
     begin
-        Run();
+        this.ExecuteInstall();
     end;
 
-    local procedure Run()
+    local procedure ExecuteInstall()
     var
         lSetup: Record "AST Asset Tracking Setup";
         lNS: Record "No. Series";
