@@ -3,12 +3,7 @@
 codeunit 50110 "AST Install Additions"
 {
     Subtype = Install;
-    trigger OnInstall()
-    begin
-        Run();
-    end;
-
-    trigger OnUpgradePerDatabase()
+    trigger OnInstallAppPerCompany()
     begin
         Run();
     end;

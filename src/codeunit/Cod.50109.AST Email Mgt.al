@@ -96,23 +96,25 @@ codeunit 50109 "AST Email Mgt"
         lMsg: Codeunit "Email Message";
         lTo: Text[80];
         lResult: Text;
+        lBody: Text;
     begin
         lSetup.Get();
         if not lSetup."Send Email Notification" then exit;
         lTo := lSetup."Admin Email Address";
         if lEmp.Get(pHdr."Employee No.") and (lEmp."Company E-Mail" <> '') then
             lTo := CopyStr(lEmp."Company E-Mail", 1, 80);
-
-        if pApproved then lResult := 'APPROVED' else lResult := 'REJECTED';
-        lBody := StrSubstNo('<h2>Assignment %1 ...', ...);
-        if pApproved then lBody += '...' else lBody += '...';
-        lMsg.Create(lTo, subject, lBody, true);
-
-
-        StrSubstNo('<h2>Assignment %1 – %2</h2><p>Dear %3,</p>', pHdr."No.", lResult, pHdr."Employee Name") +
-            if pApproved
-                then '<p style="color:green"><b>Approved.</b> Assets are ready for collection.</p>'
-                else '<p style="color:red"><b>Rejected.</b> Please contact your manager for details.</p>',
+        if pApproved then
+            lResult := 'APPROVED'
+        else
+            lResult := 'REJECTED';
+        lBody := StrSubstNo('<h2>Assignment %1 – %2</h2><p>Dear %3,</p>', pHdr."No.", lResult, pHdr."Employee Name");
+        if pApproved then
+            lBody += '<p style="color:green"><b>Approved.</b> Assets are ready for collection.</p>'
+        else
+            lBody += '<p style="color:red"><b>Rejected.</b> Please contact your manager for details.</p>';
+        lMsg.Create(lTo,
+            StrSubstNo('[AST] Assignment %1 – %2', pHdr."No.", lResult),
+            lBody,
             true);
         lEmail.Send(lMsg);
     end;
