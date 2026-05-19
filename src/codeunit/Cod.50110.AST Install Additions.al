@@ -14,7 +14,7 @@ codeunit 50110 "AST Install Additions"
         lNS: Record "No. Series";
         lNSL: Record "No. Series Line";
         lOvd: Codeunit "AST Overdue Management";
-        lDep: Codeunit "AST Depreciation Batch";
+        lDep: Codeunit "AST Depreciation Management";
     begin
         lSetup.Get();
 
