@@ -2,6 +2,7 @@
 // Serial No., Asset Tag, Location and QR text string.
 // RDLC layout file: src/reportlayout/RDL/ASTAssetQRLabel.rdl
 // For QR rendering use BC Barcode Font library or custom RDLC image expression.
+
 report 50107 "AST Asset QR Label"
 {
     Caption = 'Asset QR / Barcode Label';
