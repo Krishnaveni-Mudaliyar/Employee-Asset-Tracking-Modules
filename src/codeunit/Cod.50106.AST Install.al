@@ -1,8 +1,3 @@
-namespace AST.AssetTracking;
-
-using Microsoft.Foundation.NoSeries;
-using System.Threading;
-
 codeunit 50106 "AST Install"
 {
     Subtype = Install;
