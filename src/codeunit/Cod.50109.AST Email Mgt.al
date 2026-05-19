@@ -5,11 +5,11 @@ codeunit 50109 "AST Email Mgt"
 {
     procedure SendOverdueEmail(pCount: Integer)
     var
-        lSetup:  Record "AST Asset Tracking Setup";
-        lEmail:  Codeunit Email;
-        lMsg:    Codeunit "Email Message";
-        lHdr:    Record "AST Posted Assignment Header";
-        lBody:   Text;
+        lSetup: Record "AST Asset Tracking Setup";
+        lEmail: Codeunit Email;
+        lMsg: Codeunit "Email Message";
+        lHdr: Record "AST Posted Assignment Header";
+        lBody: Text;
     begin
         lSetup.Get();
         if not lSetup."Send Email Notification" then exit;
@@ -35,12 +35,12 @@ codeunit 50109 "AST Email Mgt"
 
     procedure SendWarrantyExpiryEmail()
     var
-        lSetup:  Record "AST Asset Tracking Setup";
-        lAsset:  Record "AST Company Asset";
-        lEmail:  Codeunit Email;
-        lMsg:    Codeunit "Email Message";
-        lBody:   Text;
-        lCount:  Integer;
+        lSetup: Record "AST Asset Tracking Setup";
+        lAsset: Record "AST Company Asset";
+        lEmail: Codeunit Email;
+        lMsg: Codeunit "Email Message";
+        lBody: Text;
+        lCount: Integer;
     begin
         lSetup.Get();
         if not lSetup."Send Email Notification" then exit;
@@ -68,8 +68,8 @@ codeunit 50109 "AST Email Mgt"
     var
         lSetup: Record "AST Asset Tracking Setup";
         lEmail: Codeunit Email;
-        lMsg:   Codeunit "Email Message";
-        lBody:  Text;
+        lMsg: Codeunit "Email Message";
+        lBody: Text;
     begin
         lSetup.Get();
         if not lSetup."Send Email Notification" then exit;
@@ -91,10 +91,10 @@ codeunit 50109 "AST Email Mgt"
     procedure SendApprovalResultEmail(pHdr: Record "AST Asset Assignment Header"; pApproved: Boolean)
     var
         lSetup: Record "AST Asset Tracking Setup";
-        lEmp:   Record Employee;
+        lEmp: Record Employee;
         lEmail: Codeunit Email;
-        lMsg:   Codeunit "Email Message";
-        lTo:    Text[80];
+        lMsg: Codeunit "Email Message";
+        lTo: Text[80];
         lResult: Text;
     begin
         lSetup.Get();
@@ -102,10 +102,14 @@ codeunit 50109 "AST Email Mgt"
         lTo := lSetup."Admin Email Address";
         if lEmp.Get(pHdr."Employee No.") and (lEmp."Company E-Mail" <> '') then
             lTo := CopyStr(lEmp."Company E-Mail", 1, 80);
-        lResult := if pApproved then 'APPROVED' else 'REJECTED';
-        lMsg.Create(lTo,
-            StrSubstNo('[AST] Assignment %1 – %2', pHdr."No.", lResult),
-            StrSubstNo('<h2>Assignment %1 – %2</h2><p>Dear %3,</p>', pHdr."No.", lResult, pHdr."Employee Name") +
+
+        if pApproved then lResult := 'APPROVED' else lResult := 'REJECTED';
+        lBody := StrSubstNo('<h2>Assignment %1 ...', ...);
+        if pApproved then lBody += '...' else lBody += '...';
+        lMsg.Create(lTo, subject, lBody, true);
+
+
+        StrSubstNo('<h2>Assignment %1 – %2</h2><p>Dear %3,</p>', pHdr."No.", lResult, pHdr."Employee Name") +
             if pApproved
                 then '<p style="color:green"><b>Approved.</b> Assets are ready for collection.</p>'
                 else '<p style="color:red"><b>Rejected.</b> Please contact your manager for details.</p>',

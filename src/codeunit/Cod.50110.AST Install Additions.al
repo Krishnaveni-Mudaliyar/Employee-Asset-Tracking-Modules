@@ -3,27 +3,39 @@
 codeunit 50110 "AST Install Additions"
 {
     Subtype = Install;
-    trigger OnInstall() begin Run(); end;
-    trigger OnUpgradePerDatabase() begin Run(); end;
+    trigger OnInstall()
+    begin
+        Run();
+    end;
+
+    trigger OnUpgradePerDatabase()
+    begin
+        Run();
+    end;
 
     local procedure Run()
     var
         lSetup: Record "AST Asset Tracking Setup";
-        lNS:    Record "No. Series";
-        lNSL:   Record "No. Series Line";
-        lOvd:   Codeunit "AST Overdue Management";
-        lDep:   Codeunit "AST Depreciation Batch";
+        lNS: Record "No. Series";
+        lNSL: Record "No. Series Line";
+        lOvd: Codeunit "AST Overdue Management";
+        lDep: Codeunit "AST Depreciation Batch";
     begin
         lSetup.Get();
 
         // Transfer No. Series
         if not lNS.Get('AST-TRANS') then begin
-            lNS.Init(); lNS.Code := 'AST-TRANS';
+            lNS.Init();
+            lNS.Code := 'AST-TRANS';
             lNS.Description := 'AST Asset Transfers';
-            lNS."Default Nos." := true; lNS."Manual Nos." := false;
+            lNS."Default Nos." := true;
+            lNS."Manual Nos." := false;
             lNS.Insert(true);
-            lNSL.Init(); lNSL."Series Code" := 'AST-TRANS'; lNSL."Line No." := 10000;
-            lNSL."Starting No." := 'TRF-0001'; lNSL."Increment-by No." := 1;
+            lNSL.Init();
+            lNSL."Series Code" := 'AST-TRANS';
+            lNSL."Line No." := 10000;
+            lNSL."Starting No." := 'TRF-0001';
+            lNSL."Increment-by No." := 1;
             lNSL.Insert(true);
         end;
         if lSetup."Transfer Nos." = '' then begin
