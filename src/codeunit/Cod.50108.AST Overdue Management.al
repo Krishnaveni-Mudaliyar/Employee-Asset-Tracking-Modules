@@ -85,7 +85,6 @@ codeunit 50108 "AST Overdue Management"
     procedure CreateJobQueueEntry()
     var
         lJQ: Record "Job Queue Entry";
-        lEnq: Codeunit "Job Queue - Enqueue";
     begin
         lJQ.SetRange("Object Type to Run", lJQ."Object Type to Run"::Codeunit);
         lJQ.SetRange("Object ID to Run", Codeunit::"AST Overdue Management");
@@ -102,7 +101,7 @@ codeunit 50108 "AST Overdue Management"
         lJQ."Starting Time" := 080000T;
         lJQ."Recurring Job" := true;
         lJQ."No. of Minutes between Runs" := 1440;
-        lEnq.EnqueueJobQueueEntry(lJQ);
+        lJQ.Insert();
     end;
 
     procedure RunManual()
