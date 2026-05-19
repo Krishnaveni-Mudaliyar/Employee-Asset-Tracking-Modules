@@ -75,7 +75,7 @@ page 50126 "AST Asset Transfer Card"
             {
                 Caption = 'Complete Transfer';
                 ApplicationArea = All;
-                Image = Finish;
+                Image = Completed;
                 Promoted = true;
                 PromotedCategory = Process;
                 Enabled = Rec.Status = Rec.Status::Approved;
