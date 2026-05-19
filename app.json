@@ -1,123 +1,47 @@
 {
   "id": "c8750eeb-a49a-410d-8bd0-31d794e9c15a",
-  "name": "Employee-Asset-Tracking-Modules",
-  "publisher": "Default Publisher",
+  "name": "Employee Asset Tracking",
+  "publisher": "Krishnaveni Mudaliyar",
   "version": "1.0.0.0",
-  "brief": "",
-  "description": "",
-  "privacyStatement": "",
-  "EULA": "",
-  "help": "",
-  "url": "",
-  "logo": "",
-  "dependencies": [
-{
-"id": "a190e87b-2f59-4e14-a727-421877802768",
-"name": "API - Cross Environment Intercompany",
-"publisher": "Microsoft",
-"version": "27.4.45366.47176"
-},
-{
-"id": "a2cc2ef8-949f-43d4-45b8-10bd6f8bc62c",
-"name": "API Reports - Finance",
-"publisher": "Microsoft",
-"version": "27.4.45366.45675"
-},
-{
-"id": "437dbf0e-84ff-417a-965d-ed2bb9650972",
-"name": "Base Application",
-"publisher": "Microsoft",
-"version": "27.4.45366.47530"
-},
-{
-"id": "f3552374-a1f2-4356-848e-196002525837",
-"name": "Business Foundation",
-"publisher": "Microsoft",
-"version": "27.4.45366.45675"
-},
-{
-"id": "cc11c22e-5ca3-423f-8804-88cac6d91983",
-"name": "Dynamics BC Excel Reports",
-"publisher": "Microsoft",
-"version": "27.4.45366.45675"
-},
-{
-"id": "e1d97edc-c239-46b4-8d84-6368bdf67c8b",
-"name": "E-Document Core",
-"publisher": "Microsoft",
-"version": "27.4.45366.47426"
-},
-{
-"id": "2dc39818-e0f0-42b6-99eb-ba29dc5f4102",
-"name": "India Gate Entry",
-"publisher": "Microsoft",
-"version": "27.4.45366.45675"
-},
-{
-"id": "db643212-b7fb-4dd4-b5a8-cb44ac714461",
-"name": "India GST",
-"publisher": "Microsoft",
-"version": "27.4.45366.46399"
-},
-{
-"id": "050f6146-bffd-40de-942c-d0dd510ec20f",
-"name": "India Reports",
-"publisher": "Microsoft",
-"version": "27.4.45366.45675"
-},
-{
-"id": "d3c551dd-5903-4194-b153-04ced9d29a2c",
-"name": "India Tax Base",
-"publisher": "Microsoft",
-"version": "27.4.45366.45675"
-},
-{
-"id": "eddcf82e-482c-49d1-836b-ad0284f2c5b0",
-"name": "India TCS",
-"publisher": "Microsoft",
-"version": "27.4.45366.45675"
-},
-{
-"id": "eae5779e-7797-4c4c-977e-7516652b7a65",
-"name": "India TDS",
-"publisher": "Microsoft",
-"version": "27.4.45366.46087"
-},
-{
-"id": "7106d701-c601-4a5f-97c2-b8b323ae2c18",
-"name": "QR Generator",
-"publisher": "Microsoft",
-"version": "27.4.45366.45675"
-},
-{
-"id": "63ca2fa4-4f03-4f2b-a480-172fef340d3f",
-"name": "System Application",
-"publisher": "Microsoft",
-"version": "27.4.45366.46024"
-},
-{
-"id": "c1eafb3f-e397-468e-bdb4-ecc5c317ca00",
-"name": "Tax Engine",
-"publisher": "Microsoft",
-"version": "27.4.45366.45675"
-}
-  ],
-  "screenshots": [],
-  "platform": "1.0.0.0",
-  "application": "27.0.0.0",
-  "idRanges": [
+  "brief": "Employee Asset Tracking Module for Business Central",
+  "description": "Track and manage company assets assigned to employees",
+   "dependencies": [
     {
-      "from": 50000,
-      "to": 60000
-    }
-  ],
-  "resourceExposurePolicy": {
-    "allowDebugging": true,
-    "allowDownloadingSource": true,
-    "includeSourceInSymbolFile": true
-  },
-  "runtime": "16.0",
-  "features": [
-    "NoImplicitWith"
-  ]
+      "id": "437dbf0e-84ff-417a-965d-ed2bb9650972",
+      "name": "Base Application",
+      "publisher": "Microsoft",
+      "version": "27.4.45366.47530"
+    },
+    {
+        "id": "f3552374-a1f2-4356-848e-196002525837",
+        "name": "Business Foundation",
+        "publisher": "Microsoft",
+        "version": "27.4.45366.45675"
+      },
+      {
+        "id": "63ca2fa4-4f03-4f2b-a480-172fef340d3f",
+        "name": "System Application",
+        "publisher": "Microsoft",
+        "version": "27.4.45366.46024"
+      }
+      ],
+        "screenshots": [],
+        "platform": "27.0.0.0",
+        "application": "27.0.0.0",
+        "idRanges": [
+          {
+            "from": 50100,
+            "to": 50199
+          }
+        ],
+        "resourceExposurePolicy": {
+          "allowDebugging": true,
+          "allowDownloadingSource": true,
+          "includeSourceInSymbolFile": true
+        },
+        "runtime": "16.0",
+        "target": "Cloud","features":
+        [
+          "NoImplicitWith","TranslationFile"
+        ]
 }
