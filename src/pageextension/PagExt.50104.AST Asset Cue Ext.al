@@ -4,7 +4,7 @@
 //   - Active Reservations
 //   - Open Transfers
 //   - Actions: Run Overdue Check, Update Book Values
-pageextension 50104 "AST Asset Cue Ext" extends "AST Asset Cue"
+pageextension 50104 ASTAssetCueExt extends "AST Asset Cue"
 {
     layout
     {
@@ -17,7 +17,8 @@ pageextension 50104 "AST Asset Cue Ext" extends "AST Asset Cue"
                 ToolTip = 'Assets flagged as overdue by the daily job. Click to view.';
                 StyleExpr = 'Unfavorable';
                 trigger OnDrillDown()
-                var lHdr: Record "AST Posted Assignment Header";
+                var
+                    lHdr: Record "AST Posted Assignment Header";
                 begin
                     lHdr.SetRange("Is Overdue", true);
                     lHdr.SetRange("Return Date", 0D);
@@ -31,7 +32,8 @@ pageextension 50104 "AST Asset Cue Ext" extends "AST Asset Cue"
                 ToolTip = 'Assets with warranty expiring within 30 days.';
                 StyleExpr = WarrantyStyle;
                 trigger OnDrillDown()
-                var lAsset: Record "AST Company Asset";
+                var
+                    lAsset: Record "AST Company Asset";
                 begin
                     lAsset.SetFilter("Warranty Expiry Date", '>=%1&<=%2', Today, Today + 30);
                     Page.Run(Page::"AST Company Asset List", lAsset);
@@ -43,7 +45,8 @@ pageextension 50104 "AST Asset Cue Ext" extends "AST Asset Cue"
                 Caption = 'Active Reservations';
                 ToolTip = 'Number of active asset reservations.';
                 trigger OnDrillDown()
-                var lRes: Record "AST Asset Reservation";
+                var
+                    lRes: Record "AST Asset Reservation";
                 begin
                     lRes.SetRange(Status, lRes.Status::Active);
                     Page.Run(Page::"AST Asset Reservation List", lRes);
@@ -55,7 +58,8 @@ pageextension 50104 "AST Asset Cue Ext" extends "AST Asset Cue"
                 Caption = 'Open Transfers';
                 ToolTip = 'Number of asset transfer documents in Open status.';
                 trigger OnDrillDown()
-                var lTrf: Record "AST Asset Transfer Header";
+                var
+                    lTrf: Record "AST Asset Transfer Header";
                 begin
                     lTrf.SetRange(Status, lTrf.Status::Open);
                     Page.Run(Page::"AST Asset Transfer List", lTrf);
@@ -69,19 +73,32 @@ pageextension 50104 "AST Asset Cue Ext" extends "AST Asset Cue"
         {
             action(RunOverdueCheckExt)
             {
-                Caption = 'Run Overdue Check Now'; ApplicationArea = All;
-                Image = Refresh; Promoted = true; PromotedCategory = Process;
+                Caption = 'Run Overdue Check Now';
+                ApplicationArea = All;
+                Image = Refresh;
+                Promoted = true;
+                PromotedCategory = Process;
                 trigger OnAction()
-                var lOvd: Codeunit "AST Overdue Management";
-                begin lOvd.RunManual(); CurrPage.Update(false); end;
+                var
+                    lOvd: Codeunit "AST Overdue Management";
+                begin
+                    lOvd.RunManual();
+                    CurrPage.Update(false);
+                end;
             }
             action(RunDepreciationExt)
             {
-                Caption = 'Update Book Values'; ApplicationArea = All;
-                Image = Calculate; Promoted = true; PromotedCategory = Process;
+                Caption = 'Update Book Values';
+                ApplicationArea = All;
+                Image = Calculate;
+                Promoted = true;
+                PromotedCategory = Process;
                 trigger OnAction()
-                var lDep: Codeunit "AST Depreciation Batch";
-                begin lDep.RunDepreciationUpdate(); CurrPage.Update(false); end;
+                begin
+                    // Fallback when the AST Depreciation codeunit is not present in this repo/package
+                    Message('The depreciation update functionality is not available in this build.');
+                    CurrPage.Update(false);
+                end;
             }
         }
     }
@@ -91,12 +108,13 @@ pageextension 50104 "AST Asset Cue Ext" extends "AST Asset Cue"
         ActiveReservations: Integer;
         OpenTransfers: Integer;
         WarrantyStyle: Text;
+
     trigger OnAfterGetCurrRecord()
     var
-        lHdr:  Record "AST Posted Assignment Header";
+        lHdr: Record "AST Posted Assignment Header";
         lAsset: Record "AST Company Asset";
-        lRes:  Record "AST Asset Reservation";
-        lTrf:  Record "AST Asset Transfer Header";
+        lRes: Record "AST Asset Reservation";
+        lTrf: Record "AST Asset Transfer Header";
     begin
         lHdr.SetRange("Is Overdue", true);
         lHdr.SetRange("Return Date", 0D);

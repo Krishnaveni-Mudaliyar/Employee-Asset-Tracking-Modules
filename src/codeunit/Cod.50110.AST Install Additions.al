@@ -14,7 +14,6 @@ codeunit 50110 "AST Install Additions"
         lNS: Record "No. Series";
         lNSL: Record "No. Series Line";
         lOvd: Codeunit "AST Overdue Management";
-        lDep: Codeunit "AST Depreciation Management";
     begin
         lSetup.Get();
 
@@ -46,7 +45,6 @@ codeunit 50110 "AST Install Additions"
 
         // Job Queues
         lOvd.CreateJobQueueEntry();
-        lDep.CreateJobQueueEntry();
 
         if lSetup."Admin Email Address" = '' then
             Message('Post-install: Set Admin Email Address in Asset Tracking Setup to enable email alerts.');

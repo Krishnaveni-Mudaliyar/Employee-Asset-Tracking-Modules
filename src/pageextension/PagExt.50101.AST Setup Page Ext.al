@@ -38,11 +38,10 @@ pageextension 50101 "AST Setup Page Ext" extends "AST Asset Tracking Setup"
                 trigger OnAction()
                 var
                     lOvd: Codeunit "AST Overdue Management";
-                    lDep: Codeunit "AST Depreciation Batch";
                 begin
+                    // Create/refresh only the job queue entry for the available codeunit.
                     lOvd.CreateJobQueueEntry();
-                    lDep.CreateJobQueueEntry();
-                    Message('Job queue entries created/refreshed.');
+                    Message('Job queue entry for Overdue Check created/refreshed.');
                 end;
             }
             action(RunOverdueNow)
