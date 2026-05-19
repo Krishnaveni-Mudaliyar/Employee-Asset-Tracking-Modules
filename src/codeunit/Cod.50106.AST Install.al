@@ -88,7 +88,9 @@ codeunit 50106 "AST Install"
     begin
         lRecJobQueueEntry.SetRange("Object Type to Run", lRecJobQueueEntry."Object Type to Run"::Codeunit);
         lRecJobQueueEntry.SetRange("Object ID to Run", Codeunit::"AST Asset Notification");
-        if lRecJobQueueEntry.FindFirst() then
+
+        if lRecJobQueueEntry.FindFirst()
+        then
             exit;
 
         lRecJobQueueEntry.Init();
