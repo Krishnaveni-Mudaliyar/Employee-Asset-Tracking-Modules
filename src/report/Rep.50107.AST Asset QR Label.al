@@ -14,18 +14,18 @@ report 50107 "AST Asset QR Label"
         {
             RequestFilterFields = "No.", "Category Code", Status;
 
-            column(AssetNo;         "No.")                          { }
-            column(Description;     Description)                    { }
-            column(CategoryCode;    "Category Code")                { }
-            column(SerialNo;        "Serial No.")                   { }
-            column(AssetTagNo;      "Asset Tag No.")                { }
-            column(LocationCode;    "Location Code")                { }
-            column(Building;        Building)                       { }
-            column(FloorRoom;       "Floor / Room")                 { }
-            column(Status;          Status)                         { }
-            column(PurchaseDate;    "Purchase Date")                { }
-            column(QRCodeData;      QRCodeDataTxt)                  { }
-            column(CompanyName;     CompanyName())                  { }
+            column(AssetNo; "No.") { }
+            column(Description; Description) { }
+            column(CategoryCode; "Category Code") { }
+            column(SerialNo; "Serial No.") { }
+            column(AssetTagNo; "Asset Tag No.") { }
+            column(LocationCode; "Location Code") { }
+            column(Building; Building) { }
+            column(FloorRoom; "Floor / Room") { }
+            column(Status; Status) { }
+            column(PurchaseDate; "Purchase Date") { }
+            column(QRCodeData; QRCodeDataTxt) { }
+            column(CompanyName; CompanyName()) { }
 
             trigger OnAfterGetRecord()
             begin
@@ -36,5 +36,6 @@ report 50107 "AST Asset QR Label"
             end;
         }
     }
-    var QRCodeDataTxt: Text[250];
+    var
+        QRCodeDataTxt: Text[250];
 }
