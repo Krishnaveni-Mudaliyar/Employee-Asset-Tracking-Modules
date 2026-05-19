@@ -1,7 +1,9 @@
 page 50126 "AST Asset Transfer Card"
 {
-    PageType = Document; SourceTable = "AST Asset Transfer Header";
-    Caption = 'Asset Transfer'; ApplicationArea = All;
+    PageType = Document;
+    SourceTable = "AST Asset Transfer Header";
+    Caption = 'Asset Transfer';
+    ApplicationArea = All;
     layout
     {
         area(content)
@@ -13,7 +15,8 @@ page 50126 "AST Asset Transfer Card"
                 {
                     ApplicationArea = All;
                     trigger OnValidate()
-                    var lEmp: Record Employee;
+                    var
+                        lEmp: Record Employee;
                     begin
                         if lEmp.Get(Rec."From Employee No.") then begin
                             Rec."From Employee Name" := CopyStr(lEmp."First Name" + ' ' + lEmp."Last Name", 1, 100);
@@ -26,7 +29,8 @@ page 50126 "AST Asset Transfer Card"
                 {
                     ApplicationArea = All;
                     trigger OnValidate()
-                    var lEmp: Record Employee;
+                    var
+                        lEmp: Record Employee;
                     begin
                         if lEmp.Get(Rec."To Employee No.") then
                             Rec."To Employee Name" := CopyStr(lEmp."First Name" + ' ' + lEmp."Last Name", 1, 100);
@@ -53,20 +57,31 @@ page 50126 "AST Asset Transfer Card"
         {
             action(Approve)
             {
-                Caption = 'Approve Transfer'; ApplicationArea = All;
-                Image = Approve; Promoted = true; PromotedCategory = Process;
+                Caption = 'Approve Transfer';
+                ApplicationArea = All;
+                Image = Approve;
+                Promoted = true;
+                PromotedCategory = Process;
                 Enabled = Rec.Status = Rec.Status::Open;
                 trigger OnAction()
-                var lMgt: Codeunit "AST Asset Transfer Mgt";
-                begin lMgt.ApproveTransfer(Rec); CurrPage.Update(false); end;
+                var
+                    lMgt: Codeunit "AST Asset Transfer Mgt";
+                begin
+                    lMgt.ApproveTransfer(Rec);
+                    CurrPage.Update(false);
+                end;
             }
             action(Complete)
             {
-                Caption = 'Complete Transfer'; ApplicationArea = All;
-                Image = Finish; Promoted = true; PromotedCategory = Process;
+                Caption = 'Complete Transfer';
+                ApplicationArea = All;
+                Image = Finish;
+                Promoted = true;
+                PromotedCategory = Process;
                 Enabled = Rec.Status = Rec.Status::Approved;
                 trigger OnAction()
-                var lMgt: Codeunit "AST Asset Transfer Mgt";
+                var
+                    lMgt: Codeunit "AST Asset Transfer Mgt";
                 begin
                     if not Confirm('Complete transfer %1? Assets will be moved to %2.', true, Rec."No.", Rec."To Employee Name") then exit;
                     lMgt.CompleteTransfer(Rec);
@@ -75,12 +90,19 @@ page 50126 "AST Asset Transfer Card"
             }
             action(CancelTransfer)
             {
-                Caption = 'Cancel Transfer'; ApplicationArea = All;
-                Image = Cancel; Promoted = true; PromotedCategory = Process;
+                Caption = 'Cancel Transfer';
+                ApplicationArea = All;
+                Image = Cancel;
+                Promoted = true;
+                PromotedCategory = Process;
                 Enabled = Rec.Status <> Rec.Status::Completed;
                 trigger OnAction()
-                var lMgt: Codeunit "AST Asset Transfer Mgt";
-                begin lMgt.CancelTransfer(Rec); CurrPage.Update(false); end;
+                var
+                    lMgt: Codeunit "AST Asset Transfer Mgt";
+                begin
+                    lMgt.CancelTransfer(Rec);
+                    CurrPage.Update(false);
+                end;
             }
         }
     }
