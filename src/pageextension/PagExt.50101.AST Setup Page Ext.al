@@ -46,7 +46,7 @@ pageextension 50101 "AST Setup Page Ext" extends "AST Asset Tracking Setup"
             {
                 Caption = 'Create / Refresh Job Queue Entries';
                 ApplicationArea = All;
-                Image = Schedule;
+                Image = Refresh;
                 Promoted = true;
                 PromotedCategory = Process;
                 ToolTip = 'Creates or refreshes the daily Overdue Check and weekly Depreciation Batch job queue entries.';
