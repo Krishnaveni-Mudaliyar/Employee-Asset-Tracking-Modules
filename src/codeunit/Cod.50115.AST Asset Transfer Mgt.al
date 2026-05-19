@@ -8,18 +8,18 @@ codeunit 50115 "AST Asset Transfer Mgt"
     begin
         if pHdr.Status <> pHdr.Status::Open then
             Error('Transfer %1 must be Open to approve.', pHdr."No.");
-        pHdr.Status          := pHdr.Status::Approved;
-        pHdr."Approved By"   := CopyStr(UserId(), 1, 50);
+        pHdr.Status := pHdr.Status::Approved;
+        pHdr."Approved By" := CopyStr(UserId(), 1, 50);
         pHdr."Approval Date" := Today;
         pHdr.Modify(true);
     end;
 
     procedure CompleteTransfer(var pHdr: Record "AST Asset Transfer Header")
     var
-        lLine:  Record "AST Asset Transfer Line";
+        lLine: Record "AST Asset Transfer Line";
         lAsset: Record "AST Company Asset";
-        lLog:   Codeunit "AST Asset Log Mgt.";
-        lEmp:   Record Employee;
+        lLog: Codeunit "AST Asset Log Mgt.";
+        lEmp: Record Employee;
     begin
         if pHdr.Status <> pHdr.Status::Approved then
             Error('Transfer %1 must be Approved before completing.', pHdr."No.");
@@ -45,15 +45,15 @@ codeunit 50115 "AST Asset Transfer Mgt"
                     "AST Transaction Type"::Transfer, pHdr."No.",
                     pHdr."To Employee No.", pHdr."To Employee Name");
 
-                lAsset."Assigned to Employee No."  := pHdr."To Employee No.";
+                lAsset."Assigned to Employee No." := pHdr."To Employee No.";
                 lAsset."Assigned to Employee Name" := pHdr."To Employee Name";
-                lAsset."Last Assignment Date"       := pHdr."Transfer Date";
-                lAsset.Condition                    := lLine.Condition;
+                lAsset."Last Assignment Date" := pHdr."Transfer Date";
+                lAsset.Condition := lLine.Condition;
                 lAsset.Modify(true);
             until lLine.Next() = 0;
 
-        pHdr.Status          := pHdr.Status::Completed;
-        pHdr."Approved By"   := CopyStr(UserId(), 1, 50);
+        pHdr.Status := pHdr.Status::Completed;
+        pHdr."Approved By" := CopyStr(UserId(), 1, 50);
         pHdr."Approval Date" := Today;
         pHdr.Modify(true);
         Message('Transfer %1 completed. Assets moved to %2.', pHdr."No.", pHdr."To Employee Name");

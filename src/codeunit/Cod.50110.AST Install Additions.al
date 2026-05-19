@@ -38,9 +38,15 @@ codeunit 50110 "AST Install Additions"
         end;
 
         // Default new setup fields if zero/blank
-        if lSetup."Default Depreciation Rate %" = 0 then lSetup."Default Depreciation Rate %" := 20;
-        if lSetup."Warranty Alert Days" = 0 then lSetup."Warranty Alert Days" := 30;
-        if lSetup."Reservation Expiry Days" = 0 then lSetup."Reservation Expiry Days" := 7;
+        if lSetup."Default Depreciation Rate %" = 0
+        then
+            lSetup."Default Depreciation Rate %" := 20;
+        if lSetup."Warranty Alert Days" = 0
+        then
+            lSetup."Warranty Alert Days" := 30;
+        if lSetup."Reservation Expiry Days" = 0
+        then
+            lSetup."Reservation Expiry Days" := 7;
         lSetup.Modify(false);
 
         // Job Queues

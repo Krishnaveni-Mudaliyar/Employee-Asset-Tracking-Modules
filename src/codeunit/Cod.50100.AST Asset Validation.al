@@ -47,7 +47,6 @@ codeunit 50100 "AST Asset Validation"
 
     var
         lRecLine: Record "AST Asset Assignment Line";
-
     begin
         lRecLine.SetRange("Document No.", pRecHeader."No.");
         lRecLine.SetRange("Asset No.", pRecLine."Asset No.");

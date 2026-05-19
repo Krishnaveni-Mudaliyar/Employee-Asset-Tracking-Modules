@@ -11,18 +11,30 @@ pageextension 50101 "AST Setup Page Ext" extends "AST Asset Tracking Setup"
             group(TransferGroup)
             {
                 Caption = 'Transfers & Reservations';
-                field("Transfer Nos."; Rec."Transfer Nos.") { ApplicationArea = All; }
-                field("Reservation Expiry Days"; Rec."Reservation Expiry Days") { ApplicationArea = All; }
+                field("Transfer Nos."; Rec."Transfer Nos.")
+                {
+                    ApplicationArea = All;
+                }
+                field("Reservation Expiry Days"; Rec."Reservation Expiry Days")
+                {
+                    ApplicationArea = All;
+                }
             }
             group(DeprecGroup)
             {
                 Caption = 'Depreciation';
-                field("Default Depreciation Rate %"; Rec."Default Depreciation Rate %") { ApplicationArea = All; }
+                field("Default Depreciation Rate %"; Rec."Default Depreciation Rate %")
+                {
+                    ApplicationArea = All;
+                }
             }
             group(AlertGroup)
             {
                 Caption = 'Alert Thresholds';
-                field("Warranty Alert Days"; Rec."Warranty Alert Days") { ApplicationArea = All; }
+                field("Warranty Alert Days"; Rec."Warranty Alert Days")
+                {
+                    ApplicationArea = All;
+                }
             }
         }
     }
@@ -32,8 +44,11 @@ pageextension 50101 "AST Setup Page Ext" extends "AST Asset Tracking Setup"
         {
             action(SetupJobQueues)
             {
-                Caption = 'Create / Refresh Job Queue Entries'; ApplicationArea = All;
-                Image = Schedule; Promoted = true; PromotedCategory = Process;
+                Caption = 'Create / Refresh Job Queue Entries';
+                ApplicationArea = All;
+                Image = Schedule;
+                Promoted = true;
+                PromotedCategory = Process;
                 ToolTip = 'Creates or refreshes the daily Overdue Check and weekly Depreciation Batch job queue entries.';
                 trigger OnAction()
                 var
@@ -46,11 +61,17 @@ pageextension 50101 "AST Setup Page Ext" extends "AST Asset Tracking Setup"
             }
             action(RunOverdueNow)
             {
-                Caption = 'Run Overdue Check Now'; ApplicationArea = All;
-                Image = Refresh; Promoted = true; PromotedCategory = Process;
+                Caption = 'Run Overdue Check Now';
+                ApplicationArea = All;
+                Image = Refresh;
+                Promoted = true;
+                PromotedCategory = Process;
                 trigger OnAction()
-                var lOvd: Codeunit "AST Overdue Management";
-                begin lOvd.RunManual(); end;
+                var
+                    lOvd: Codeunit "AST Overdue Management";
+                begin
+                    lOvd.RunManual();
+                end;
             }
         }
     }
