@@ -10,12 +10,37 @@ pageextension 50102 "AST Posted Assignment Ext" extends "AST Posted Assignment"
             group(ReturnDetails)
             {
                 Caption = 'Return Details';
-                field("Return Date"; Rec."Return Date") { ApplicationArea = All; Editable = false; }
-                field("Return Processed By"; Rec."Return Processed By") { ApplicationArea = All; Editable = false; }
-                field("Return Notes"; Rec."Return Notes") { ApplicationArea = All; Editable = false; }
-                field("Days on Loan"; Rec."Days on Loan") { ApplicationArea = All; Editable = false; }
-                field("Is Overdue"; Rec."Is Overdue") { ApplicationArea = All; Editable = false; StyleExpr = ReturnOverdueStyle; }
-                field("Overdue Days"; Rec."Overdue Days") { ApplicationArea = All; Editable = false; }
+                field("Return Date"; Rec."Return Date")
+                {
+                    ApplicationArea = All;
+                    Editable = false;
+                }
+                field("Return Processed By"; Rec."Return Processed By")
+                {
+                    ApplicationArea = All;
+                    Editable = false;
+                }
+                field("Return Notes"; Rec."Return Notes")
+                {
+                    ApplicationArea = All;
+                    Editable = false;
+                }
+                field("Days on Loan"; Rec."Days on Loan")
+                {
+                    ApplicationArea = All;
+                    Editable = false;
+                }
+                field("Is Overdue"; Rec."Is Overdue")
+                {
+                    ApplicationArea = All;
+                    Editable = false;
+                    StyleExpr = ReturnOverdueStyle;
+                }
+                field("Overdue Days"; Rec."Overdue Days")
+                {
+                    ApplicationArea = All;
+                    Editable = false;
+                }
             }
         }
     }
@@ -25,14 +50,17 @@ pageextension 50102 "AST Posted Assignment Ext" extends "AST Posted Assignment"
         {
             action(ProcessReturnWithCondition)
             {
-                Caption = 'Process Return (with Condition)'; ApplicationArea = All;
-                Image = Return; Promoted = true; PromotedCategory = Process;
+                Caption = 'Process Return (with Condition)';
+                ApplicationArea = All;
+                Image = Return;
+                Promoted = true;
+                PromotedCategory = Process;
                 ToolTip = 'Process return and capture condition at return for each asset.';
                 Enabled = CanReturn;
                 trigger OnAction()
                 var
-                    lRetMgt:    Codeunit "AST Asset Return Mgt.";
-                    lEnrich:    Codeunit "AST Return Enrichment";
+                    lRetMgt: Codeunit "AST Asset Return Mgt.";
+                    lEnrich: Codeunit "AST Return Enrichment";
                 begin
                     if not Confirm('Process return for assignment %1?\n\nAll assets will be set to Available. You can capture condition per line before confirming.', true, Rec."No.") then
                         exit;
@@ -46,10 +74,19 @@ pageextension 50102 "AST Posted Assignment Ext" extends "AST Posted Assignment"
             }
         }
     }
-    var ReturnOverdueStyle: Text; CanReturn: Boolean;
+    var
+        ReturnOverdueStyle: Text;
+        CanReturn: Boolean;
+
     trigger OnAfterGetRecord()
     begin
-        if Rec."Is Overdue" then ReturnOverdueStyle := 'Unfavorable' else ReturnOverdueStyle := 'None';
-        CanReturn := (Rec."Transaction Type" = Rec."Transaction Type"::Assignment) and (Rec."Return Date" = 0D);
+        if Rec."Is Overdue"
+        then
+            ReturnOverdueStyle := 'Unfavorable'
+        else
+            ReturnOverdueStyle := 'None';
+
+        CanReturn := (Rec."Transaction Type" = Rec."Transaction Type"::Assignment)
+        and (Rec."Return Date" = 0D);
     end;
 }

@@ -10,8 +10,14 @@ query 50101 "AST Asset Statistics Query"
             column(CategoryCode; "Category Code") { }
             column(AssetStatus; Status) { }
             column(AssetCondition; Condition) { }
-            column(Count) { Method = Count; }
-            column(TotalPurchasePrice; "Purchase Price") { Method = Sum; }
+            column(Count)
+            {
+                Method = Count;
+            }
+            column(TotalPurchasePrice; "Purchase Price")
+            {
+                Method = Sum;
+            }
         }
     }
 

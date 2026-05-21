@@ -11,7 +11,8 @@ pageextension 50103 "AST Posted Lines Ext" extends "AST Posted Assign Line Subpa
                 ApplicationArea = All;
                 ToolTip = 'Specifies the condition of the asset when returned by the employee.';
                 trigger OnValidate()
-                var lEnrich: Codeunit "AST Return Enrichment";
+                var
+                    lEnrich: Codeunit "AST Return Enrichment";
                 begin
                     lEnrich.SetReturnCondition(
                         Rec."Document No.", Rec."Line No.",
@@ -32,7 +33,9 @@ pageextension 50103 "AST Posted Lines Ext" extends "AST Posted Assign Line Subpa
             }
         }
     }
-    var DegradedStyle: Text;
+    var
+        DegradedStyle: Text;
+
     trigger OnAfterGetRecord()
     begin
         if Rec."Condition Degraded" then DegradedStyle := 'Unfavorable' else DegradedStyle := 'None';

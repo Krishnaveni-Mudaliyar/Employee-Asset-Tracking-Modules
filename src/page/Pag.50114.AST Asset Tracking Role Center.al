@@ -10,7 +10,10 @@ page 50114 "AST Asset Tracking Role Center"
     {
         area(RoleCenter)
         {
-            part(AssetActivities; "AST Asset Cue") { ApplicationArea = All; }
+            part(AssetActivities; "AST Asset Cue")
+            {
+                ApplicationArea = All;
+            }
         }
     }
 
