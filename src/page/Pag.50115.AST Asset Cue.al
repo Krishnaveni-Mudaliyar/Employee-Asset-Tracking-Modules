@@ -5,7 +5,7 @@ page 50115 "AST Asset Cue"
     ApplicationArea = All;
     RefreshOnActivate = true;
     AboutTitle = 'Asset Activity Tiles';
-    AboutText = 'Live counts of assets and assignments. Click any tile to drill down into the matching records. The Overdue tile turns red when returns are outstanding.';
+    AboutText = 'Live counts of assets, assignments, workflow items and reservations. Click any tile to drill down.';
 
     layout
     {
@@ -19,7 +19,7 @@ page 50115 "AST Asset Cue"
                 {
                     ApplicationArea = All;
                     Caption = 'Available';
-                    ToolTip = 'Shows the number of assets currently available for assignment.';
+                    ToolTip = 'Number of assets available for assignment.';
                     StyleExpr = 'Favorable';
 
                     trigger OnDrillDown()
@@ -34,7 +34,7 @@ page 50115 "AST Asset Cue"
                 {
                     ApplicationArea = All;
                     Caption = 'Assigned';
-                    ToolTip = 'Shows the number of assets currently assigned to employees.';
+                    ToolTip = 'Number of assets currently assigned to employees.';
                     StyleExpr = 'Strong';
 
                     trigger OnDrillDown()
@@ -49,7 +49,7 @@ page 50115 "AST Asset Cue"
                 {
                     ApplicationArea = All;
                     Caption = 'Under Maintenance';
-                    ToolTip = 'Shows the number of assets currently under maintenance.';
+                    ToolTip = 'Number of assets under maintenance.';
                     StyleExpr = 'Ambiguous';
 
                     trigger OnDrillDown()
@@ -61,6 +61,7 @@ page 50115 "AST Asset Cue"
                     end;
                 }
             }
+
             cuegroup(Assignments)
             {
                 Caption = 'Assignments';
@@ -69,7 +70,7 @@ page 50115 "AST Asset Cue"
                 {
                     ApplicationArea = All;
                     Caption = 'Open Assignments';
-                    ToolTip = 'Shows the number of assignment documents currently open.';
+                    ToolTip = 'Number of open assignment documents.';
 
                     trigger OnDrillDown()
                     var
@@ -83,14 +84,15 @@ page 50115 "AST Asset Cue"
                 {
                     ApplicationArea = All;
                     Caption = 'Posted Today';
-                    ToolTip = 'Shows the number of assignments posted today.';
+                    ToolTip = 'Assignments posted today.';
 
                     trigger OnDrillDown()
                     var
                         lRecPosted: Record "AST Posted Assignment Header";
                     begin
                         lRecPosted.SetRange("Posting Date", Today);
-                        lRecPosted.SetRange("Transaction Type", lRecPosted."Transaction Type"::Assignment);
+                        lRecPosted.SetRange("Transaction Type",
+                            lRecPosted."Transaction Type"::Assignment);
                         Page.Run(Page::"AST Posted Assignment List", lRecPosted);
                     end;
                 }
@@ -98,11 +100,65 @@ page 50115 "AST Asset Cue"
                 {
                     ApplicationArea = All;
                     Caption = 'Overdue Returns';
-                    ToolTip = 'Assignments past their expected return date. Click to run the Overdue report.';
+                    ToolTip = 'Assignments past their expected return date.';
                     StyleExpr = OverdueStyle;
+
                     trigger OnDrillDown()
                     begin
                         Report.RunModal(Report::"AST Overdue Asset Return");
+                    end;
+                }
+            }
+
+            cuegroup(WorkflowCues)
+            {
+                Caption = 'Workflow';
+
+                field(PendingApprovals; PendingApprovals)
+                {
+                    ApplicationArea = All;
+                    Caption = 'Pending Approvals';
+                    ToolTip = 'Assignments awaiting approval decision.';
+                    StyleExpr = PendingApprovalStyle;
+
+                    trigger OnDrillDown()
+                    var
+                        lRecHeader: Record "AST Asset Assignment Header";
+                    begin
+                        lRecHeader.SetRange("Approval Status",
+                            lRecHeader."Approval Status"::PendingApproval);
+                        Page.Run(Page::"AST Asset Assignment List", lRecHeader);
+                    end;
+                }
+                field(EscalatedApprovals; EscalatedApprovals)
+                {
+                    ApplicationArea = All;
+                    Caption = 'Escalated';
+                    ToolTip = 'Approval requests that have been escalated.';
+                    StyleExpr = 'Unfavorable';
+
+                    trigger OnDrillDown()
+                    var
+                        lRecHeader: Record "AST Asset Assignment Header";
+                    begin
+                        lRecHeader.SetRange(Escalated, true);
+                        Page.Run(Page::"AST Asset Assignment List", lRecHeader);
+                    end;
+                }
+                field(RejectedCount; RejectedCount)
+                {
+                    ApplicationArea = All;
+                    Caption = 'Rejected';
+                    ToolTip = 'Assignments that were rejected and need re-submission.';
+                    StyleExpr = 'Attention';
+
+                    trigger OnDrillDown()
+                    var
+                        lRecHeader: Record "AST Asset Assignment Header";
+                    begin
+                        lRecHeader.SetRange("Approval Status",
+                            lRecHeader."Approval Status"::Rejected);
+                        Page.Run(Page::"AST Asset Assignment List", lRecHeader);
                     end;
                 }
             }
@@ -110,9 +166,10 @@ page 50115 "AST Asset Cue"
     }
 
     var
-        AvailableCount, AssignedCount, MaintenanceCount, OverdueCount : Integer;
-        OpenAssignments, PostedToday : Integer;
-        OverdueStyle: Text;
+        AvailableCount, AssignedCount, MaintenanceCount : Integer;
+        OverdueCount, OpenAssignments, PostedToday : Integer;
+        PendingApprovals, EscalatedApprovals, RejectedCount : Integer;
+        OverdueStyle, PendingApprovalStyle : Text;
 
     trigger OnOpenPage()
     begin
@@ -140,28 +197,41 @@ page 50115 "AST Asset Cue"
         lRecAsset.SetRange(Status, lRecAsset.Status::UnderMaintenance);
         MaintenanceCount := lRecAsset.Count();
 
-        lRecHeader.SetLoadFields("No.", Status);
+        lRecHeader.SetLoadFields("No.", Status, "Approval Status", Escalated);
         lRecHeader.SetRange(Status, lRecHeader.Status::Open);
         OpenAssignments := lRecHeader.Count();
 
-        lRecPosted.SetLoadFields("No.", "Posting Date", "Expected Return Date");
+        lRecHeader.SetRange(Status);
+        lRecHeader.SetRange("Approval Status",
+            lRecHeader."Approval Status"::PendingApproval);
+        PendingApprovals := lRecHeader.Count();
+
+        lRecHeader.SetRange("Approval Status");
+        lRecHeader.SetRange(Escalated, true);
+        EscalatedApprovals := lRecHeader.Count();
+
+        lRecHeader.SetRange(Escalated);
+        lRecHeader.SetRange("Approval Status",
+            lRecHeader."Approval Status"::Rejected);
+        RejectedCount := lRecHeader.Count();
+
+        lRecPosted.SetLoadFields("No.", "Posting Date", "Transaction Type",
+            "Expected Return Date");
         lRecPosted.SetRange("Posting Date", Today);
-        lRecPosted.SetRange("Transaction Type", lRecPosted."Transaction Type"::Assignment);
+        lRecPosted.SetRange("Transaction Type",
+            lRecPosted."Transaction Type"::Assignment);
         PostedToday := lRecPosted.Count();
 
         lRecPosted.SetRange("Posting Date");
-        lRecPosted.SetRange("Transaction Type", lRecPosted."Transaction Type"::Assignment);
-        lRecPosted.SetFilter("Expected Return Date", '<>%1&<%2', 0D, Today);
+        lRecPosted.SetRange("Transaction Type",
+            lRecPosted."Transaction Type"::Assignment);
+        lRecPosted.SetFilter("Expected Return Date",
+            '<>%1&<%2', 0D, Today);
         OverdueCount := lRecPosted.Count();
 
-        if OverdueReturns() then
-            OverdueStyle := 'Unfavorable'
-        else
-            OverdueStyle := 'Favorable';
-    end;
-
-    local procedure OverdueReturns(): Boolean
-    begin
-        exit(OverdueCount > 0);
+        OverdueStyle :=
+            if (OverdueCount > 0) then 'Unfavorable' else 'Favorable';
+        PendingApprovalStyle :=
+            if (PendingApprovals > 0) then 'Attention' else 'Favorable';
     end;
 }

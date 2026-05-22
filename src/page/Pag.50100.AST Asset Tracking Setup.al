@@ -75,7 +75,8 @@ page 50100 "AST Asset Tracking Setup"
 
     trigger OnOpenPage()
     begin
-        if not Rec.Get() then begin
+        if not Rec.Get()
+        then begin
             Rec.Init();
             Rec."Primary Key" := '';
             Rec.Insert(true);

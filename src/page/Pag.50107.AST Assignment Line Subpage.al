@@ -45,7 +45,6 @@ page 50107 "AST Assignment Lines Subpage"
                     ToolTip = 'Specifies the notes of the asset.';
                     MultiLine = true;
                 }
-
             }
         }
     }

@@ -46,6 +46,20 @@ page 50114 "AST Asset Tracking Role Center"
                     RunObject = page "AST Asset Statistics";
                     ToolTip = 'View a statistical overview of all assets.';
                 }
+                action(AssetReservations)
+                {
+                    Caption = 'Asset Reservations';
+                    ApplicationArea = All;
+                    RunObject = page "AST Asset Reservation List";
+                    ToolTip = 'View and manage asset reservation requests.';
+                }
+                action(AssetTransfers)
+                {
+                    Caption = 'Asset Transfers';
+                    ApplicationArea = All;
+                    RunObject = page "AST Asset Transfer List";
+                    ToolTip = 'View and manage inter-location asset transfers.';
+                }
             }
             group(Assignments)
             {
@@ -64,6 +78,81 @@ page 50114 "AST Asset Tracking Role Center"
                     ApplicationArea = All;
                     RunObject = page "AST Posted Assignment List";
                     ToolTip = 'View all posted assignment and return documents.';
+                }
+            }
+            group(Workflow)
+            {
+                Caption = 'Workflow';
+
+                action(PendingApprovals)
+                {
+                    Caption = 'Pending Approvals';
+                    ApplicationArea = All;
+                    ToolTip = 'View assignment documents awaiting approval.';
+                    Image = Approval;
+
+                    trigger OnAction()
+                    var
+                        lRecHeader: Record "AST Asset Assignment Header";
+                    begin
+                        lRecHeader.SetRange("Approval Status",
+                            lRecHeader."Approval Status"::PendingApproval);
+                        Page.Run(Page::"AST Asset Assignment List", lRecHeader);
+                    end;
+                }
+                action(EscalateApprovals)
+                {
+                    Caption = 'Escalate Overdue Approvals';
+                    ApplicationArea = All;
+                    ToolTip = 'Manually trigger escalation emails for approvals pending beyond the threshold.';
+                    Image = SendEmailPdf;
+
+                    trigger OnAction()
+                    var
+                        lCodWorkflow: Codeunit "AST Workflow Mgt.";
+                    begin
+                        lCodWorkflow.EscalateOverdueApprovals();
+                    end;
+                }
+            }
+            group(PowerBI)
+            {
+                Caption = 'Power BI';
+
+                action(PBIAssets)
+                {
+                    Caption = 'Assets Data Feed';
+                    ApplicationArea = All;
+                    RunObject = page "AST Power BI Asset List";
+                    ToolTip = 'OData feed: all assets for Power BI charts.';
+                }
+                action(PBIAssignments)
+                {
+                    Caption = 'Assignments Data Feed';
+                    ApplicationArea = All;
+                    RunObject = page "AST Power BI Assignments";
+                    ToolTip = 'OData feed: posted assignments for Power BI.';
+                }
+                action(PBICategories)
+                {
+                    Caption = 'Category Analytics Feed';
+                    ApplicationArea = All;
+                    RunObject = page "AST Power BI Category Analytics";
+                    ToolTip = 'OData feed: assets with category details for Power BI bar/pie charts.';
+                }
+                action(PBIDept)
+                {
+                    Caption = 'Department Analytics Feed';
+                    ApplicationArea = All;
+                    RunObject = page "AST Power BI Dept Analytics";
+                    ToolTip = 'OData feed: assignments by department for Power BI dashboards.';
+                }
+                action(PBIAuditLog)
+                {
+                    Caption = 'Audit Log Feed';
+                    ApplicationArea = All;
+                    RunObject = page "AST Power BI Audit Log";
+                    ToolTip = 'OData feed: audit log for Power BI compliance visuals.';
                 }
             }
             group(Administration)
@@ -122,6 +211,20 @@ page 50114 "AST Asset Tracking Role Center"
                 ApplicationArea = All;
                 RunObject = report "AST Asset History";
                 ToolTip = 'Print the full history of assets.';
+            }
+            action(DepreciationReport)
+            {
+                Caption = 'Depreciation Schedule';
+                ApplicationArea = All;
+                RunObject = report "AST Asset Depreciation Schedule";
+                ToolTip = 'Print asset depreciation schedule.';
+            }
+            action(WarrantyReport)
+            {
+                Caption = 'Warranty Expiry';
+                ApplicationArea = All;
+                RunObject = report "AST Warranty Expiry Report";
+                ToolTip = 'Print upcoming warranty expiry list.';
             }
         }
     }

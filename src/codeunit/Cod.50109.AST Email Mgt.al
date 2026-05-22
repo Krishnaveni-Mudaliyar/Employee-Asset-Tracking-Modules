@@ -12,7 +12,9 @@ codeunit 50109 "AST Email Mgt"
         lBody: Text;
     begin
         lSetup.Get();
-        if not lSetup."Send Email Notification" then exit;
+        if not lSetup."Send Email Notification"
+        then
+            exit;
         lSetup.TestField("Admin Email Address");
 
         lBody := StrSubstNo('<h2 style="color:#c0392b">%1 Overdue Return(s) as of %2</h2>', pCount, Format(Today));
@@ -43,11 +45,17 @@ codeunit 50109 "AST Email Mgt"
         lCount: Integer;
     begin
         lSetup.Get();
-        if not lSetup."Send Email Notification" then exit;
+        if not lSetup."Send Email Notification"
+        then
+            exit;
+
         lSetup.TestField("Admin Email Address");
         lAsset.SetFilter("Warranty Expiry Date", '>=%1&<=%2', Today, Today + lSetup."Warranty Alert Days");
         lCount := lAsset.Count();
-        if lCount = 0 then exit;
+
+        if lCount = 0
+        then
+            exit;
 
         lBody := StrSubstNo('<h2>%1 Asset Warranty Expiry/Expiries in Next %2 Days</h2>', lCount, lSetup."Warranty Alert Days");
         lBody += '<table border="1" cellpadding="4"><tr><th>Asset No.</th><th>Description</th><th>Expiry</th><th>Status</th></tr>';
@@ -72,7 +80,11 @@ codeunit 50109 "AST Email Mgt"
         lBody: Text;
     begin
         lSetup.Get();
-        if not lSetup."Send Email Notification" then exit;
+
+        if not lSetup."Send Email Notification"
+        then
+            exit;
+
         lSetup.TestField("Admin Email Address");
         lBody := '<h2>Approval Required – Asset Assignment</h2>';
         lBody += '<table cellpadding="5">';
@@ -99,16 +111,26 @@ codeunit 50109 "AST Email Mgt"
         lBody: Text;
     begin
         lSetup.Get();
-        if not lSetup."Send Email Notification" then exit;
+
+        if not lSetup."Send Email Notification"
+        then
+            exit;
+
         lTo := lSetup."Admin Email Address";
-        if lEmp.Get(pHdr."Employee No.") and (lEmp."Company E-Mail" <> '') then
+
+        if lEmp.Get(pHdr."Employee No.") and (lEmp."Company E-Mail" <> '')
+        then
             lTo := CopyStr(lEmp."Company E-Mail", 1, 80);
-        if pApproved then
+        if pApproved
+        then
             lResult := 'APPROVED'
         else
             lResult := 'REJECTED';
+
         lBody := StrSubstNo('<h2>Assignment %1 – %2</h2><p>Dear %3,</p>', pHdr."No.", lResult, pHdr."Employee Name");
-        if pApproved then
+
+        if pApproved
+         then
             lBody += '<p style="color:green"><b>Approved.</b> Assets are ready for collection.</p>'
         else
             lBody += '<p style="color:red"><b>Rejected.</b> Please contact your manager for details.</p>';

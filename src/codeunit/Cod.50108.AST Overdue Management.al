@@ -78,7 +78,9 @@ codeunit 50108 "AST Overdue Management"
         lLine: Record "AST Posted Assignment Line";
     begin
         lLine.SetRange("Document No.", pDocNo);
-        if lLine.FindFirst() then exit(lLine."Asset No.");
+        if lLine.FindFirst()
+        then
+            exit(lLine."Asset No.");
         exit('');
     end;
 
@@ -88,7 +90,9 @@ codeunit 50108 "AST Overdue Management"
     begin
         lJQ.SetRange("Object Type to Run", lJQ."Object Type to Run"::Codeunit);
         lJQ.SetRange("Object ID to Run", Codeunit::"AST Overdue Management");
-        if not lJQ.IsEmpty() then exit;
+        if not lJQ.IsEmpty()
+        then
+            exit;
         lJQ.Init();
         lJQ."Object Type to Run" := lJQ."Object Type to Run"::Codeunit;
         lJQ."Object ID to Run" := Codeunit::"AST Overdue Management";

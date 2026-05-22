@@ -18,7 +18,8 @@ codeunit 50110 "AST Install Additions"
         lSetup.Get();
 
         // Transfer No. Series
-        if not lNS.Get('AST-TRANS') then begin
+        if not lNS.Get('AST-TRANS')
+        then begin
             lNS.Init();
             lNS.Code := 'AST-TRANS';
             lNS.Description := 'AST Asset Transfers';
@@ -32,7 +33,9 @@ codeunit 50110 "AST Install Additions"
             lNSL."Increment-by No." := 1;
             lNSL.Insert(true);
         end;
-        if lSetup."Transfer Nos." = '' then begin
+
+        if lSetup."Transfer Nos." = ''
+        then begin
             lSetup."Transfer Nos." := 'AST-TRANS';
             lSetup.Modify(true);
         end;

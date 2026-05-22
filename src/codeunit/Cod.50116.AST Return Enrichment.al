@@ -34,7 +34,9 @@ codeunit 50116 "AST Return Enrichment"
         lLine: Record "AST Posted Assignment Line";
         lAsset: Record "AST Company Asset";
     begin
-        if pReturnDate = 0D then pReturnDate := Today;
+        if pReturnDate = 0D
+        then
+            pReturnDate := Today;
 
         pHdr."Return Date" := pReturnDate;
         pHdr."Return Processed By" := CopyStr(UserId(), 1, 50);

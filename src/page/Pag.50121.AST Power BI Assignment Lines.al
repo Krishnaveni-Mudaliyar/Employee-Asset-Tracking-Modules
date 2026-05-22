@@ -11,6 +11,7 @@ page 50121 "AST Power BI Assignment Lines"
     InsertAllowed = false;
     ModifyAllowed = false;
     DeleteAllowed = false;
+
     layout
     {
         area(content)

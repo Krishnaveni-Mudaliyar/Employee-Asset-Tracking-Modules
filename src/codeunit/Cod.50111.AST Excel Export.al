@@ -23,6 +23,7 @@ codeunit 50111 "AST Excel Export"
 
         lRecAsset.SetLoadFields("No.", Description, "Category Code", "Serial No.", Status,
     Condition, "Purchase Date", "Purchase Price", "Assigned to Employee No.");
+
         if lRecAsset.FindSet() then
             repeat
                 lIntRow += 1;
