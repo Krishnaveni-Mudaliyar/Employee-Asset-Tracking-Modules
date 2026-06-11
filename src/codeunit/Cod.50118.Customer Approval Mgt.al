@@ -21,7 +21,7 @@ codeunit 50118 "Customer Approval Mgt."
         pRecCustomer.TestField("No.");
         pRecCustomer.TestField(Name);
 
-        if pRecCustomer."Approval Status" = pRecCustomer."Approval Status"::"Pending for Approval" then
+        if pRecCustomer."Approval Status" = pRecCustomer."Approval Status"::"open" then
             Error('Customer %1 is already pending approval.', pRecCustomer."No.");
 
         if pRecCustomer."Approval Status" = pRecCustomer."Approval Status"::Released then
@@ -29,8 +29,8 @@ codeunit 50118 "Customer Approval Mgt."
 
         pRecCustomer."Approval Status" := pRecCustomer."Approval Status"::"Pending for Approval";
         pRecCustomer."Approval Requested By" := CopyStr(UserId(), 1, 50);
-        pRecCustomer."Approval Requested Date" := Today();
-        pRecCustomer.Blocked := pRecCustomer.Blocked::All;
+        pRecCustomer."Approval Request Date" := CurrentDateTime;
+        pRecCustomer.Validate(Blocked, Enum::"Customer Blocked"::All);
         pRecCustomer.Modify(true);
 
         LogEvent(pRecCustomer."No.", StrSubstNo('SUBMITTED by %1', UserId()));
@@ -51,7 +51,7 @@ codeunit 50118 "Customer Approval Mgt."
         pRecCustomer."Approval Status" := pRecCustomer."Approval Status"::Released;
         pRecCustomer."Approved By" := CopyStr(UserId(), 1, 50);
         pRecCustomer."Approved Date" := Today();
-        pRecCustomer.Blocked := pRecCustomer.Blocked::" ";
+        pRecCustomer.Validate(Blocked, Enum::"Customer Blocked"::" ");
         pRecCustomer.Modify(true);
 
         LogEvent(pRecCustomer."No.", StrSubstNo('APPROVED by %1', UserId()));
@@ -85,7 +85,7 @@ codeunit 50118 "Customer Approval Mgt."
         pRecCustomer."Approved By" := '';
         pRecCustomer."Approved Date" := 0D;
         pRecCustomer."Approval Requested By" := '';
-        pRecCustomer."Approval Requested Date" := 0D;
+        pRecCustomer."Approval Request Date" := CurrentDateTime;
         pRecCustomer.Modify(true);
 
         LogEvent(pRecCustomer."No.", StrSubstNo('REOPENED by %1', UserId()));

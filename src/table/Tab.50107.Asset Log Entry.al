@@ -75,6 +75,31 @@ table 50107 "Asset Log Entry"
             Caption = 'Created By';
             DataClassification = CustomerContent;
         }
+        field(15; "Log Entry Type"; Enum "Transaction Type")
+        {
+            Caption = 'Log Entry Type';
+        }
+
+        field(16; Description; Text[250])
+        {
+            Caption = 'Description';
+        }
+
+        field(17; "Changed By"; Code[50])
+        {
+            Caption = 'Changed By';
+        }
+
+        field(18; "Changed Date"; Date)
+        {
+            Caption = 'Changed Date';
+        }
+
+        field(19; "Changed Time"; Time)
+        {
+            Caption = 'Changed Time';
+        }
+
     }
     keys
     {

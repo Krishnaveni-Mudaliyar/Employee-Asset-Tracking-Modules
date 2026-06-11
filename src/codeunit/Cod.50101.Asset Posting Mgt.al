@@ -51,17 +51,17 @@ codeunit 50101 "Asset Posting Mgt."
         if pRecHeader.Status <> pRecHeader.Status::Open then
             Error('Only Open assignments can be sent for approval.');
 
-        if pRecHeader."Approval Status" = pRecHeader."Approval Status"::PendingApproval then
+        if pRecHeader."Approval Status" = pRecHeader."Approval Status"::Open then
             Error('Assignment %1 is already pending approval.', pRecHeader."No.");
 
-        pRecHeader."Approval Status" := pRecHeader."Approval Status"::PendingApproval;
+        pRecHeader."Approval Status" := pRecHeader."Approval Status"::Open;
         pRecHeader.Modify(true);
         Message('Assignment %1 has been sent for approval.', pRecHeader."No.");
     end;
 
     procedure ApproveAssignment(var pRecHeader: Record "Asset Assignment Header")
     begin
-        if pRecHeader."Approval Status" <> pRecHeader."Approval Status"::PendingApproval then
+        if pRecHeader."Approval Status" <> pRecHeader."Approval Status"::Open then
             Error('Assignment %1 is not pending approval.', pRecHeader."No.");
 
         pRecHeader."Approval Status" := pRecHeader."Approval Status"::Approved;
@@ -71,7 +71,7 @@ codeunit 50101 "Asset Posting Mgt."
 
     procedure RejectAssignment(var pRecHeader: Record "Asset Assignment Header")
     begin
-        if pRecHeader."Approval Status" <> pRecHeader."Approval Status"::PendingApproval then
+        if pRecHeader."Approval Status" <> pRecHeader."Approval Status"::Open then
             Error('Assignment %1 is not pending approval.', pRecHeader."No.");
 
         pRecHeader."Approval Status" := pRecHeader."Approval Status"::Rejected;

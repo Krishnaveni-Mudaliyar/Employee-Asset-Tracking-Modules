@@ -1,4 +1,4 @@
-codeunit 50117 "Workflow Management"
+codeunit 50117 "Workflow Mgt."
 {
     procedure RequestApproval(var pRecHeader: Record "Asset Assignment Header")
     var
@@ -10,11 +10,11 @@ codeunit 50117 "Workflow Management"
         if pRecHeader.Status <> pRecHeader.Status::Open then
             Error('Only open assignments can be submitted for approval.');
 
-        if pRecHeader."Approval Status" = pRecHeader."Approval Status"::PendingApproval then
+        if pRecHeader."Approval Status" = pRecHeader."Approval Status"::Open then
             Error('Assignment %1 is already awaiting approval.', pRecHeader."No.");
 
         lRecSetup.Get();
-        pRecHeader."Approval Status" := pRecHeader."Approval Status"::PendingApproval;
+        pRecHeader."Approval Status" := pRecHeader."Approval Status"::Open;
         pRecHeader."Approval Requested By" := CopyStr(UserId(), 1, 50);
         pRecHeader."Approval Requested On" := Today;
         pRecHeader.Modify(true);
@@ -30,7 +30,7 @@ codeunit 50117 "Workflow Management"
     var
         lRecSetup: Record "Asset Tracking Setup";
     begin
-        if pRecHeader."Approval Status" <> pRecHeader."Approval Status"::PendingApproval then
+        if pRecHeader."Approval Status" <> pRecHeader."Approval Status"::Open then
             Error('Assignment %1 is not pending approval (Current Status: %2).',
                 pRecHeader."No.", pRecHeader."Approval Status");
 
@@ -49,7 +49,7 @@ codeunit 50117 "Workflow Management"
     var
         lRecSetup: Record "Asset Tracking Setup";
     begin
-        if pRecHeader."Approval Status" <> pRecHeader."Approval Status"::PendingApproval then
+        if pRecHeader."Approval Status" <> pRecHeader."Approval Status"::Open then
             Error('Assignment %1 is not pending approval.', pRecHeader."No.");
 
         pRecHeader."Approval Status" := pRecHeader."Approval Status"::Rejected;
@@ -66,7 +66,7 @@ codeunit 50117 "Workflow Management"
 
     procedure DelegateApproval(var pRecHeader: Record "Asset Assignment Header"; pTxtDelegateTo: Text[50])
     begin
-        if pRecHeader."Approval Status" <> pRecHeader."Approval Status"::PendingApproval then
+        if pRecHeader."Approval Status" <> pRecHeader."Approval Status"::Open then
             Error('Only Pending Approval assignments can be delegated.');
         if pTxtDelegateTo = '' then
             Error('Delegate-to user must be specified.');
@@ -79,7 +79,7 @@ codeunit 50117 "Workflow Management"
 
     procedure RecallApprovalRequest(var pRecHeader: Record "Asset Assignment Header")
     begin
-        if pRecHeader."Approval Status" <> pRecHeader."Approval Status"::PendingApproval then
+        if pRecHeader."Approval Status" <> pRecHeader."Approval Status"::Open then
             Error('Only Pending Approval assignments can be recalled.');
 
         pRecHeader."Approval Status" := pRecHeader."Approval Status"::Open;
@@ -102,7 +102,7 @@ codeunit 50117 "Workflow Management"
         if lIntEscalateDays <= 0 then
             lIntEscalateDays := 3;
 
-        lRecHeader.SetRange("Approval Status", lRecHeader."Approval Status"::PendingApproval);
+        lRecHeader.SetRange("Approval Status", lRecHeader."Approval Status"::Open);
         lRecHeader.SetFilter("Approval Requested On",
             '<%1', CalcDate(StrSubstNo('<-%1D>', lIntEscalateDays), Today));
         if lRecHeader.FindSet(true) then
