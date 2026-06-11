@@ -201,7 +201,7 @@ page 50113 "Asset Statistics"
 
         lRecHeader.SetRange(Status);
         lRecHeader.SetRange("Approval Status",
-            lRecHeader."Approval Status"::PendingApproval);
+            lRecHeader."Approval Status"::Open);
         PendingApprovals := lRecHeader.Count();
 
         lRecHeader.SetRange("Approval Status");

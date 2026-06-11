@@ -90,15 +90,7 @@ page 50114 "Asset Tracking Role Center"
                     ApplicationArea = All;
                     ToolTip = 'View assignment documents awaiting approval.';
                     Image = Approval;
-
-                    trigger OnAction()
-                    var
-                        lRecHeader: Record "Asset Assignment Header";
-                    begin
-                        lRecHeader.SetRange("Approval Status",
-                            lRecHeader."Approval Status"::PendingApproval);
-                        Page.Run(Page::"Asset Assignment List", lRecHeader);
-                    end;
+                    RunObject = page "Asset Assignment";
                 }
                 action(EscalateApprovals)
                 {
@@ -107,12 +99,7 @@ page 50114 "Asset Tracking Role Center"
                     ToolTip = 'Manually trigger escalation emails for approvals pending beyond the threshold.';
                     Image = SendEmailPdf;
 
-                    trigger OnAction()
-                    var
-                        lCodWorkflow: Codeunit "Workflow Mgt.";
-                    begin
-                        lCodWorkflow.EscalateOverdueApprovals();
-                    end;
+                    RunObject = codeunit "Workflow Mgt.";
                 }
             }
             group(PowerBI)
@@ -216,7 +203,7 @@ page 50114 "Asset Tracking Role Center"
             {
                 Caption = 'Depreciation Schedule';
                 ApplicationArea = All;
-                RunObject = report "Asset Depreciation Schedule";
+                RunObject = report "Asset Deprec Schedule";
                 ToolTip = 'Print asset depreciation schedule.';
             }
             action(WarrantyReport)

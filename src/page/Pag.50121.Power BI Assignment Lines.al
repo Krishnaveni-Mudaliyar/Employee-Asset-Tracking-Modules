@@ -4,8 +4,8 @@ page 50121 "Power BI Assignment Lines"
     APIPublisher = 'KrishnaveniMudaliyar';
     APIGroup = 'assetTracking';
     APIVersion = 'v1.0';
-    EntityName = 'astPbiAssignmentLine';
-    EntitySetName = 'astPbiAssignmentLines';
+    EntityName = 'PBIAssignmentLine';
+    EntitySetName = 'PBIAssignmentLines';
     SourceTable = "Posted Assignment Line";
     ODataKeyFields = "Document No.", "Line No.";
     InsertAllowed = false;

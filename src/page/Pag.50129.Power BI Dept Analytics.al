@@ -36,8 +36,8 @@ page 50129 "Power BI Dept Analytics"
                 field(noOfLines; Rec."No. of Lines") { }
                 part(lines; "Power BI Assignment Lines")
                 {
-                    EntityName = 'PbiDeptAssignmentLine';
-                    EntitySetName = 'PbiDeptAssignmentLines';
+                    EntityName = 'PBIAssignmentLine';
+                    EntitySetName = 'PBIAssignmentLines';
                     SubPageLink = "Document No." = field("No.");
                 }
             }

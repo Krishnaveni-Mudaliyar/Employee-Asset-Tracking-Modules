@@ -126,7 +126,7 @@ page 50115 "Asset Cue"
                         lRecHeader: Record "Asset Assignment Header";
                     begin
                         lRecHeader.SetRange("Approval Status",
-                            lRecHeader."Approval Status"::PendingApproval);
+                            lRecHeader."Approval Status"::Open);
                         Page.Run(Page::"Asset Assignment List", lRecHeader);
                     end;
                 }
@@ -203,7 +203,7 @@ page 50115 "Asset Cue"
 
         lRecHeader.SetRange(Status);
         lRecHeader.SetRange("Approval Status",
-            lRecHeader."Approval Status"::PendingApproval);
+            lRecHeader."Approval Status"::Open);
         PendingApprovals := lRecHeader.Count();
 
         lRecHeader.SetRange("Approval Status");
@@ -229,9 +229,15 @@ page 50115 "Asset Cue"
             '<>%1&<%2', 0D, Today);
         OverdueCount := lRecPosted.Count();
 
-        OverdueStyle :=
-            if (OverdueCount > 0) then 'Unfavorable' else 'Favorable';
-        PendingApprovalStyle :=
-            if (PendingApprovals > 0) then 'Attention' else 'Favorable';
+        // Cue Styles
+        if OverdueCount > 0 then
+            OverdueStyle := 'Unfavorable'
+        else
+            OverdueStyle := 'Favorable';
+
+        if PendingApprovals > 0 then
+            PendingApprovalStyle := 'Attention'
+        else
+            PendingApprovalStyle := 'Favorable';
     end;
 }

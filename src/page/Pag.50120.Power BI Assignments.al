@@ -35,8 +35,8 @@ page 50120 "Power BI Assignments"
                 field(noOfLines; Rec."No. of Lines") { }
                 part(lines; "Power BI Assignment Lines")
                 {
-                    EntityName = 'astPbiAssignmentLine';
-                    EntitySetName = 'astPbiAssignmentLines';
+                    EntityName = 'PBIAssignmentLine';
+                    EntitySetName = 'PBIAssignmentLines';
                     SubPageLink = "Document No." = field("No.");
                 }
             }

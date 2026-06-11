@@ -1,4 +1,4 @@
-report 50100 "AST Asset Register"
+report 50100 "Asset Register"
 {
     Caption = 'Asset Register';
     UsageCategory = ReportsAndAnalysis;

@@ -73,12 +73,12 @@ page 50123 "Asset Reservation List"
                 PromotedCategory = Process;
                 trigger OnAction()
                 begin
-                    if Rec.Status <> Rec.Status::Active then
+                    if Rec.Status <> Enum::"Asset Reservation Status"::Active then
                         Error('Only Active reservations can be cancelled.');
                     if not Confirm('Cancel reservation %1?', true, Rec."No.")
                     then
                         exit;
-                    Rec.Status := Rec.Status::Cancelled;
+                    Rec.Status := Enum::"Asset Reservation Status"::Cancelled;
                     Rec.Modify(true);
                 end;
             }
@@ -86,12 +86,19 @@ page 50123 "Asset Reservation List"
     }
     trigger OnAfterGetRecord()
     begin
-        if Rec.Status = Rec.Status::Active then
-            ResStyle := 'Favorable'
-        else if Rec.Status = Rec.Status::Expired then
-            ResStyle := 'Unfavorable'
-        else
-            ResStyle := 'None';
+        case Rec.Status of
+            Enum::"Asset Reservation Status"::Open:
+                ResStyle := 'Favorable';
+
+            Enum::"Asset Reservation Status"::Expired:
+                ResStyle := 'Unfavorable';
+
+            Enum::"Asset Reservation Status"::Cancelled:
+                ResStyle := 'Attention';
+
+            else
+                ResStyle := 'None';
+        end;
     end;
 
     var

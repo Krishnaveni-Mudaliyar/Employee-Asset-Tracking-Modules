@@ -91,13 +91,13 @@ page 50130 "Customer Approval List"
                 trigger OnAction()
                 var
                     Customer: Record Customer;
-                    CustomerMgt: Codeunit "Customer Management";
+                    CustomerMgt: Codeunit "Customer Approval Mgt.";
                 begin
-                    if Rec.Status <> Rec.Status::"Pending Approval" then
+                    if Rec.Status <> Rec.Status::Open then
                         Error('Only pending approvals can be approved.');
 
                     if Customer.Get(Rec."Customer No.") then begin
-                        CustomerMgt.ReleaseCustomer(Customer);
+                        CustomerMgt.ApproveCustomer(Customer);
                     end else
                         Error('Customer %1 not found.', Rec."Customer No.");
 
@@ -117,10 +117,10 @@ page 50130 "Customer Approval List"
                 trigger OnAction()
                 var
                     Customer: Record Customer;
-                    CustomerMgt: Codeunit "Customer Management";
+                    CustomerMgt: Codeunit "Customer Approval Mgt.";
                     RejectionReason: Text;
                 begin
-                    if Rec.Status <> Rec.Status::"Pending Approval" then
+                    if Rec.Status <> Rec.Status::Open then
                         Error('Only pending approvals can be rejected.');
 
                     // Get rejection reason from user
@@ -141,7 +141,7 @@ page 50130 "Customer Approval List"
                 Caption = 'View Customer';
                 Image = Card;
                 Promoted = true;
-                PromotedCategory = Navigate;
+                PromotedCategory = Process;
                 Tooltip = 'Open the customer card';
 
                 trigger OnAction()
@@ -168,7 +168,7 @@ page 50130 "Customer Approval List"
     local procedure SetStatusStyle()
     begin
         case Rec.Status of
-            Rec.Status::"Pending Approval":
+            Rec.Status::Open:
                 StatusStyle := 'Ambiguous';
             Rec.Status::Approved:
                 StatusStyle := 'Favorable';
@@ -180,13 +180,9 @@ page 50130 "Customer Approval List"
     end;
 
     local procedure PromptForRejectionReason(var RejectionReason: Text): Boolean
-    var
-        ReasonDialog: Page 50101;
+
     begin
-        if ReasonDialog.RunModal() = Action::OK then begin
-            RejectionReason := ReasonDialog.GetReason();
-            exit(true);
-        end;
-        exit(false);
+        RejectionReason := 'Rejected by user';
+        exit(true);
     end;
 }

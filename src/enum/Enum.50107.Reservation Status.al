@@ -1,4 +1,4 @@
-enum 50107 "Reservation Status"
+enum 50107 "Asset Reservation Status"
 {
     Extensible = true;
     value(0; " ") { Caption = ' '; }
@@ -6,4 +6,5 @@ enum 50107 "Reservation Status"
     value(2; Fulfilled) { Caption = 'Fulfilled'; }
     value(3; Cancelled) { Caption = 'Cancelled'; }
     value(4; Expired) { Caption = 'Expired'; }
+    value(5; Open) { Caption = 'Open'; }
 }

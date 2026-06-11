@@ -2,7 +2,7 @@ page 50106 "Asset Assignment"
 {
     PageType = Document;
     SourceTable = "Asset Assignment Header";
-    Caption = 'Asset Assignment';
+    Caption = 'Asset Assignment List';
     UsageCategory = None;
     AboutTitle = 'Asset Assignment';
     AboutText = 'An assignment document links one or more assets to an employee. Add lines for each asset, then Post (or Send for Approval if approval is required).';
@@ -199,14 +199,14 @@ page 50106 "Asset Assignment"
     begin
         IsOpen := Rec.Status = Rec.Status::Open;
         IsPendingApproval :=
-            Rec."Approval Status" = Rec."Approval Status"::PendingApproval;
+            Rec."Approval Status" = Rec."Approval Status"::Open;
 
         case Rec."Approval Status" of
             Rec."Approval Status"::Approved:
                 ApprovalStyle := 'Favorable';
             Rec."Approval Status"::Rejected:
                 ApprovalStyle := 'Unfavorable';
-            Rec."Approval Status"::PendingApproval:
+            Rec."Approval Status"::Open:
                 ApprovalStyle := 'Ambiguous';
             else
                 ApprovalStyle := 'None';
