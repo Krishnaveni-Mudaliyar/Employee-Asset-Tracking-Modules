@@ -1,7 +1,7 @@
 // OData API page exposing per-asset data enriched with category description for Power BI
 // category-level charts (bar / pie / treemap).
 // Endpoint: /api/KrishnaveniMudaliyar/assetTracking/v1.0/companies({id})/astPbiCategoryAssets
-page 50128 "AST Power BI Category Analytics"
+page 50128 "Power BI Category Analytics"
 {
     PageType = API;
     APIPublisher = 'KrishnaveniMudaliyar';
@@ -9,7 +9,7 @@ page 50128 "AST Power BI Category Analytics"
     APIVersion = 'v1.0';
     EntityName = 'astPbiCategoryAsset';
     EntitySetName = 'astPbiCategoryAssets';
-    SourceTable = "AST Company Asset";
+    SourceTable = "Company Asset";
     ODataKeyFields = "No.";
     InsertAllowed = false;
     ModifyAllowed = false;

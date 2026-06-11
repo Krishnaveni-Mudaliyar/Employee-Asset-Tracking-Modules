@@ -1,7 +1,7 @@
 // OData API page exposing posted assignment data enriched with department dimension
 // for Power BI department-level dashboards (who has what, overdue by dept, etc.).
 // Endpoint: /api/KrishnaveniMudaliyar/assetTracking/v1.0/companies({id})/astPbiDeptAssignments
-page 50129 "AST Power BI Dept Analytics"
+page 50129 "Power BI Dept Analytics"
 {
     PageType = API;
     APIPublisher = 'KrishnaveniMudaliyar';
@@ -9,7 +9,7 @@ page 50129 "AST Power BI Dept Analytics"
     APIVersion = 'v1.0';
     EntityName = 'astPbiDeptAssignment';
     EntitySetName = 'astPbiDeptAssignments';
-    SourceTable = "AST Posted Assignment Header";
+    SourceTable = "Posted Assignment Header";
     ODataKeyFields = "No.";
     InsertAllowed = false;
     ModifyAllowed = false;
@@ -34,10 +34,10 @@ page 50129 "AST Power BI Dept Analytics"
                 field(overdueDays; Rec."Overdue Days") { }
                 field(daysOnLoan; Rec."Days on Loan") { }
                 field(noOfLines; Rec."No. of Lines") { }
-                part(lines; "AST Power BI Assignment Lines")
+                part(lines; "Power BI Assignment Lines")
                 {
-                    EntityName = 'astPbiDeptAssignmentLine';
-                    EntitySetName = 'astPbiDeptAssignmentLines';
+                    EntityName = 'PbiDeptAssignmentLine';
+                    EntitySetName = 'PbiDeptAssignmentLines';
                     SubPageLink = "Document No." = field("No.");
                 }
             }
