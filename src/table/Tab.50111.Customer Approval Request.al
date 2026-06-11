@@ -1,4 +1,4 @@
-Table 50111 CustomerApprovalRequest
+table 50111 "Customer Approval Request"
 {
     Caption = 'Customer Approval Request';
     DataClassification = ToBeClassified;

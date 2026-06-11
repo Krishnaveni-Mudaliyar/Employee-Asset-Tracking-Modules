@@ -170,7 +170,7 @@ page 50130 "Customer Approval List"
         case Rec.Status of
             Rec.Status::Open:
                 StatusStyle := 'Ambiguous';
-            Rec.Status::Approved:
+            Rec.Status::"Pending for Approval":
                 StatusStyle := 'Favorable';
             Rec.Status::Rejected:
                 StatusStyle := 'Unfavorable';
