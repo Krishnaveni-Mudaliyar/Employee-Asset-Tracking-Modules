@@ -13,7 +13,7 @@ codeunit 50101 "Asset Posting Mgt."
         lRecLine: Record "Asset Assignment Line";
         lRecSetup: Record "Asset Tracking Setup";
         lCodEvents: Codeunit "Asset Events";
-        lCodTelemetry: Codeunit "Telemetry";
+        lCodTelemetry: Codeunit "Asset Telemetry";
         lBolHandled: Boolean;
         lRecPostedHeader: Record "Posted Assignment Header";
 

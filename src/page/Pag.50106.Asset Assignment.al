@@ -105,7 +105,7 @@ page 50106 "Asset Assignment"
                 trigger OnAction()
                 var
                     lCodPostingMgt: Codeunit "Asset Posting Mgt.";
-                    lCodTelemetry: Codeunit "Telemetry";
+                    lCodTelemetry: Codeunit "Asset Telemetry";
                 begin
                     if not Confirm('Post assignment %1?', true, Rec."No.") then
                         exit;

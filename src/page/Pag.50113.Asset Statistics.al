@@ -91,26 +91,21 @@ page 50113 "Asset Statistics"
                 {
                     ApplicationArea = All;
                     Caption = 'Pending Approval';
-                    StyleExpr = if (PendingApprovals > 0)
-                    then 'Attention' else 'Favorable';
+                    StyleExpr = OpenAssignmentStyle;
                     ToolTip = 'Open assignments awaiting approval.';
                 }
                 field(EscalatedApprovals; EscalatedApprovals)
                 {
                     ApplicationArea = All;
                     Caption = 'Escalated Approvals';
-                    StyleExpr = if (EscalatedApprovals > 0)
-                    then
-                     'Unfavorable'
-                      else 
-                      'Favorable';
+                    StyleExpr = EscalatedStyle;
                     ToolTip = 'Approvals that have been escalated.';
                 }
                 field(OverdueReturns; OverdueReturns)
                 {
                     ApplicationArea = All;
                     Caption = 'Overdue Returns';
-                    StyleExpr = if (OverdueReturns > 0) then 'Unfavorable' else 'Favorable';
+                    StyleExpr = OverdueStyle;
                     ToolTip = 'Assignments past their expected return date.';
                 }
                 field(PostedThisMonth; PostedThisMonth)
@@ -198,6 +193,8 @@ page 50113 "Asset Statistics"
         WarrantyExpiringCount := lRecAsset.Count();
 
         // Workflow KPIs
+
+        lRecHeader.Reset();
         lRecHeader.SetLoadFields("No.", Status, "Approval Status", Escalated);
         lRecHeader.SetRange(Status, lRecHeader.Status::Open);
         OpenAssignments := lRecHeader.Count();
@@ -235,5 +232,30 @@ page 50113 "Asset Statistics"
         lRecPosted.SetRange("Transaction Type",
             lRecPosted."Transaction Type"::Return);
         ReturnsThisMonth := lRecPosted.Count();
+
+        // KPI Styles
+        if PendingApprovals > 0 then
+            OpenAssignmentStyle := 'Attention'
+        else
+            OpenAssignmentStyle := 'Favorable';
+
+        if EscalatedApprovals > 0 then
+            EscalatedStyle := 'Unfavorable'
+        else
+            EscalatedStyle := 'Favorable';
+
+        if OverdueReturns > 0 then
+            OverdueStyle := 'Unfavorable'
+        else
+            OverdueStyle := 'Favorable';
     end;
+
+
+    var
+
+        TotalBookValue, AveragePurchasePrice : Decimal;
+
+        WarrantyExpiringCount, OverdueReturns, PostedThisMonth, ReturnsThisMonth, OpenAssignments, PendingApprovals, EscalatedApprovals : Integer;
+
+        OpenAssignmentStyle, EscalatedStyle, OverdueStyle : Text;
 }

@@ -30,7 +30,7 @@ permissionset 50102 "AST-ASSIGN"
         codeunit "Asset Return Mgt." = X,
         codeunit "Asset Log Mgt." = X,
         codeunit "Asset Events" = X,
-        codeunit "Telemetry" = X,
+        codeunit "Asset Telemetry" = X,
         codeunit "Excel Export" = X,
 
         report "Asset Register" = X,

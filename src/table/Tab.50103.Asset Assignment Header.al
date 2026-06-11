@@ -74,18 +74,64 @@ table 50103 "Asset Assignment Header"
             Caption = 'No. of Lines';
             FieldClass = FlowField;
             CalcFormula = Count("Asset Assignment Line"
-           where("Document No." = field("No.")));
+                          where("Document No." = field("No.")));
             Editable = false;
         }
+        // --- Workflow fields ---
+        field(11; "Approval Requested By"; Code[50])
+        {
+            Caption = 'Approval Requested By';
+            DataClassification = CustomerContent;
+            Editable = false;
+        }
+        field(12; "Approval Requested On"; Date)
+        {
+            Caption = 'Approval Requested On';
+            DataClassification = CustomerContent;
+            Editable = false;
+        }
+        field(13; "Approved By"; Code[50])
+        {
+            Caption = 'Approved By';
+            DataClassification = CustomerContent;
+            Editable = false;
+        }
+        field(14; "Approved Date"; Date)
+        {
+            Caption = 'Approved Date';
+            DataClassification = CustomerContent;
+            Editable = false;
+        }
+        field(15; "Rejection Reason"; Text[250])
+        {
+            Caption = 'Rejection Reason';
+            DataClassification = CustomerContent;
+            Editable = false;
+        }
+        field(16; "Delegated To"; Code[50])
+        {
+            Caption = 'Delegated To';
+            DataClassification = CustomerContent;
+            Editable = false;
+        }
+        field(17; Escalated; Boolean)
+        {
+            Caption = 'Escalated';
+            DataClassification = CustomerContent;
+            Editable = false;
+        }
+        // --- Audit fields ---
         field(101; "Created By"; Code[50])
         {
             Caption = 'Created By';
             DataClassification = CustomerContent;
+            Editable = false;
         }
         field(102; "Created Date"; Date)
         {
             Caption = 'Created Date';
             DataClassification = CustomerContent;
+            Editable = false;
         }
         field(103; "Last Modified By"; Code[50])
         {
@@ -100,31 +146,31 @@ table 50103 "Asset Assignment Header"
             Editable = false;
         }
     }
+
     keys
     {
         key(PK; "No.") { Clustered = true; }
         key(EmployeeNo; "Employee No.") { }
         key(AssignmentDate; "Assignment Date") { }
+        key(ApprovalStatus; "Approval Status") { }
+        key(ApprovalRequestedOn; "Approval Requested On") { }
+        key(Escalated; Escalated) { }
     }
 
     trigger OnInsert()
     var
         lRecSetup: Record "Asset Tracking Setup";
         lCodNoSeries: Codeunit "No. Series";
-
     begin
         lRecSetup.Get();
         if "No." = '' then begin
             lRecSetup.TestField("Assignment Nos.");
-            "No." := lCodNoSeries.GetNextNo(
-                lRecSetup."Assignment Nos.", Today, true);
+            "No." := lCodNoSeries.GetNextNo(lRecSetup."Assignment Nos.", Today, true);
         end;
         Status := Status::Open;
         "Assignment Date" := Today;
-
         if lRecSetup."Default Return Days" > 0 then
             "Expected Return Date" := Today + lRecSetup."Default Return Days";
-
         "Created By" := CopyStr(UserId(), 1, 50);
         "Created Date" := Today;
         "Last Modified By" := CopyStr(UserId(), 1, 50);
@@ -140,12 +186,9 @@ table 50103 "Asset Assignment Header"
     trigger OnDelete()
     var
         lRecLine: Record "Asset Assignment Line";
-
     begin
         if Status in [Status::Approved, Status::Posted] then
-            Error('You cannot delete assignment %1 with status %2.',
-            "No.", Status);
-
+            Error('You cannot delete assignment %1 with status %2.', "No.", Status);
         lRecLine.SetRange("Document No.", "No.");
         lRecLine.DeleteAll(true);
     end;

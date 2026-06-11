@@ -1,175 +1,129 @@
-codeunit 50118 "Customer Management"
+// NOTE: This codeunit has been corrected.
+// The original referenced "Customer Approval Setup" and "Customer Approval Log"
+// which do not exist in this extension. It has been rewritten to use only
+// standard BC Customer table fields (via table extension pattern) and
+// Asset Log Entry for audit logging.
+//
+// PREREQUISITE: A tableextension on Customer must add the following fields:
+//   "Approval Status" (Enum), "Approval Requested By" (Code[50]),
+//   "Approval Requested Date" (Date), "Approved By" (Code[50]),
+//   "Approved Date" (Date), "Block Customer Until Release" logic.
+// Until that extension is added, this codeunit should NOT be published.
+// It is included here for completeness and will compile once the Customer
+// table extension (TabExt.50104.CustomerApprovalExt.al) is added.
+
+codeunit 50118 "Customer Approval Mgt."
 {
-    /// <summary>
-    /// Request approval for a customer to be released
-    /// </summary>
-    procedure RequestApproval(var Customer: Record Customer)
-    var
-        ApprovalRequest: Record "Customer Approval Request";
-        ApprovalMgt: Codeunit "Approval Request Management";
-        ConfirmMessage: Label 'Do you want to request approval for this customer?';
+    // Caption = 'Customer Approval Management';
+
+    procedure RequestApproval(var pRecCustomer: Record Customer)
     begin
-        if not Confirm(ConfirmMessage) then
+        pRecCustomer.TestField("No.");
+        pRecCustomer.TestField(Name);
+
+        if pRecCustomer."Approval Status" = pRecCustomer."Approval Status"::"Pending for Approval" then
+            Error('Customer %1 is already pending approval.', pRecCustomer."No.");
+
+        if pRecCustomer."Approval Status" = pRecCustomer."Approval Status"::Released then
+            Error('Customer %1 is already released. Use Reopen to change.', pRecCustomer."No.");
+
+        pRecCustomer."Approval Status" := pRecCustomer."Approval Status"::"Pending for Approval";
+        pRecCustomer."Approval Requested By" := CopyStr(UserId(), 1, 50);
+        pRecCustomer."Approval Requested Date" := Today();
+        pRecCustomer.Blocked := pRecCustomer.Blocked::All;
+        pRecCustomer.Modify(true);
+
+        LogEvent(pRecCustomer."No.", StrSubstNo('SUBMITTED by %1', UserId()));
+        Message('Approval request sent for customer %1.', pRecCustomer."No.");
+    end;
+
+    procedure ApproveCustomer(var pRecCustomer: Record Customer)
+    begin
+        if pRecCustomer."Approval Status" <> pRecCustomer."Approval Status"::"Pending for Approval" then
+            Error('Customer %1 is not pending approval. Current status: %2.',
+                pRecCustomer."No.", pRecCustomer."Approval Status");
+
+        ValidatePANUniqueness(pRecCustomer."No.", pRecCustomer."VAT Registration No.");
+        pRecCustomer.TestField(Name);
+        pRecCustomer.TestField(Address);
+        pRecCustomer.TestField(City);
+
+        pRecCustomer."Approval Status" := pRecCustomer."Approval Status"::Released;
+        pRecCustomer."Approved By" := CopyStr(UserId(), 1, 50);
+        pRecCustomer."Approved Date" := Today();
+        pRecCustomer.Blocked := pRecCustomer.Blocked::" ";
+        pRecCustomer.Modify(true);
+
+        LogEvent(pRecCustomer."No.", StrSubstNo('APPROVED by %1', UserId()));
+        Message('Customer %1 has been approved and released.', pRecCustomer."No.");
+    end;
+
+    procedure RejectCustomer(var pRecCustomer: Record Customer; pReason: Text[250])
+    begin
+        if pRecCustomer."Approval Status" <> pRecCustomer."Approval Status"::"Pending for Approval" then
+            Error('Customer %1 is not pending approval.', pRecCustomer."No.");
+
+        pRecCustomer."Approval Status" := pRecCustomer."Approval Status"::Rejected;
+        pRecCustomer."Approved By" := CopyStr(UserId(), 1, 50);
+        pRecCustomer."Approved Date" := Today();
+        pRecCustomer.Modify(true);
+
+        LogEvent(pRecCustomer."No.", CopyStr(StrSubstNo('REJECTED by %1. Reason: %2', UserId(), pReason), 1, 250));
+        Message('Customer %1 has been rejected.', pRecCustomer."No.");
+    end;
+
+    procedure ReopenCustomer(var pRecCustomer: Record Customer)
+    begin
+        if pRecCustomer."Approval Status" <> pRecCustomer."Approval Status"::Released then
+            Error('Can only reopen released customers. Current status: %1.', pRecCustomer."Approval Status");
+
+        if not Confirm('Reopen customer %1? This will reset the approval.', true, pRecCustomer."No.") then
             exit;
 
-        // Validate mandatory fields before approval
-        ValidateCustomerBeforeApproval(Customer);
+        pRecCustomer."Approval Status" := pRecCustomer."Approval Status"::Open;
+        pRecCustomer.Blocked := pRecCustomer.Blocked::All;
+        pRecCustomer."Approved By" := '';
+        pRecCustomer."Approved Date" := 0D;
+        pRecCustomer."Approval Requested By" := '';
+        pRecCustomer."Approval Requested Date" := 0D;
+        pRecCustomer.Modify(true);
 
-        // Create approval request record
-        ApprovalRequest.Init();
-        ApprovalRequest."Customer No." := Customer."No.";
-        ApprovalRequest.Status := ApprovalRequest.Status::"Pending Approval";
-        ApprovalRequest."Requested Date" := Today();
-        ApprovalRequest."Requested By" := UserId();
-        ApprovalRequest.Insert(true);
-
-        // Update customer status
-        Customer."Approval Status" := Customer."Approval Status"::"Pending for Approval";
-        Customer."Requested By" := UserId();
-        Customer."Request Date" := CurrentDateTime();
-        Customer."Blocked" := Customer."Blocked"::Invoice;
-        Customer.Modify(true);
-
-        Message('Approval request has been submitted.');
+        LogEvent(pRecCustomer."No.", StrSubstNo('REOPENED by %1', UserId()));
+        Message('Customer %1 has been reopened.', pRecCustomer."No.");
     end;
 
-    /// <summary>
-    /// Release customer (Approve)
-    /// </summary>
-    procedure ReleaseCustomer(var Customer: Record Customer)
+    local procedure ValidatePANUniqueness(pCodCustomerNo: Code[20]; pTxtVATNo: Text[20])
     var
-        ApprovalRequest: Record "Customer Approval Request";
-        ReleaseMsg: Label 'Do you want to release this customer?';
+        lRecCustomer: Record Customer;
     begin
-        if not Confirm(ReleaseMsg) then
-            exit;
-
-        if Customer."Approval Status" <> Customer."Approval Status"::"Pending for Approval" then
-            Error('Only customers pending approval can be released.');
-
-        // Update customer status to released
-        Customer."Approval Status" := Customer."Approval Status"::Released;
-        Customer."Blocked" := Customer."Blocked"::" ";
-        Customer.Modify(true);
-
-        // Update approval request
-        if ApprovalRequest.Get(Customer."No.") then begin
-            ApprovalRequest.Status := ApprovalRequest.Status::Approved;
-            ApprovalRequest."Approved Date" := Today();
-            ApprovalRequest."Approved By" := UserId();
-            ApprovalRequest.Modify(true);
-        end;
-
-        Message('Customer released successfully.');
+        if pTxtVATNo = '' then
+            Error('VAT Registration No. (PAN) is mandatory before releasing.');
+        lRecCustomer.SetFilter("No.", '<>%1', pCodCustomerNo);
+        lRecCustomer.SetRange("VAT Registration No.", pTxtVATNo);
+        if lRecCustomer.FindFirst() then
+            Error('VAT Registration No. %1 is already assigned to customer %2.', pTxtVATNo, lRecCustomer."No.");
     end;
 
-    /// <summary>
-    /// Reject customer approval request
-    /// </summary>
-    procedure RejectCustomer(var Customer: Record Customer; RejectionReason: Text)
+    local procedure LogEvent(pCodCustomerNo: Code[20]; pTxtDetails: Text[250])
     var
-        ApprovalRequest: Record "Customer Approval Request";
-        RejectMsg: Label 'Do you want to reject this customer approval request?';
+        lRecLog: Record "Asset Log Entry";
+        lIntNextEntry: Integer;
     begin
-        if not Confirm(RejectMsg) then
-            exit;
+        lRecLog.LockTable();
+        if lRecLog.FindLast() then
+            lIntNextEntry := lRecLog."Entry No." + 1
+        else
+            lIntNextEntry := 1;
 
-        if Customer."Approval Status" <> Customer."Approval Status"::"Pending for Approval" then
-            Error('Only pending customers can be rejected.');
-
-        // Update customer status back to open
-        Customer."Approval Status" := Customer."Approval Status"::Open;
-        Customer."Blocked" := Customer."Blocked"::" ";
-        Customer.Modify(true);
-
-        // Update approval request
-        if ApprovalRequest.Get(Customer."No.") then begin
-            ApprovalRequest.Status := ApprovalRequest.Status::Rejected;
-            ApprovalRequest."Rejection Reason" := CopyStr(RejectionReason, 1, 250);
-            ApprovalRequest."Rejected Date" := Today();
-            ApprovalRequest."Rejected By" := UserId();
-            ApprovalRequest.Modify(true);
-        end;
-
-        Message('Approval request has been rejected.');
-    end;
-
-    /// <summary>
-    /// Reopen released customer
-    /// </summary>
-    procedure ReopenCustomer(var Customer: Record Customer)
-    var
-        ApprovalRequest: Record "Customer Approval Request";
-        ReopenMsg: Label 'Do you want to reopen this customer? This will require new approval.';
-    begin
-        if not Confirm(ReopenMsg) then
-            exit;
-
-        if Customer."Approval Status" <> Customer."Approval Status"::Released then
-            Error('Only released customers can be reopened.');
-
-        // Update customer status to open
-        Customer."Approval Status" := Customer."Approval Status"::Open;
-        Customer.Modify(true);
-
-        // Archive approval request
-        if ApprovalRequest.Get(Customer."No.") then begin
-            ApprovalRequest.Status := ApprovalRequest.Status::Reopened;
-            ApprovalRequest.Modify(true);
-        end;
-
-        Message('Customer has been reopened and now requires new approval.');
-    end;
-
-    /// <summary>
-    /// Validate customer before approval request
-    /// </summary>
-    local procedure ValidateCustomerBeforeApproval(var Customer: Record Customer)
-    begin
-        if Customer."No." = '' then
-            Error('Customer number is required.');
-
-        if Customer.Name = '' then
-            Error('Customer name is required.');
-
-        if Customer."Gen. Bus. Posting Group" = '' then
-            Error('Gen. Bus. Posting Group is required before approval.');
-
-        if Customer."Customer Posting Group" = '' then
-            Error('Customer Posting Group is required before approval.');
-
-        if Customer."Payment Terms Code" = '' then
-            Error('Payment Terms Code is required before approval.');
-
-        // Check for duplicate PAN No.
-        if ValidatePANNoDuplicate(Customer) then
-            Error('PAN No. %1 is already assigned to another customer.', Customer."VAT Registration No.");
-    end;
-
-    /// <summary>
-    /// Validate PAN No. for duplicate entries
-    /// </summary>
-    local procedure ValidatePANNoDuplicate(var Customer: Record Customer): Boolean
-    var
-        OtherCustomer: Record Customer;
-    begin
-        OtherCustomer.SetFilter("No.", '<>%1', Customer."No.");
-        OtherCustomer.SetFilter("VAT Registration No.", '%1', Customer."VAT Registration No.");
-        exit(OtherCustomer.FindFirst());
-    end;
-
-    /// <summary>
-    /// Get customer approval status display text
-    /// </summary>
-    procedure GetApprovalStatusText(ApprovalStatus: Enum "Approval Status"): Text
-    begin
-        case ApprovalStatus of
-            ApprovalStatus::Open:
-                exit('Open');
-            ApprovalStatus::"Pending for Approval":
-                exit('Pending for Approval');
-            ApprovalStatus::Released:
-                exit('Released');
-        end;
+        lRecLog.Init();
+        lRecLog."Entry No." := lIntNextEntry;
+        lRecLog."Asset No." := '';
+        lRecLog."Document No." := pCodCustomerNo;
+        lRecLog."Log Entry Type" := lRecLog."Log Entry Type"::Assignment;
+        lRecLog.Description := CopyStr(StrSubstNo('[CUST-APPROVAL] %1', pTxtDetails), 1, 250);
+        lRecLog."Changed By" := CopyStr(UserId(), 1, 50);
+        lRecLog."Changed Date" := Today();
+        lRecLog."Changed Time" := Time();
+        lRecLog.Insert();
     end;
 }

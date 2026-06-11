@@ -1,4 +1,4 @@
-codeunit 50113 "Telemetry"
+codeunit 50113 "Asset Telemetry"
 {
     procedure LogAssetAssigned(pCodAssetNo: Code[20]; pCodEmployeeNo: Code[20]; pCodDocumentNo: Code[20])
     var

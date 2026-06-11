@@ -1,4 +1,4 @@
-enum 50104 "Approval Status"
+enum 50104 "Asset Approval Status"
 {
     Extensible = true;
 

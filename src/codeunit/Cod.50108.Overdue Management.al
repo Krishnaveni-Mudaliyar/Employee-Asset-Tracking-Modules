@@ -11,7 +11,7 @@ codeunit 50108 "Overdue Management"
         lHdr: Record "Posted Assignment Header";
         lAsset: Record "Company Asset";
         lSetup: Record "Asset Tracking Setup";
-        lEmail: Codeunit "Email Mgt";
+        lEmail: Codeunit "Email Mgt.";
         lCount: Integer;
     begin
         lSetup.Get();

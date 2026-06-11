@@ -4,10 +4,10 @@ codeunit 50102 "Asset Return Mgt."
     var
         lRecPostedLine: Record "Posted Assignment Line";
         lRecAsset: Record "Company Asset";
-        lCodLogMgt: Codeunit "AST Asset Log Mgt.";
-        lCodEvents: Codeunit "AST Asset Events";
-        lCodTelemetry: Codeunit "AST Telemetry";
-        lEnumStatusBefore: Enum "AST Asset Status";
+        lCodLogMgt: Codeunit "Asset Log Mgt.";
+        lCodEvents: Codeunit "Asset Events";
+        lCodTelemetry: Codeunit "Asset Telemetry";
+        lEnumStatusBefore: Enum "Asset Status";
         lBolHandled: Boolean;
     begin
         pRecPostedHeader.TestField("No.");
@@ -32,7 +32,7 @@ codeunit 50102 "Asset Return Mgt."
                 lRecAsset."Last Assignment Date" := 0D;
                 lRecAsset.Modify(true);
 
-                lCodLogMgt.CreateLogEntry(lRecAsset, lEnumStatusBefore, lRecAsset.Status::Available, "AST Transaction Type"::Return, pRecPostedHeader."No.", pRecPostedHeader."Employee No.", pRecPostedHeader."Employee Name");
+                lCodLogMgt.CreateLogEntry(lRecAsset, lEnumStatusBefore, lRecAsset.Status::Available, "Transaction Type"::Return, pRecPostedHeader."No.", pRecPostedHeader."Employee No.", pRecPostedHeader."Employee Name");
 
                 lCodTelemetry.LogAssetReturned(lRecPostedLine."Asset No.", pRecPostedHeader."Employee No.", pRecPostedHeader."No.");
 
@@ -45,11 +45,11 @@ codeunit 50102 "Asset Return Mgt."
         lCodEvents.OnAfterProcessReturn(pRecPostedHeader);
     end;
 
-    local procedure CreateReturnDocument(var pRecOriginal: Record "AST Posted Assignment Header")
+    local procedure CreateReturnDocument(var pRecOriginal: Record "Posted Assignment Header")
     var
-        lRecReturnHeader: Record "AST Posted Assignment Header";
-        lRecOrigLine: Record "AST Posted Assignment Line";
-        lRecReturnLine: Record "AST Posted Assignment Line";
+        lRecReturnHeader: Record "Posted Assignment Header";
+        lRecOrigLine: Record "Posted Assignment Line";
+        lRecReturnLine: Record "Posted Assignment Line";
         lCodReturnNo: Code[20];
     begin
         lCodReturnNo := CopyStr('RET-' + pRecOriginal."No.", 1, 20);

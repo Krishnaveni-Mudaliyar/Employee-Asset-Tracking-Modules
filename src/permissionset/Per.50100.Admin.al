@@ -43,7 +43,7 @@ permissionset 50100 "AST-ADMIN"
         codeunit "Upgrade" = X,
         codeunit "Excel Export" = X,
         codeunit "Performance Helpers" = X,
-        codeunit "Telemetry" = X,
+        codeunit "Asset Telemetry" = X,
 
         report "Asset Register" = X,
         report "Asset Handover Letter" = X,
