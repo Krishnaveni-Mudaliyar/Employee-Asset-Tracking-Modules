@@ -42,7 +42,7 @@ pageextension 50104 AssetCueExt extends "Asset Cue"
                 var
                     lRes: Record "Asset Reservation";
                 begin
-                    lRes.SetRange(Status, lRes.Status::Active);
+                    lRes.SetRange(Status, Enum::"Asset Reservation Status"::Open);
                     Page.Run(Page::"Asset Reservation List", lRes);
                 end;
             }
@@ -117,7 +117,7 @@ pageextension 50104 AssetCueExt extends "Asset Cue"
         lAsset.SetFilter("Warranty Expiry Date", '>=%1&<=%2', Today, Today + 30);
         WarrantyExpiring := lAsset.Count();
 
-        lRes.SetRange(Status, "Reservation Status"::Active);
+        lRes.SetRange(Status, Enum::"Asset Reservation Status"::Open);
         ActiveReservations := lRes.Count();
 
         lTrf.SetRange(Status, "Transfer Status"::Open);

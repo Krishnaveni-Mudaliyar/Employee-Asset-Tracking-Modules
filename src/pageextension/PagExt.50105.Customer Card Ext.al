@@ -10,12 +10,6 @@ pageextension 50105 "Customer Card Ext" extends "Customer Card"
                 Editable = false;
                 StyleExpr = ApprovalStatusStyle;
             }
-
-            field("Blocked"; Rec."Blocked")
-            {
-                ApplicationArea = All;
-                Tooltip = 'Blocks customer from further transactions if status is not released';
-            }
         }
     }
 
@@ -23,7 +17,7 @@ pageextension 50105 "Customer Card Ext" extends "Customer Card"
     {
         addafter("&Customer")
         {
-            group("Request Approval")
+            group(CustomerApproval)
             {
                 Caption = 'Request Approval';
                 Image = Approval;
@@ -40,7 +34,7 @@ pageextension 50105 "Customer Card Ext" extends "Customer Card"
 
                     trigger OnAction()
                     var
-                        CustomerMgt: Codeunit "Customer Management";
+                        CustomerMgt: Codeunit "Customer Approval Mgt.";
                     begin
                         if Rec."Approval Status" = Rec."Approval Status"::Released then
                             Error('This customer is already released.');
@@ -64,7 +58,7 @@ pageextension 50105 "Customer Card Ext" extends "Customer Card"
 
                     trigger OnAction()
                     var
-                        CustomerMgt: Codeunit "Customer Management";
+                        CustomerMgt: Codeunit "Customer Approval Mgt.";
                     begin
                         if Rec."Approval Status" <> Rec."Approval Status"::Released then
                             Error('Only released customers can be reopened.');

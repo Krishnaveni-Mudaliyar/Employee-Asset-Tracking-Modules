@@ -1,4 +1,4 @@
-table 50111 "Customer Approval Request"
+Table 50111 CustomerApprovalRequest
 {
     Caption = 'Customer Approval Request';
     DataClassification = ToBeClassified;
@@ -20,7 +20,7 @@ table 50111 "Customer Approval Request"
             Editable = false;
         }
 
-        field(3; Status; Enum "Approval Status")
+        field(3; Status; Enum "Customer Approval Status")
         {
             Caption = 'Status';
             DataClassification = ToBeClassified;
@@ -108,7 +108,7 @@ table 50111 "Customer Approval Request"
 
     trigger OnModify()
     begin
-        if Status = Status::"Pending Approval" then
+        if Status = Status::"Pending for Approval" then
             Error('Status cannot be modified for pending approvals. Use the approval process.');
     end;
 }

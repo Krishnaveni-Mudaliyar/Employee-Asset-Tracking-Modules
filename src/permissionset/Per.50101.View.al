@@ -32,4 +32,4 @@ permissionset 50101 "AST-VIEW"
         report "Asset Handover Letter" = X,
         report "Employee Asset Summary" = X,
         report "Asset History" = X;
-
+}
