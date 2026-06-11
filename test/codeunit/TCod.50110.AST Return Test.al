@@ -1,17 +1,17 @@
-codeunit 50152 "AST Return Test"
+codeunit 50152 "Return Test"
 {
     Subtype = Test;
     TestPermissions = Disabled;
 
     var
-        lCodReturnMgt: Codeunit "AST Asset Return Mgt.";
+        lCodReturnMgt: Codeunit "Asset Return Mgt.";
 
     [Test]
     procedure TestProcessReturn_SetsAssetAvailable()
     var
-        lRecPostedHeader: Record "AST Posted Assignment Header";
-        lRecPostedLine: Record "AST Posted Assignment Line";
-        lRecAsset: Record "AST Company Asset";
+        lRecPostedHeader: Record "Posted Assignment Header";
+        lRecPostedLine: Record "Posted Assignment Line";
+        lRecAsset: Record "Company Asset";
     begin
         lRecAsset.Init();
         lRecAsset."No." := 'TEST-ASSET-RETURN';
@@ -52,7 +52,7 @@ codeunit 50152 "AST Return Test"
     [Test]
     procedure TestProcessReturn_ClearsEmployeeNo()
     var
-        lRecAsset: Record "AST Company Asset";
+        lRecAsset: Record "Company Asset";
     begin
         lRecAsset.Get('TEST-ASSET-RETURN');
         if lRecAsset."Assigned to Employee No." <> '' then
@@ -62,7 +62,7 @@ codeunit 50152 "AST Return Test"
     [Test]
     procedure TestProcessReturn_ClearsLastAssignmentDate()
     var
-        lRecAsset: Record "AST Company Asset";
+        lRecAsset: Record "Company Asset";
     begin
         lRecAsset.Get('TEST-ASSET-RETURN');
         if lRecAsset."Last Assignment Date" <> 0D then
@@ -72,7 +72,7 @@ codeunit 50152 "AST Return Test"
     [Test]
     procedure TestProcessReturn_CreatesReturnLogEntry()
     var
-        lRecLog: Record "AST Asset Log Entry";
+        lRecLog: Record "Asset Log Entry";
     begin
         lRecLog.SetRange("Asset No.", 'TEST-ASSET-RETURN');
         lRecLog.SetRange("Transaction Type", lRecLog."Transaction Type"::Return);

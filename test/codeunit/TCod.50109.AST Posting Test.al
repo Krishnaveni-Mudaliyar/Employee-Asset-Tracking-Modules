@@ -1,18 +1,18 @@
-codeunit 50151 "AST Posting Test"
+codeunit 50151 "Posting Test"
 {
     Subtype = Test;
     TestPermissions = Disabled;
 
     var
-        lCodPostingMgt: Codeunit "AST Asset Posting Mgt.";
+        lCodPostingMgt: Codeunit "Asset Posting Mgt.";
 
     [Test]
     procedure TestPostAssignment_ValidDocument_CreatesPostedHeader()
     var
-        lRecHeader: Record "AST Asset Assignment Header";
-        lRecLine: Record "AST Asset Assignment Line";
-        lRecAsset: Record "AST Company Asset";
-        lRecPostedHeader: Record "AST Posted Assignment Header";
+        lRecHeader: Record "Asset Assignment Header";
+        lRecLine: Record "Asset Assignment Line";
+        lRecAsset: Record "Company Asset";
+        lRecPostedHeader: Record "Posted Assignment Header";
         lCodNoSeries: Codeunit "No. Series";
     begin
         lRecAsset.Init();
@@ -55,7 +55,7 @@ codeunit 50151 "AST Posting Test"
     [Test]
     procedure TestPostAssignment_UpdatesAssetStatusToAssigned()
     var
-        lRecAsset: Record "AST Company Asset";
+        lRecAsset: Record "Company Asset";
     begin
         if lRecAsset.Get('TEST-ASSET-POST') then
             if lRecAsset.Status <> lRecAsset.Status::Assigned then
@@ -65,7 +65,7 @@ codeunit 50151 "AST Posting Test"
     [Test]
     procedure TestPostAssignment_CreatesLogEntry()
     var
-        lRecLog: Record "AST Asset Log Entry";
+        lRecLog: Record "iAsset Log Entry";
     begin
         lRecLog.SetRange("Asset No.", 'TEST-ASSET-POST');
         lRecLog.SetRange("Transaction Type", lRecLog."Transaction Type"::Assignment);

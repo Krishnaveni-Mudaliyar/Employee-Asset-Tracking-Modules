@@ -1,15 +1,15 @@
-codeunit 50150 "AST Asset Validation Test"
+codeunit 50150 "Asset Validation Test"
 {
     Subtype = Test;
     TestPermissions = Disabled;
 
     var
-        lCodValidation: Codeunit "AST Asset Validation";
+        lCodValidation: Codeunit "Asset Validation";
 
     [Test]
     procedure TestValidateHeader_NoEmployee_ShouldError()
     var
-        lRecHeader: Record "AST Asset Assignment Header";
+        lRecHeader: Record "Asset Assignment Header";
     begin
         lRecHeader.Init();
         lRecHeader."No." := 'TEST-001';
@@ -20,7 +20,7 @@ codeunit 50150 "AST Asset Validation Test"
     [Test]
     procedure TestValidateHeader_NoDate_ShouldError()
     var
-        lRecHeader: Record "AST Asset Assignment Header";
+        lRecHeader: Record "Asset Assignment Header";
     begin
         lRecHeader.Init();
         lRecHeader."No." := 'TEST-001';
@@ -31,9 +31,9 @@ codeunit 50150 "AST Asset Validation Test"
     [Test]
     procedure TestValidateLine_AssetNotAvailable_ShouldError()
     var
-        lRecHeader: Record "AST Asset Assignment Header";
-        lRecLine: Record "AST Asset Assignment Line";
-        lRecAsset: Record "AST Company Asset";
+        lRecHeader: Record "Asset Assignment Header";
+        lRecLine: Record "Asset Assignment Line";
+        lRecAsset: Record "Company Asset";
     begin
         lRecAsset.Init();
         lRecAsset."No." := 'AST-TEST-VALIDATE';
