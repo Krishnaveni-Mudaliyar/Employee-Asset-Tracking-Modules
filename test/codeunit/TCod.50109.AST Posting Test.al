@@ -65,7 +65,7 @@ codeunit 50151 "Posting Test"
     [Test]
     procedure TestPostAssignment_CreatesLogEntry()
     var
-        lRecLog: Record "iAsset Log Entry";
+        lRecLog: Record "Asset Log Entry";
     begin
         lRecLog.SetRange("Asset No.", 'TEST-ASSET-POST');
         lRecLog.SetRange("Transaction Type", lRecLog."Transaction Type"::Assignment);

@@ -7,7 +7,7 @@ report 50100 "AST Asset Register"
 
     dataset
     {
-        dataitem("Company Asset"; "AST Company Asset")
+        dataitem("Company Asset"; "Company Asset")
         {
             RequestFilterFields = Status, "Category Code";
 
@@ -61,5 +61,5 @@ report 50100 "AST Asset Register"
         }
     }
     var
-        StatusFilter: Enum "AST Asset Status";
+        StatusFilter: Enum "Asset Status";
 }
