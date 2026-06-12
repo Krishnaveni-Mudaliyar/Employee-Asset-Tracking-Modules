@@ -19,11 +19,15 @@ codeunit 50104 "Asset Notification"
             exit;
 
         lNotification.Id := CreateGuid();
+
         if lIntCount = 1 then begin
             lRecPostedHeader.FindFirst();
-            lNotification.Message := StrSubstNo('1 asset assignment is overdue for return. Employee: %1, Due: %2.', lRecPostedHeader."Employee No.", lRecPostedHeader."Expected Return Date");
+            lNotification.Message := StrSubstNo('1 asset assignment is overdue for return. Employee: %1, Due: %2.',
+            lRecPostedHeader."Employee No.",
+            lRecPostedHeader."Expected Return Date");
         end else
             lNotification.Message := StrSubstNo('%1 asset assignments are overdue for return. Review the Overdue Asset Return report.', lIntCount);
+
         lNotification.Scope := NotificationScope::LocalScope;
         lNotification.AddAction('View Overdue Report', Codeunit::"Asset Notification", 'OpenOverdueReport');
         lNotification.Send();

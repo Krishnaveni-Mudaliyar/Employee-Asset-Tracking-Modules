@@ -21,7 +21,9 @@ codeunit 50101 "Asset Posting Mgt."
         lRecSetup.Get();
         if lRecSetup."Require Approval" then
             if pRecHeader."Approval Status" <> pRecHeader."Approval Status"::Approved then
-                Error('Assignment %1 must be approved before posting. Approval status: %2.', pRecHeader."No.", pRecHeader."Approval Status");
+                Error('Assignment %1 must be approved before posting. Approval status: %2.',
+                 pRecHeader."No.",
+                  pRecHeader."Approval Status");
 
         lCodEvents.OnBeforePostAssetAssignment(pRecHeader, lBolHandled);
         if lBolHandled then

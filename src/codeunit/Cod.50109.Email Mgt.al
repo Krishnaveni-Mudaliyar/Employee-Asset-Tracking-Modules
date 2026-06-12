@@ -13,15 +13,23 @@ codeunit 50109 "Email Mgt."
             exit;
         lSetup.TestField("Admin Email Address");
 
-        lBody := StrSubstNo('<h2 style="color:#c0392b">%1 Overdue Return(s) as of %2</h2>', pCount, Format(Today));
+        lBody := StrSubstNo(
+            '<h2 style="color:#c0392b">%1 Overdue Return(s) as of %2</h2>',
+        pCount,
+        Format(Today));
         lBody += '<table border="1" cellpadding="4"><tr><th>Assignment</th><th>Employee</th><th>Dept</th><th>Expected Return</th><th>Days Overdue</th></tr>';
         lHdr.SetRange("Is Overdue", true);
         lHdr.SetRange("Return Date", 0D);
+
         if lHdr.FindSet() then
             repeat
-                lBody += StrSubstNo('<tr><td>%1</td><td>%2</td><td>%3</td><td>%4</td><td><b>%5</b></td></tr>',
-                    lHdr."No.", lHdr."Employee Name", lHdr.Department,
-                    Format(lHdr."Expected Return Date"), lHdr."Overdue Days");
+                lBody += StrSubstNo
+                ('<tr><td>%1</td><td>%2</td><td>%3</td><td>%4</td><td><b>%5</b></td></tr>',
+                                        lHdr."No.",
+                                        lHdr."Employee Name",
+                                        lHdr.Department,
+                    Format(lHdr."Expected Return Date"),
+                    lHdr."Overdue Days");
             until lHdr.Next() = 0;
         lBody += '</table>';
 

@@ -1,5 +1,6 @@
 codeunit 50100 "Asset Validation"
 {
+    //--------- Validate Assignment Header ----------
     procedure ValidateAssignmentHeader(
     var pRecHeader: Record "Asset Assignment Header")
 
@@ -16,6 +17,7 @@ codeunit 50100 "Asset Validation"
             Error('Assignment %1 cannot be posted with status %2.', pRecHeader."No.", pRecHeader.Status);
     end;
 
+    //--------- Validate Assignment Line ----------
     procedure ValidateAssignmentLine(
         var pRecLine: Record "Asset Assignment Line";
         var pRecHeader: Record "Asset Assignment Header")
@@ -31,6 +33,7 @@ codeunit 50100 "Asset Validation"
         CheckDuplicateAsset(pRecLine, pRecHeader);
     end;
 
+    //--------- Existing Lines Check ----------
     local procedure CheckLinesExist(
         var pRecHeader: Record "Asset Assignment Header")
     var
@@ -41,6 +44,7 @@ codeunit 50100 "Asset Validation"
             Error('Assignment %1 has no lines. Add at least one asset.', pRecHeader."No.");
     end;
 
+    //--------- Check Duplicate Asset ----------
     local procedure CheckDuplicateAsset(
         var pRecLine: Record "Asset Assignment Line";
         var pRecHeader: Record "Asset Assignment Header")

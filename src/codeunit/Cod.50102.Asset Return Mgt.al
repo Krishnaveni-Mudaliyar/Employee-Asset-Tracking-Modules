@@ -12,7 +12,8 @@ codeunit 50102 "Asset Return Mgt."
     begin
         pRecPostedHeader.TestField("No.");
 
-        if pRecPostedHeader."Transaction Type" = pRecPostedHeader."Transaction Type"::Return then
+        if pRecPostedHeader."Transaction Type" = pRecPostedHeader."Transaction Type"::Return
+        then
             Error('Assignment %1 has already been returned. Double-Return not allowed.', pRecPostedHeader."No.");
 
         lCodEvents.OnBeforeProcessReturn(pRecPostedHeader, lBolHandled);
