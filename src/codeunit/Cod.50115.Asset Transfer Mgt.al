@@ -3,7 +3,9 @@ codeunit 50115 "Asset Transfer Mgt"
     procedure ApproveTransfer(var pHdr: Record "Asset Transfer Header")
     begin
         if pHdr.Status <> pHdr.Status::Open then
-            Error('Transfer %1 must be Open to approve.', pHdr."No.");
+            Error('Transfer %1 must be Open to approve.',
+            pHdr."No.");
+
         pHdr.Status := pHdr.Status::Approved;
         pHdr."Approved By" := CopyStr(UserId(), 1, 50);
         pHdr."Approval Date" := Today;
@@ -18,15 +20,19 @@ codeunit 50115 "Asset Transfer Mgt"
         lEmp: Record Employee;
     begin
         if pHdr.Status <> pHdr.Status::Approved then
-            Error('Transfer %1 must be Approved before completing.', pHdr."No.");
+            Error('Transfer %1 must be Approved before completing.',
+            pHdr."No.");
+
         pHdr.TestField("From Employee No.");
         pHdr.TestField("To Employee No.");
         if pHdr."From Employee No." = pHdr."To Employee No." then
             Error('From and To employees cannot be the same.');
 
         lLine.SetRange("Document No.", pHdr."No.");
+
         if lLine.IsEmpty() then
-            Error('No asset lines on transfer %1.', pHdr."No.");
+            Error('No asset lines on transfer %1.',
+            pHdr."No.");
 
         if lEmp.Get(pHdr."To Employee No.") then
             pHdr."To Employee Name" := CopyStr(lEmp."First Name" + ' ' + lEmp."Last Name", 1, 100);
@@ -35,11 +41,15 @@ codeunit 50115 "Asset Transfer Mgt"
             repeat
                 lAsset.Get(lLine."Asset No.");
                 if lAsset."Assigned to Employee No." <> pHdr."From Employee No." then
-                    Error('Asset %1 is not assigned to %2.', lLine."Asset No.", pHdr."From Employee No.");
+                    Error('Asset %1 is not assigned to %2.',
+                    lLine."Asset No.",
+                    pHdr."From Employee No.");
 
-                lLog.CreateLogEntry(lAsset, lAsset.Status::Assigned, lAsset.Status::Assigned,
+                lLog.CreateLogEntry(lAsset, lAsset.Status::Assigned,
+                lAsset.Status::Assigned,
                     "Transaction Type"::Transfer, pHdr."No.",
-                    pHdr."To Employee No.", pHdr."To Employee Name");
+                    pHdr."To Employee No.",
+                    pHdr."To Employee Name");
 
                 lAsset."Assigned to Employee No." := pHdr."To Employee No.";
                 lAsset."Assigned to Employee Name" := pHdr."To Employee Name";
@@ -52,7 +62,9 @@ codeunit 50115 "Asset Transfer Mgt"
         pHdr."Approved By" := CopyStr(UserId(), 1, 50);
         pHdr."Approval Date" := Today;
         pHdr.Modify(true);
-        Message('Transfer %1 completed. Assets moved to %2.', pHdr."No.", pHdr."To Employee Name");
+        Message('Transfer %1 completed. Assets moved to %2.',
+        pHdr."No.",
+        pHdr."To Employee Name");
     end;
 
     procedure CancelTransfer(var pHdr: Record "Asset Transfer Header")

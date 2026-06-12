@@ -6,6 +6,7 @@ codeunit 50111 "Excel Export"
         lTmpExcelBuf: Record "Excel Buffer" temporary;
         lIntRow: Integer;
         lTxtSheetName: Text[250];
+
     begin
         lTxtSheetName := 'Asset Register';
         lIntRow := 1;
@@ -40,9 +41,15 @@ codeunit 50111 "Excel Export"
 
         // Create and download Excel file
         lTmpExcelBuf.CreateNewBook(lTxtSheetName);
-        lTmpExcelBuf.WriteSheet(lTxtSheetName, CompanyName(), UserId());
+        lTmpExcelBuf.WriteSheet(lTxtSheetName,
+        CompanyName(),
+        UserId());
+
         lTmpExcelBuf.CloseBook();
-        lTmpExcelBuf.SetFriendlyFilename('AssetRegister_' + Format(Today, 0, '<Year4><Month,2><Day,2>'));
+        lTmpExcelBuf.SetFriendlyFilename(
+            'AssetRegister_' +
+            Format(Today, 0,
+            '<Year4><Month,2><Day,2>'));
         lTmpExcelBuf.OpenExcel();
     end;
 

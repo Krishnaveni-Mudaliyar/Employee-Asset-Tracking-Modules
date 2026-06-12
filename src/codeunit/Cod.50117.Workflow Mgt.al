@@ -11,7 +11,8 @@ codeunit 50117 "Workflow Mgt."
             Error('Only open assignments can be submitted for approval.');
 
         if pRecHeader."Approval Status" = pRecHeader."Approval Status"::Open then
-            Error('Assignment %1 is already awaiting approval.', pRecHeader."No.");
+            Error('Assignment %1 is already awaiting approval.',
+            pRecHeader."No.");
 
         lRecSetup.Get();
         pRecHeader."Approval Status" := pRecHeader."Approval Status"::Open;
@@ -20,10 +21,14 @@ codeunit 50117 "Workflow Mgt."
         pRecHeader.Modify(true);
 
         if lRecSetup."Require Approval" then
-            SendApprovalRequestEmail(pRecHeader, lRecSetup."Approval Manager Email");
+            SendApprovalRequestEmail(pRecHeader,
+            lRecSetup."Approval Manager Email");
 
         LogWorkflowEvent(pRecHeader."No.", 'SUBMITTED',
-            CopyStr(StrSubstNo('Submitted by %1 on %2', UserId(), Format(Today)), 1, 250));
+            CopyStr(StrSubstNo('Submitted by %1 on %2',
+            UserId(),
+            Format(Today)),
+            1, 250));
     end;
 
     procedure ApproveAssignment(var pRecHeader: Record "Asset Assignment Header")
@@ -32,7 +37,8 @@ codeunit 50117 "Workflow Mgt."
     begin
         if pRecHeader."Approval Status" <> pRecHeader."Approval Status"::Open then
             Error('Assignment %1 is not pending approval (Current Status: %2).',
-                pRecHeader."No.", pRecHeader."Approval Status");
+                pRecHeader."No.",
+                pRecHeader."Approval Status");
 
         pRecHeader."Approval Status" := pRecHeader."Approval Status"::Approved;
         pRecHeader."Approved By" := CopyStr(UserId(), 1, 50);
@@ -40,9 +46,17 @@ codeunit 50117 "Workflow Mgt."
         pRecHeader.Modify(true);
 
         lRecSetup.Get();
-        SendApprovalDecisionEmail(pRecHeader, lRecSetup."Approval Manager Email", true);
-        LogWorkflowEvent(pRecHeader."No.", 'APPROVED',
-            CopyStr(StrSubstNo('Approved by %1 on %2', UserId(), Format(Today)), 1, 250));
+        SendApprovalDecisionEmail(pRecHeader,
+        lRecSetup."Approval Manager Email",
+        true);
+
+        LogWorkflowEvent(pRecHeader."No.",
+        'APPROVED',
+            CopyStr(StrSubstNo
+            ('Approved by %1 on %2',
+            UserId(),
+            Format(Today)),
+            1, 250));
     end;
 
     procedure RejectAssignment(var pRecHeader: Record "Asset Assignment Header"; pTxtReason: Text[250])
@@ -50,7 +64,8 @@ codeunit 50117 "Workflow Mgt."
         lRecSetup: Record "Asset Tracking Setup";
     begin
         if pRecHeader."Approval Status" <> pRecHeader."Approval Status"::Open then
-            Error('Assignment %1 is not pending approval.', pRecHeader."No.");
+            Error('Assignment %1 is not pending approval.',
+            pRecHeader."No.");
 
         pRecHeader."Approval Status" := pRecHeader."Approval Status"::Rejected;
         pRecHeader."Rejection Reason" := pTxtReason;
@@ -61,7 +76,10 @@ codeunit 50117 "Workflow Mgt."
         lRecSetup.Get();
         SendApprovalDecisionEmail(pRecHeader, lRecSetup."Approval Manager Email", false);
         LogWorkflowEvent(pRecHeader."No.", 'REJECTED',
-            CopyStr(StrSubstNo('Rejected by %1. Reason: %2', UserId(), pTxtReason), 1, 250));
+            CopyStr(StrSubstNo('Rejected by %1. Reason: %2',
+            UserId(),
+            pTxtReason),
+            1, 250));
     end;
 
     procedure DelegateApproval(var pRecHeader: Record "Asset Assignment Header"; pTxtDelegateTo: Text[50])
@@ -73,8 +91,14 @@ codeunit 50117 "Workflow Mgt."
 
         pRecHeader."Delegated To" := pTxtDelegateTo;
         pRecHeader.Modify(true);
-        LogWorkflowEvent(pRecHeader."No.", 'DELEGATED',
-            CopyStr(StrSubstNo('Delegated by %1 to %2 on %3', UserId(), pTxtDelegateTo, Format(Today)), 1, 250));
+        LogWorkflowEvent(pRecHeader."No.",
+        'DELEGATED',
+            CopyStr(StrSubstNo
+            ('Delegated by %1 to %2 on %3',
+            UserId(),
+            pTxtDelegateTo,
+            Format(Today)),
+            1, 250));
     end;
 
     procedure RecallApprovalRequest(var pRecHeader: Record "Asset Assignment Header")
@@ -86,8 +110,12 @@ codeunit 50117 "Workflow Mgt."
         pRecHeader."Approval Requested By" := '';
         pRecHeader."Delegated To" := '';
         pRecHeader.Modify(true);
-        LogWorkflowEvent(pRecHeader."No.", 'RECALLED',
-            CopyStr(StrSubstNo('Recalled by %1 on %2', UserId(), Format(Today)), 1, 250));
+        LogWorkflowEvent(pRecHeader."No.",
+        'RECALLED',
+            CopyStr(StrSubstNo
+            ('Recalled by %1 on %2',
+            UserId(), Format(Today)),
+            1, 250));
     end;
 
     procedure EscalateOverdueApprovals()
@@ -104,19 +132,32 @@ codeunit 50117 "Workflow Mgt."
 
         lRecHeader.SetRange("Approval Status", lRecHeader."Approval Status"::Open);
         lRecHeader.SetFilter("Approval Requested On",
-            '<%1', CalcDate(StrSubstNo('<-%1D>', lIntEscalateDays), Today));
+            '<%1',
+            CalcDate(StrSubstNo
+            ('<-%1D>',
+            lIntEscalateDays),
+            Today));
+
         if lRecHeader.FindSet(true) then
             repeat
                 lRecHeader.Escalated := true;
                 lRecHeader.Modify(true);
-                SendEscalationEmail(lRecHeader, lRecSetup."Approval Manager Email");
-                LogWorkflowEvent(lRecHeader."No.", 'ESCALATED',
-                    CopyStr(StrSubstNo('Escalated on %1: pending > %2 days', Format(Today), lIntEscalateDays), 1, 250));
+                SendEscalationEmail(lRecHeader,
+                lRecSetup."Approval Manager Email");
+
+                LogWorkflowEvent(lRecHeader."No.",
+                'ESCALATED',
+                    CopyStr(StrSubstNo('Escalated on %1: pending > %2 days',
+                    Format(Today),
+                    lIntEscalateDays),
+                    1, 250));
+
                 lIntCount += 1;
             until lRecHeader.Next() = 0;
 
         if lIntCount > 0 then
-            Message('%1 assignment(s) have been escalated to the approval manager.', lIntCount);
+            Message('%1 assignment(s) have been escalated to the approval manager.',
+            lIntCount);
     end;
 
     local procedure SendApprovalRequestEmail(pRecHeader: Record "Asset Assignment Header"; pTxtApproverEmail: Text[100])
@@ -125,14 +166,20 @@ codeunit 50117 "Workflow Mgt."
     begin
         if pTxtApproverEmail = '' then
             exit;
-        lCodEmail.SendApprovalRequestNotification(pRecHeader, pTxtApproverEmail);
+        lCodEmail.SendApprovalRequestNotification(pRecHeader,
+        pTxtApproverEmail);
     end;
 
-    local procedure SendApprovalDecisionEmail(pRecHeader: Record "Asset Assignment Header"; pTxtManagerEmail: Text[100]; pBolApproved: Boolean)
+    local procedure SendApprovalDecisionEmail(pRecHeader: Record "Asset Assignment Header";
+    pTxtManagerEmail: Text[100];
+    pBolApproved: Boolean)
+
     var
         lCodEmail: Codeunit "Email Mgt.";
     begin
-        lCodEmail.SendApprovalDecisionNotification(pRecHeader, pTxtManagerEmail, pBolApproved);
+        lCodEmail.SendApprovalDecisionNotification(pRecHeader,
+        pTxtManagerEmail,
+        pBolApproved);
     end;
 
     local procedure SendEscalationEmail(pRecHeader: Record "Asset Assignment Header"; pTxtManagerEmail: Text[100])
@@ -160,7 +207,12 @@ codeunit 50117 "Workflow Mgt."
         lRecLog."Asset No." := '';
         lRecLog."Document No." := pTxtDocNo;
         lRecLog."Log Entry Type" := lRecLog."Log Entry Type"::Assignment;
-        lRecLog.Description := CopyStr(StrSubstNo('[WORKFLOW:%1] %2', pTxtEvent, pTxtDetails), 1, 250);
+
+        lRecLog.Description := CopyStr(StrSubstNo('[WORKFLOW:%1] %2',
+        pTxtEvent,
+        pTxtDetails),
+        1, 250);
+
         lRecLog."Changed By" := CopyStr(UserId(), 1, 50);
         lRecLog."Changed Date" := Today;
         lRecLog."Changed Time" := Time;

@@ -4,8 +4,12 @@ codeunit 50112 "Performance Helpers"
     var
         lRecAsset: Record "Company Asset";
     begin
-        lRecAsset.SetLoadFields("No.", "Category Code");
-        lRecAsset.SetRange("Category Code", pCodCategoryCode);
+        lRecAsset.SetLoadFields("No.",
+        "Category Code");
+
+        lRecAsset.SetRange("Category Code",
+        pCodCategoryCode);
+
         exit(lRecAsset.Count());
     end;
 
@@ -22,18 +26,29 @@ codeunit 50112 "Performance Helpers"
     var
         lRecAsset: Record "Company Asset";
     begin
-        lRecAsset.SetLoadFields("No.", Status, "Category Code");
-        lRecAsset.SetRange("Category Code", pCodCategoryCode);
-        lRecAsset.SetRange(Status, lRecAsset.Status::UnderMaintenance);
-        lRecAsset.ModifyAll(Status, lRecAsset.Status::Available, true);
+        lRecAsset.SetLoadFields("No.",
+        Status,
+        "Category Code");
+
+        lRecAsset.SetRange("Category Code",
+        pCodCategoryCode);
+
+        lRecAsset.SetRange(Status,
+        lRecAsset.Status::UnderMaintenance);
+
+        lRecAsset.ModifyAll(Status,
+        lRecAsset.Status::Available, true);
     end;
 
     procedure LogAllAssignedAssets()
     var
         lRecAsset: Record "Company Asset";
     begin
-        lRecAsset.SetLoadFields("No.", "Assigned to Employee No.", Status);
-        lRecAsset.SetRange(Status, lRecAsset.Status::Assigned);
+        lRecAsset.SetLoadFields("No.",
+        "Assigned to Employee No.", Status);
+
+        lRecAsset.SetRange(Status,
+        lRecAsset.Status::Assigned);
 
         if lRecAsset.FindSet() then
             repeat

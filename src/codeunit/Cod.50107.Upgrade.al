@@ -13,7 +13,9 @@ codeunit 50107 "Upgrade"
         lUpgradeTag: Text;
     begin
         lUpgradeTag := GetV1toV2UpgradeTag();
-        if lCodUpgradeTag.HasUpgradeTag(lUpgradeTag) then
+
+        if lCodUpgradeTag.HasUpgradeTag(lUpgradeTag)
+        then
             exit;
         lCodUpgradeTag.SetUpgradeTag(lUpgradeTag);
     end;

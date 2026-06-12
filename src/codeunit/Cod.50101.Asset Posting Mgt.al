@@ -127,7 +127,11 @@ codeunit 50101 "Asset Posting Mgt."
                 lRecAsset."Last Assignment Date" := pRecHeader."Assignment Date";
                 lRecAsset.Modify(true);
 
-                lCodLogMgt.CreateLogEntry(lRecAsset, lEnumStatusBefore, lRecAsset.Status::Assigned, "Transaction Type"::Assignment, pRecHeader."No.", pRecHeader."Employee No.", pRecHeader."Employee Name");
+                lCodLogMgt.CreateLogEntry(lRecAsset, lEnumStatusBefore,
+                lRecAsset.Status::Assigned, "Transaction Type"::Assignment,
+                pRecHeader."No.",
+                pRecHeader."Employee No.",
+                pRecHeader."Employee Name");
             until lRecLine.Next() = 0;
     end;
 

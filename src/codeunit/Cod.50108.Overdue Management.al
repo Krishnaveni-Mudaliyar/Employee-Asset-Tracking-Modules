@@ -17,10 +17,23 @@ codeunit 50108 "Overdue Management"
         lSetup.Get();
 
         // ── 1. Flag newly overdue ───
-        lHdr.SetRange("Transaction Type", "Transaction Type"::Assignment);
-        lHdr.SetRange("Return Date", 0D);
-        lHdr.SetFilter("Expected Return Date", '<%1', Today);
-        lHdr.SetRange("Is Overdue", false);
+        lHdr.SetRange(
+            "Transaction Type",
+            "Transaction Type"::Assignment);
+
+        lHdr.SetRange(
+            "Return Date",
+            0D);
+
+        lHdr.SetFilter(
+            "Expected Return Date",
+            '<%1',
+            Today);
+
+        lHdr.SetRange(
+            "Is Overdue",
+            false);
+
         if lHdr.FindSet(true) then
             repeat
                 lHdr."Is Overdue" := true;
@@ -80,11 +93,18 @@ codeunit 50108 "Overdue Management"
     var
         lJQ: Record "Job Queue Entry";
     begin
-        lJQ.SetRange("Object Type to Run", lJQ."Object Type to Run"::Codeunit);
-        lJQ.SetRange("Object ID to Run", Codeunit::"Overdue Management");
+        lJQ.SetRange(
+            "Object Type to Run",
+            lJQ."Object Type to Run"::Codeunit);
+
+        lJQ.SetRange(
+            "Object ID to Run",
+            Codeunit::"Overdue Management");
+
         if not lJQ.IsEmpty()
         then
             exit;
+
         lJQ.Init();
         lJQ."Object Type to Run" := lJQ."Object Type to Run"::Codeunit;
         lJQ."Object ID to Run" := Codeunit::"Overdue Management";

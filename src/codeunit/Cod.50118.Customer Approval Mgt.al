@@ -22,7 +22,8 @@ codeunit 50118 "Customer Approval Mgt."
         pRecCustomer.TestField(Name);
 
         if pRecCustomer."Approval Status" = pRecCustomer."Approval Status"::"open" then
-            Error('Customer %1 is already pending approval.', pRecCustomer."No.");
+            Error('Customer %1 is already pending approval.',
+            pRecCustomer."No.");
 
         if pRecCustomer."Approval Status" = pRecCustomer."Approval Status"::Released then
             Error('Customer %1 is already released. Use Reopen to change.', pRecCustomer."No.");
@@ -33,7 +34,9 @@ codeunit 50118 "Customer Approval Mgt."
         pRecCustomer.Validate(Blocked, Enum::"Customer Blocked"::All);
         pRecCustomer.Modify(true);
 
-        LogEvent(pRecCustomer."No.", StrSubstNo('SUBMITTED by %1', UserId()));
+        LogEvent(pRecCustomer."No.",
+        StrSubstNo('SUBMITTED by %1',
+        UserId()));
         Message('Approval request sent for customer %1.', pRecCustomer."No.");
     end;
 
@@ -41,9 +44,11 @@ codeunit 50118 "Customer Approval Mgt."
     begin
         if pRecCustomer."Approval Status" <> pRecCustomer."Approval Status"::"Pending for Approval" then
             Error('Customer %1 is not pending approval. Current status: %2.',
-                pRecCustomer."No.", pRecCustomer."Approval Status");
+                            pRecCustomer."No.",
+                            pRecCustomer."Approval Status");
 
-        ValidatePANUniqueness(pRecCustomer."No.", pRecCustomer."VAT Registration No.");
+        ValidatePANUniqueness(pRecCustomer."No.",
+        pRecCustomer."VAT Registration No.");
         pRecCustomer.TestField(Name);
         pRecCustomer.TestField(Address);
         pRecCustomer.TestField(City);
@@ -54,30 +59,41 @@ codeunit 50118 "Customer Approval Mgt."
         pRecCustomer.Validate(Blocked, Enum::"Customer Blocked"::" ");
         pRecCustomer.Modify(true);
 
-        LogEvent(pRecCustomer."No.", StrSubstNo('APPROVED by %1', UserId()));
-        Message('Customer %1 has been approved and released.', pRecCustomer."No.");
+        LogEvent(pRecCustomer."No.",
+        StrSubstNo('APPROVED by %1',
+        UserId()));
+
+        Message('Customer %1 has been approved and released.',
+        pRecCustomer."No.");
     end;
 
     procedure RejectCustomer(var pRecCustomer: Record Customer; pReason: Text[250])
     begin
         if pRecCustomer."Approval Status" <> pRecCustomer."Approval Status"::"Pending for Approval" then
-            Error('Customer %1 is not pending approval.', pRecCustomer."No.");
+            Error('Customer %1 is not pending approval.',
+            pRecCustomer."No.");
 
         pRecCustomer."Approval Status" := pRecCustomer."Approval Status"::Rejected;
         pRecCustomer."Approved By" := CopyStr(UserId(), 1, 50);
         pRecCustomer."Approved Date" := Today();
         pRecCustomer.Modify(true);
 
-        LogEvent(pRecCustomer."No.", CopyStr(StrSubstNo('REJECTED by %1. Reason: %2', UserId(), pReason), 1, 250));
+        LogEvent(pRecCustomer."No.", CopyStr(StrSubstNo('REJECTED by %1. Reason: %2',
+        UserId(),
+        pReason),
+        1, 250));
+
         Message('Customer %1 has been rejected.', pRecCustomer."No.");
     end;
 
     procedure ReopenCustomer(var pRecCustomer: Record Customer)
     begin
         if pRecCustomer."Approval Status" <> pRecCustomer."Approval Status"::Released then
-            Error('Can only reopen released customers. Current status: %1.', pRecCustomer."Approval Status");
+            Error('Can only reopen released customers. Current status: %1.',
+            pRecCustomer."Approval Status");
 
-        if not Confirm('Reopen customer %1? This will reset the approval.', true, pRecCustomer."No.") then
+        if not Confirm(
+            'Reopen customer %1? This will reset the approval.', true, pRecCustomer."No.") then
             exit;
 
         pRecCustomer."Approval Status" := pRecCustomer."Approval Status"::Open;
@@ -88,8 +104,13 @@ codeunit 50118 "Customer Approval Mgt."
         pRecCustomer."Approval Request Date" := CurrentDateTime;
         pRecCustomer.Modify(true);
 
-        LogEvent(pRecCustomer."No.", StrSubstNo('REOPENED by %1', UserId()));
-        Message('Customer %1 has been reopened.', pRecCustomer."No.");
+        LogEvent(pRecCustomer."No.",
+        StrSubstNo('REOPENED by %1',
+        UserId()));
+
+        Message('Customer %1 has been reopened.',
+        pRecCustomer."No.");
+
     end;
 
     local procedure ValidatePANUniqueness(pCodCustomerNo: Code[20]; pTxtVATNo: Text[20])
@@ -98,10 +119,18 @@ codeunit 50118 "Customer Approval Mgt."
     begin
         if pTxtVATNo = '' then
             Error('VAT Registration No. (PAN) is mandatory before releasing.');
-        lRecCustomer.SetFilter("No.", '<>%1', pCodCustomerNo);
-        lRecCustomer.SetRange("VAT Registration No.", pTxtVATNo);
+
+        lRecCustomer.SetFilter("No.",
+        '<>%1',
+        pCodCustomerNo);
+
+        lRecCustomer.SetRange("VAT Registration No.",
+        pTxtVATNo);
+
         if lRecCustomer.FindFirst() then
-            Error('VAT Registration No. %1 is already assigned to customer %2.', pTxtVATNo, lRecCustomer."No.");
+            Error('VAT Registration No. %1 is already assigned to customer %2.',
+            pTxtVATNo,
+            lRecCustomer."No.");
     end;
 
     local procedure LogEvent(pCodCustomerNo: Code[20]; pTxtDetails: Text[250])

@@ -33,9 +33,19 @@ codeunit 50102 "Asset Return Mgt."
                 lRecAsset."Last Assignment Date" := 0D;
                 lRecAsset.Modify(true);
 
-                lCodLogMgt.CreateLogEntry(lRecAsset, lEnumStatusBefore, lRecAsset.Status::Available, "Transaction Type"::Return, pRecPostedHeader."No.", pRecPostedHeader."Employee No.", pRecPostedHeader."Employee Name");
+                lCodLogMgt.CreateLogEntry
+                (lRecAsset,
+                lEnumStatusBefore,
+                lRecAsset.Status::Available,
+                "Transaction Type"::Return,
+                pRecPostedHeader."No.",
+                pRecPostedHeader."Employee No.",
+                pRecPostedHeader."Employee Name");
 
-                lCodTelemetry.LogAssetReturned(lRecPostedLine."Asset No.", pRecPostedHeader."Employee No.", pRecPostedHeader."No.");
+                lCodTelemetry.LogAssetReturned
+                (lRecPostedLine."Asset No.",
+                pRecPostedHeader."Employee No.",
+                pRecPostedHeader."No.");
 
             until lRecPostedLine.Next() = 0;
 

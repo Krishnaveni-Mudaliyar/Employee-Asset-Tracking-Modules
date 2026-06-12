@@ -91,8 +91,14 @@ codeunit 50106 "Install"
         lRecJobQueueEntry: Record "Job Queue Entry";
     begin
         // Overdue notification job
-        lRecJobQueueEntry.SetRange("Object Type to Run", lRecJobQueueEntry."Object Type to Run"::Codeunit);
-        lRecJobQueueEntry.SetRange("Object ID to Run", Codeunit::"Asset Notification");
+        lRecJobQueueEntry.SetRange(
+            "Object Type to Run",
+            lRecJobQueueEntry."Object Type to Run"::Codeunit);
+
+        lRecJobQueueEntry.SetRange(
+            "Object ID to Run",
+            Codeunit::"Asset Notification");
+
         if not lRecJobQueueEntry.FindFirst() then begin
             lRecJobQueueEntry.Init();
             lRecJobQueueEntry."Object Type to Run" := lRecJobQueueEntry."Object Type to Run"::Codeunit;
@@ -109,7 +115,10 @@ codeunit 50106 "Install"
         end;
     end;
 
-    local procedure InsertCategory(pCodCode: Code[20]; pTxtDescription: Text[100]; pEnumType: Enum "Asset Category Type")
+    local procedure InsertCategory(pCodCode: Code[20];
+    pTxtDescription: Text[100];
+    pEnumType: Enum "Asset Category Type")
+
     var
         lRecCategory: Record "Asset Category";
     begin
